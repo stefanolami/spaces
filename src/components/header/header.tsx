@@ -49,6 +49,7 @@ export default function Header() {
 							fill
 							sizes="(max-width: 640px) 40vw, 40vw"
 							quality={100}
+							loading="eager"
 						/>
 					</Link>
 				</div>
