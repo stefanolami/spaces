@@ -1,3 +1,3 @@
 export default function Home() {
-	return <div className="bg-orange-spaces min-h-screen"></div>
+	return <div className="bg-beje-spaces min-h-screen h-[10000px]"></div>
 }
