@@ -17,6 +17,10 @@ export default {
 				'brown-spaces': '#7F401F',
 				'orange-spaces': '#FF5900',
 			},
+			fontFamily: {
+				robo: ['var(--font-robo)'],
+				nunito: ['var(--font-nunito)'],
+			},
 		},
 	},
 	plugins: [],
