@@ -1,5 +1,5 @@
 const ServicesPage = () => {
-	return <div>ServicesPage</div>
+	return <div className="bg-beje-spaces min-h-screen "></div>
 }
 
 export default ServicesPage
