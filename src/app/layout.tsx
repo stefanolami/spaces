@@ -3,6 +3,7 @@ import { nunito, robo } from '@/app/fonts'
 import './globals.css'
 import { RenderMounted } from '@/components/render-mounted'
 import Header from '@/components/header/header'
+import Footer from '@/components/footer'
 
 export const metadata: Metadata = {
 	title: 'Time&Spaces',
@@ -20,6 +21,7 @@ export default function RootLayout({
 				<RenderMounted>
 					<Header />
 					<main>{children}</main>
+					<Footer />
 				</RenderMounted>
 			</body>
 		</html>

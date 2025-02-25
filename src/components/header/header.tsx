@@ -58,7 +58,7 @@ export default function Header() {
 					<NavDesktop />
 					<NavMobile />
 				</div>
-				<div className="w-full h-5 md:h-7 xl:h-10 bg-black">
+				<div className="w-full h-5 md:h-7 xl:h-10 bg-black-spaces">
 					<div className="mx-auto w-[90%] max-w-[1200px] h-full flex flex-row items-center justify-end gap-10">
 						<span className="font-nunito text-xs md:text-base xl:text-lg">{`+32 (0) 485 382 221`}</span>
 						<Link
