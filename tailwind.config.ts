@@ -9,12 +9,10 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				background: 'var(--background)',
-				foreground: 'var(--foreground)',
+				'brown-spaces': '#7F401F',
 				'blue-spaces': '#0F2CCA',
 				'black-spaces': '#2A2A2A',
 				'beje-spaces': '#DAC2A8',
-				'brown-spaces': '#7F401F',
 				'orange-spaces': '#FF5900',
 			},
 			fontFamily: {

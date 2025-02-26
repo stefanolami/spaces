@@ -1,9 +1,6 @@
 import { CONCEPTS } from '@/lib/data'
 import { ConceptSection } from '@/lib/types'
 import { MotionValue, useTransform, motion } from 'framer-motion'
-
-import React from 'react'
-
 const SectionConcepts = ({
 	position,
 	concept,
