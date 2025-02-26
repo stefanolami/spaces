@@ -15,7 +15,7 @@ export const CONCEPTS: ConceptSection[] = [
 		image: '/header-logo.png',
 		link: '/access',
 		containerClasses: 'bg-beje-spaces text-black-spaces text-right',
-		buttonClasses: 'bg-blue-spaces text-white',
+		buttonClasses: 'bg-blue-spaces text-beje-spaces',
 	},
 	{
 		title: 'Trainings, Seminars & Action Tanks',

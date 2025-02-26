@@ -62,7 +62,7 @@ const Footer = () => {
 					</div>
 				</div>
 			</div>
-			<div className="bg-brown-spaces hidden"></div>
+			<div className="bg-brown-spaces text-black-spaces text-beje-spaces hidden"></div>
 		</footer>
 	)
 }
