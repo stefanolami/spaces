@@ -1,5 +1,11 @@
+import Concepts from '@/components/concepts/concepts'
+
 const ConceptsPage = () => {
-	return <div className="bg-beje-spaces min-h-screen "></div>
+	return (
+		<>
+			<Concepts />
+		</>
+	)
 }
 
 export default ConceptsPage

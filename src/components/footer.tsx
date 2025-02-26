@@ -56,9 +56,9 @@ const Footer = () => {
 							))}
 						</div>
 					</div>
-					<div className="h-full flex flex-col md:flex-row items-end md:items-center justify-end mb-4 md:mb-0 text-right font-nunito text-[8px] md:text-sm xl:text-base italic text-white">
-						<p>© 2025 Time&Spaces - pillar of Time&Place Group</p>
-						<p>All rights reserved</p>
+					<div className="h-full flex flex-col md:flex-row items-end md:items-center justify-end mb-4 md:mb-0 text-right font-nunito text-[8px] md:text-sm xl:text-base italic text-white md:space-x-2">
+						<p>© 2025 Time&Spaces - pillar of Time&Place Group.</p>
+						<p> All rights reserved.</p>
 					</div>
 				</div>
 			</div>
