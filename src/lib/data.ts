@@ -14,7 +14,8 @@ export const CONCEPTS: ConceptSection[] = [
 		text: "Our spaces allow for a variety of approaches to your conference, ranging from pure seating arrangements to stand up table arrangements, to a mix of the two. Furthermore, we can arrange for break-out rooms for special sessions. And, we can adapt to how you want the catering service to be conducted, from a separate room for a buffet to a cocktail-style reception. Not to forget, it is a stone's throw away for many EU decision-makers.",
 		image: '/header-logo.png',
 		link: '/access',
-		containerClasses: 'bg-beje-spaces text-black-spaces text-right',
+		containerClasses:
+			'bg-beje-spaces text-black-spaces text-right lg:text-left',
 		buttonClasses: 'bg-blue-spaces text-beje-spaces',
 	},
 	{
