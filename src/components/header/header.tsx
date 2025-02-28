@@ -5,7 +5,7 @@ import { motion, useScroll, useMotionValueEvent } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import NavDesktop from './nav-desktop'
-import NavMobile from './nav-mobile'
+import { NavMobile } from './nav-mobile'
 
 export default function Header() {
 	const { scrollY } = useScroll()
