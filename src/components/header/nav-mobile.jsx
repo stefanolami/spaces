@@ -31,7 +31,7 @@ const LinksOverlay = () => {
 
 const LinksContainer = () => {
 	return (
-		<motion.div className="space-y-8 p-12 pl-8">
+		<motion.div className="space-y-5 p-12 pl-8">
 			{LINKS.map((l, idx) => {
 				return (
 					<NavLink
@@ -63,7 +63,7 @@ const NavLink = ({ children, href, idx }) => {
 			}}
 			exit={{ opacity: 0, y: -8 }}
 			href={href}
-			className={`block text-5xl font-semibold font-nunito ${
+			className={`block text-[38px] font-semibold font-nunito ${
 				path === href ? 'text-orange-spaces' : 'text-white'
 			}`}
 		>
