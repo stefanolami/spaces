@@ -22,7 +22,7 @@ export const NavMobile = () => {
 
 const LinksOverlay = () => {
 	return (
-		<nav className="fixed right-3 top-3 z-40 h-[calc(100vh_-_24px)] w-[calc(100%_-_24px)] overflow-hidden">
+		<nav className="fixed right-3 top-3 z-40 h-[calc(100svh_-_24px)] w-[calc(100%_-_24px)] overflow-hidden">
 			<Logo />
 			<LinksContainer />
 		</nav>
@@ -31,7 +31,7 @@ const LinksOverlay = () => {
 
 const LinksContainer = () => {
 	return (
-		<motion.div className="space-y-5 p-12 pl-4 md:pl-20">
+		<motion.div className="space-y-8 p-12 pl-8">
 			{LINKS.map((l, idx) => {
 				return (
 					<NavLink
@@ -63,7 +63,7 @@ const NavLink = ({ children, href, idx }) => {
 			}}
 			exit={{ opacity: 0, y: -8 }}
 			href={href}
-			className={`block text-4xl font-semibold font-nunito ${
+			className={`block text-5xl font-semibold font-nunito ${
 				path === href ? 'text-orange-spaces' : 'text-white'
 			}`}
 		>
@@ -84,13 +84,13 @@ const Logo = () => {
 			}}
 			exit={{ opacity: 0, y: -12 }}
 			href="/"
-			className="grid h-12 w-36 place-content-center rounded-br-xl rounded-tl-xl bg-orange-spaces"
+			className="grid h-20 w-56 place-content-center rounded-br-xl rounded-tl-xl bg-orange-spaces"
 		>
 			<Image
 				src="/header-logo.png"
 				alt="Logo"
-				width={100}
-				height={38}
+				width={150}
+				height={57}
 			/>
 		</motion.a>
 	)
@@ -157,7 +157,7 @@ const LINKS = [
 const UNDERLAY_VARIANTS = {
 	open: {
 		width: 'calc(100% - 24px)',
-		height: 'calc(100vh - 24px)',
+		height: 'calc(100svh - 24px)',
 		transition: { type: 'spring', mass: 3, stiffness: 400, damping: 50 },
 	},
 	closed: {
