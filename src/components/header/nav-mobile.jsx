@@ -31,7 +31,7 @@ const LinksOverlay = () => {
 
 const LinksContainer = () => {
 	return (
-		<motion.div className="space-y-5 p-12 pl-8">
+		<motion.div className="space-y-5 p-12 ">
 			{LINKS.map((l, idx) => {
 				return (
 					<NavLink
@@ -63,7 +63,7 @@ const NavLink = ({ children, href, idx }) => {
 			}}
 			exit={{ opacity: 0, y: -8 }}
 			href={href}
-			className={`block text-[38px] font-semibold font-nunito ${
+			className={`block text-4xl font-semibold font-nunito text-center ${
 				path === href ? 'text-orange-spaces' : 'text-white'
 			}`}
 		>
@@ -84,7 +84,7 @@ const Logo = () => {
 			}}
 			exit={{ opacity: 0, y: -12 }}
 			href="/"
-			className="grid h-20 w-56 place-content-center rounded-br-xl rounded-tl-xl bg-orange-spaces"
+			className="grid h-20 w-full place-content-center rounded-tl-xl bg-orange-spaces"
 		>
 			<Image
 				src="/header-logo.png"
