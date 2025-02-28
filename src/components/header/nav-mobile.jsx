@@ -1,7 +1,10 @@
+'use client'
+
 import React, { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { FiArrowRight, FiArrowUpRight } from 'react-icons/fi'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 
 export const NavMobile = () => {
 	const [active, setActive] = useState(false)
@@ -19,7 +22,7 @@ export const NavMobile = () => {
 
 const LinksOverlay = () => {
 	return (
-		<nav className="fixed right-4 top-4 z-40 h-[calc(100vh_-_32px)] w-[calc(100%_-_32px)] overflow-hidden">
+		<nav className="fixed right-3 top-3 z-40 h-[calc(100vh_-_24px)] w-[calc(100%_-_24px)] overflow-hidden">
 			<Logo />
 			<LinksContainer />
 		</nav>
@@ -28,7 +31,7 @@ const LinksOverlay = () => {
 
 const LinksContainer = () => {
 	return (
-		<motion.div className="space-y-4 p-12 pl-4 md:pl-20">
+		<motion.div className="space-y-5 p-12 pl-4 md:pl-20">
 			{LINKS.map((l, idx) => {
 				return (
 					<NavLink
@@ -45,6 +48,7 @@ const LinksContainer = () => {
 }
 
 const NavLink = ({ children, href, idx }) => {
+	const path = usePathname()
 	return (
 		<motion.a
 			initial={{ opacity: 0, y: -8 }}
@@ -59,7 +63,9 @@ const NavLink = ({ children, href, idx }) => {
 			}}
 			exit={{ opacity: 0, y: -8 }}
 			href={href}
-			className="block text-5xl font-semibold text-white"
+			className={`block text-4xl font-semibold font-nunito ${
+				path === href ? 'text-orange-spaces' : 'text-white'
+			}`}
 		>
 			{children}
 		</motion.a>
@@ -77,8 +83,8 @@ const Logo = () => {
 				transition: { delay: 0.5, duration: 0.5, ease: 'easeInOut' },
 			}}
 			exit={{ opacity: 0, y: -12 }}
-			href="#"
-			className="grid h-12 w-36 place-content-center rounded-br-xl rounded-tl-xl bg-blue-spaces transition-colors hover:bg-violet-50"
+			href="/"
+			className="grid h-12 w-36 place-content-center rounded-br-xl rounded-tl-xl bg-orange-spaces"
 		>
 			<Image
 				src="/header-logo.png"
@@ -97,31 +103,31 @@ const HamburgerButton = ({ active, setActive }) => {
 				initial={false}
 				animate={active ? 'open' : 'closed'}
 				variants={UNDERLAY_VARIANTS}
-				style={{ top: 16, right: 16 }}
-				className="fixed z-10 bg-orange-spaces rounded-xl"
+				style={{ top: 12, right: 12 }}
+				className="fixed z-10 bg-black-spaces rounded-xl"
 			/>
 
 			<motion.button
 				initial={false}
 				animate={active ? 'open' : 'closed'}
 				onClick={() => setActive((pv) => !pv)}
-				className={`group fixed right-4 top-4 z-50 h-10 w-10 bg-white/0 transition-all hover:bg-white/20 ${
+				className={`group fixed right-3 top-3 z-50 h-10 w-10 transition-all ${
 					active ? 'rounded-bl-xl rounded-tr-xl' : 'rounded-xl'
 				}`}
 			>
 				<motion.span
 					variants={HAMBURGER_VARIANTS.top}
-					className="absolute block h-1 w-8 bg-white rounded-sm"
+					className="absolute block h-1 w-7 bg-white rounded-sm"
 					style={{ y: '-50%', left: '50%', x: '-50%' }}
 				/>
 				<motion.span
 					variants={HAMBURGER_VARIANTS.middle}
-					className="absolute block h-1 w-8 bg-white rounded-sm"
+					className="absolute block h-1 w-7 bg-white rounded-sm"
 					style={{ left: '50%', x: '-50%', top: '50%', y: '-50%' }}
 				/>
 				<motion.span
 					variants={HAMBURGER_VARIANTS.bottom}
-					className="absolute block h-1 w-5 bg-white rounded-sm"
+					className="absolute block h-1 w-4 bg-white rounded-sm"
 					style={{ x: '-50%', y: '50%' }}
 				/>
 			</motion.button>
@@ -150,8 +156,8 @@ const LINKS = [
 
 const UNDERLAY_VARIANTS = {
 	open: {
-		width: 'calc(100% - 32px)',
-		height: 'calc(100vh - 32px)',
+		width: 'calc(100% - 24px)',
+		height: 'calc(100vh - 24px)',
 		transition: { type: 'spring', mass: 3, stiffness: 400, damping: 50 },
 	},
 	closed: {
