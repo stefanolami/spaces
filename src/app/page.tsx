@@ -1,3 +1,5 @@
+import HomeComponent from '@/components/home/home'
+
 export default function Home() {
-	return <div className="bg-beje-spaces min-h-screen h-[2000px]"></div>
+	return <HomeComponent />
 }

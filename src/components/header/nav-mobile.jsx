@@ -104,9 +104,8 @@ const HamburgerButton = ({ active, setActive }) => {
 				animate={active ? 'open' : 'closed'}
 				variants={UNDERLAY_VARIANTS}
 				style={{ top: 12, right: 12 }}
-				className="fixed z-10 bg-black-spaces rounded-xl"
+				className="fixed z-10 rounded-lg"
 			/>
-
 			<motion.button
 				initial={false}
 				animate={active ? 'open' : 'closed'}
@@ -159,10 +158,12 @@ const UNDERLAY_VARIANTS = {
 		width: 'calc(100% - 24px)',
 		height: 'calc(100svh - 24px)',
 		transition: { type: 'spring', mass: 3, stiffness: 400, damping: 50 },
+		backgroundColor: '#2A2A2A',
 	},
 	closed: {
 		width: '40px',
 		height: '40px',
+		backgroundColor: '#0F2CCA',
 		transition: {
 			delay: 0.75,
 			type: 'spring',

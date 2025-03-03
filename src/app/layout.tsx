@@ -20,10 +20,12 @@ export default function RootLayout({
 			<body className={`${robo.variable} ${nunito.variable} antialiased`}>
 				<RenderMounted>
 					<Header />
-					<main>{children}</main>
+					<main className="">{children}</main>
 					<Footer />
 				</RenderMounted>
 			</body>
 		</html>
 	)
 }
+
+/* pt-[84px] md:pt-[92px] xl:pt-[120px] */
