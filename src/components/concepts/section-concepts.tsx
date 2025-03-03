@@ -25,7 +25,7 @@ const SectionConcepts = ({
 		>
 			<div className="w-[90%] sm:w-3/4 md:w-1/2 lg:w-3/4 mx-auto flex flex-col lg:flex-row items-center justify-start h-full my-8 gap-8 lg:gap-16">
 				<div
-					className={`bg-orange-spaces/50 w-full h-fit ${
+					className={`bg-orange-spaces/50 w-full h-2/5 ${
 						position % 2 === 0 ? 'lg:order-1' : ''
 					}`}
 				></div>
