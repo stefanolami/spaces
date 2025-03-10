@@ -1,5 +1,7 @@
+import FacilitiesComponent from '@/components/facilities/facilities'
+
 const FacilitiesPage = () => {
-	return <div className="bg-beje-spaces min-h-screen "></div>
+	return <FacilitiesComponent />
 }
 
 export default FacilitiesPage

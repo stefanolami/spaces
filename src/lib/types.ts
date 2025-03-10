@@ -6,3 +6,13 @@ export type ConceptSection = {
 	containerClasses: string
 	buttonClasses: string
 }
+
+export type FacilitiesCardType = {
+	title: string
+	text: string
+	image: string
+	firstLink: string
+	secondLink: string
+	price: string
+	subText?: string
+}

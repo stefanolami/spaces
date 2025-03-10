@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import React from 'react'
 
-const HomeBox = ({
+const HomeCard = ({
 	image,
 	title,
 	text,
@@ -31,7 +31,7 @@ const HomeBox = ({
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
 					transition={{ duration: 0.5, delay: 0.2 }}
-					className="text-lg md:text-5xl font-extrabold"
+					className="text-lg lg:text-xl xl:text-2xl font-extrabold"
 				>
 					{title}
 				</motion.h1>
@@ -40,7 +40,7 @@ const HomeBox = ({
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
 					transition={{ duration: 0.5, delay: 0.5 }}
-					className="text-sm md:text-lg"
+					className="text-sm lg:text-base xl:text-lg lg:w-3/4 mx-auto"
 				>
 					{text}
 				</motion.p>
@@ -49,15 +49,15 @@ const HomeBox = ({
 					whileInView={{ opacity: 1 }}
 					viewport={{ once: true }}
 					transition={{ duration: 0.5, delay: 0.8 }}
-					className="flex space-x-4"
+					className="grid grid-cols-2 gap-4"
 				>
 					<Link href={firstLink}>
-						<button className="bg-orange-spaces hover:bg-orange-spaces/80 text-white font-bold py-2 px-4 rounded text-sm">
+						<button className="bg-orange-spaces hover:bg-orange-spaces/80 text-white font-bold py-2 px-4 rounded text-sm w-full">
 							GET A QUOTE
 						</button>
 					</Link>
 					<Link href={secondLink}>
-						<button className="bg-black-spaces hover:bg-black-spaces/80 text-white font-bold py-2 px-4 rounded text-sm">
+						<button className="bg-black-spaces hover:bg-black-spaces/80 text-white font-bold py-2 px-4 rounded text-sm w-full">
 							FIND MORE
 						</button>
 					</Link>
@@ -67,4 +67,4 @@ const HomeBox = ({
 	)
 }
 
-export default HomeBox
+export default HomeCard
