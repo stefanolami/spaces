@@ -35,17 +35,15 @@ const FacilitiesCard = ({
 						{card.text}
 					</p>
 					<div className="w-full md:w-2/3 md:gap-4 grid grid-cols-2">
-						<Link
-							className="bg-orange-spaces hover:bg-orange-spaces/80 w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white"
-							href={card.firstLink}
-						>
-							BOOK NOW!
+						<Link href={card.firstLink}>
+							<button className="bg-orange-spaces hover:scale-[1.02] w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white shadow-md hover:shadow-lg">
+								BOOK NOW!
+							</button>
 						</Link>
-						<Link
-							className="bg-black-spaces hover:bg-black-spaces/80 w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white"
-							href={card.firstLink}
-						>
-							GET A QUOTE
+						<Link href={card.firstLink}>
+							<button className="bg-black-spaces hover:scale-[1.02] w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white shadow-md hover:shadow-lg">
+								GET A QUOTE
+							</button>
 						</Link>
 					</div>
 					<p className="text-sm md:text-base lg:text-lg md:text-left">
