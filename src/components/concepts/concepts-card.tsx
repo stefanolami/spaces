@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { CONCEPTS } from '@/lib/data'
 import { ConceptSection } from '@/lib/types'
 
-const SectionConcepts = ({
+const ConceptsCard = ({
 	position,
 	concept,
 	scrollYProgress,
@@ -58,4 +58,4 @@ const SectionConcepts = ({
 	)
 }
 
-export default SectionConcepts
+export default ConceptsCard

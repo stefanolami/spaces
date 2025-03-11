@@ -3,7 +3,7 @@
 import { useRef } from 'react'
 import HeroConcepts from './hero-concepts'
 import { useScroll } from 'framer-motion'
-import SectionConcepts from './section-concepts'
+import ConceptsCard from './concepts-card'
 import { CONCEPTS } from '@/lib/data'
 
 const Concepts = () => {
@@ -21,7 +21,7 @@ const Concepts = () => {
 				className="relative "
 			>
 				{CONCEPTS.map((concept, index) => (
-					<SectionConcepts
+					<ConceptsCard
 						key={index}
 						concept={concept}
 						scrollYProgress={scrollYProgress}
