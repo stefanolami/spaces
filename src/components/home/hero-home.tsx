@@ -15,7 +15,7 @@ const HeroHome = () => {
 			<div className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px] my-8 md:my-12 lg:my-16">
 				<p className="font-nunito text-[12px] md:text-[16px] lg:text-[20px] leading-[14px] md:leading-[18px] lg:leading-[22px] text-justify">
 					We provide strategic meeting and event locations. Launched
-					in February 2025, our first location is at the heart of EU
+					in March 2025, our first location is at the heart of EU
 					decision-making in Brussels. Our focus is on providing the
 					right spaces for your place of action; from board meeting to
 					conferences, and expert round-tables to trainings. We also
