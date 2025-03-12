@@ -1,35 +1,30 @@
-import { MotionValue, useTransform, motion } from 'framer-motion'
 import Link from 'next/link'
-import { CONCEPTS } from '@/lib/data'
 import { ConceptSection } from '@/lib/types'
+import Image from 'next/image'
 
 const ConceptsCard = ({
 	position,
 	concept,
-	scrollYProgress,
 }: {
 	position: number
 	concept: ConceptSection
-	scrollYProgress: MotionValue<number>
 }) => {
-	const scaleFromPct = (position - 1) / CONCEPTS.length
-	const cardHeight = window.innerHeight
-	const y = useTransform(scrollYProgress, [scaleFromPct, 1], [0, -cardHeight])
 	return (
-		<motion.div
-			style={{
-				height: cardHeight,
-				y: position === CONCEPTS.length ? undefined : y,
-			}}
-			className={` ${concept.containerClasses} sticky top-0 flex w-full origin-top font-nunito`}
-		>
-			<div className="w-[90%] sm:w-3/4 md:w-1/2 lg:w-3/4 mx-auto flex flex-col lg:flex-row items-center justify-start h-full my-8 gap-8 lg:gap-16">
+		<div className={` ${concept.containerClasses} flex w-full font-nunito`}>
+			<div className="w-full grid grid-cols-2 h-full">
 				<div
-					className={`bg-orange-spaces/50 w-full h-2/5 ${
+					className={`w-full aspect-[5/4] relative ${
 						position % 2 === 0 ? 'lg:order-1' : ''
 					}`}
-				></div>
-				<div className="flex flex-col justify-center w-full gap-4 md:gap-5 lg:gap-6">
+				>
+					<Image
+						src={concept.image}
+						alt={concept.title}
+						fill
+						className="object-cover"
+					/>
+				</div>
+				<div className="flex flex-col justify-center w-3/4 mx-auto gap-4 md:gap-5 lg:gap-6">
 					<h2 className="text-base md:text-lg lg:text-xl font-semibold w-full text-balance">
 						{concept.title}
 					</h2>
@@ -54,7 +49,7 @@ const ConceptsCard = ({
 					</Link>
 				</div>
 			</div>
-		</motion.div>
+		</div>
 	)
 }
 

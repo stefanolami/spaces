@@ -1,6 +1,6 @@
 import { ConceptSection } from './types'
 
-/* export const CONCEPTS: ConceptSection[] = [
+export const CONCEPTS: ConceptSection[] = [
 	{
 		title: 'Multi-functional Board Meeting Approach',
 		text: 'A large board meeting room with additional areas for more private discussions and full catering service. We are happy to provide you with additional VIP services, ranging from arranged transportation or dry-cleaning to special board room decorative arrangements.',
@@ -25,9 +25,9 @@ import { ConceptSection } from './types'
 		containerClasses: 'bg-black-spaces text-white text-left',
 		buttonClasses: 'bg-white text-black-spaces',
 	},
-] */
+]
 
-export const CONCEPTS: ConceptSection[] = [
+/* export const CONCEPTS: ConceptSection[] = [
 	{
 		title: 'Multi-functional Board Meeting Approach',
 		text: 'A large board meeting room with additional areas for more private discussions and full catering service. We are happy to provide you with additional VIP services, ranging from arranged transportation or dry-cleaning to special board room decorative arrangements.',
@@ -53,4 +53,4 @@ export const CONCEPTS: ConceptSection[] = [
 		containerClasses: 'bg-brown-spaces text-white text-left',
 		buttonClasses: 'bg-white text-black-spaces',
 	},
-]
+] */
