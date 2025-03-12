@@ -22,7 +22,7 @@ export const NavMobile = () => {
 
 const LinksOverlay = () => {
 	return (
-		<nav className="fixed right-3 top-3 z-40 h-[calc(100svh_-_24px)] w-[calc(100%_-_24px)] overflow-hidden">
+		<nav className="fixed right-3 top-3 z-40 h-auto w-[calc(100%_-_24px)] overflow-hidden">
 			<Logo />
 			<LinksContainer />
 		</nav>
@@ -104,7 +104,7 @@ const HamburgerButton = ({ active, setActive }) => {
 				animate={active ? 'open' : 'closed'}
 				variants={UNDERLAY_VARIANTS}
 				style={{ top: 12, right: 12 }}
-				className="fixed z-10 rounded-lg"
+				className="fixed z-10 rounded-xl"
 			/>
 			<motion.button
 				initial={false}
@@ -156,7 +156,7 @@ const LINKS = [
 const UNDERLAY_VARIANTS = {
 	open: {
 		width: 'calc(100% - 24px)',
-		height: 'calc(100svh - 24px)',
+		height: '400px',
 		transition: { type: 'spring', mass: 3, stiffness: 400, damping: 50 },
 		backgroundColor: '#2A2A2A',
 	},

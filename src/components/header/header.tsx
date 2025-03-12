@@ -61,7 +61,7 @@ export default function Header() {
 				<div className="w-full h-5 md:h-7 xl:h-10 bg-black-spaces flex items-center justify-end">
 					<div className="h-full grid grid-cols-2 gap-2 items-center md:gap-4 lg:gap-6 mr-2 md:mr-4 lg:mr-6">
 						<Link
-							className="w-full h-full flex items-center h-5 md:h-7 xl:h-8 xl:hover:h-10 transition-transform hover:shadow-xl"
+							className="w-full flex items-center h-5 md:h-7 xl:h-8 xl:hover:h-10 transition-[height] duration-300 ease-in-out hover:shadow-xl"
 							href="/access"
 						>
 							<button className="h-full w-full px-2 xl:px-5 bg-orange-spaces font-robo font-bold text-xs md:text-base xl:text-lg">
@@ -69,7 +69,7 @@ export default function Header() {
 							</button>
 						</Link>
 						<Link
-							className="w-full flex items-center h-5 md:h-7 xl:h-8 xl:hover:h-10 transition-transform hover:shadow-xl"
+							className="w-full flex items-center h-5 md:h-7 xl:h-8 xl:hover:h-10 transition-[height] duration-300 ease-in-out hover:shadow-xl"
 							href="/access"
 						>
 							<button className="h-full w-full px-2 xl:px-5 bg-orange-spaces font-robo font-bold text-xs md:text-base xl:text-lg">
