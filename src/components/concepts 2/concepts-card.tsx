@@ -1,7 +1,7 @@
 import { MotionValue, useTransform, motion } from 'framer-motion'
 import Link from 'next/link'
 import { CONCEPTS } from '@/lib/data'
-import { ConceptSection } from '@/lib/types'
+import { ConceptsCardType } from '@/lib/types'
 
 const ConceptsCard = ({
 	position,
@@ -9,7 +9,7 @@ const ConceptsCard = ({
 	scrollYProgress,
 }: {
 	position: number
-	concept: ConceptSection
+	concept: ConceptsCardType
 	scrollYProgress: MotionValue<number>
 }) => {
 	const scaleFromPct = (position - 1) / CONCEPTS.length

@@ -46,11 +46,6 @@ const FacilitiesCard = ({
 							</button>
 						</Link>
 					</div>
-					{card.subText && (
-						<p className="italic text-[10px] leading-[12px] md:text-xs lg:text-sm w-4/5 mx-auto md:w-full md:text-left">
-							{card.subText}
-						</p>
-					)}
 				</div>
 			</div>
 		</div>
