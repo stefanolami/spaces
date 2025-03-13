@@ -1,4 +1,4 @@
-export type ConceptSection = {
+export type ConceptsCardType = {
 	title: string
 	text: string
 	image: string
@@ -13,6 +13,4 @@ export type FacilitiesCardType = {
 	image: string
 	firstLink: string
 	secondLink: string
-	price: string
-	subText?: string
 }

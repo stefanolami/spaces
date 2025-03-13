@@ -10,7 +10,44 @@ const FacilitiesCard = ({
 	position: number
 }) => {
 	return (
-		<div
+		<>
+			<div className={`bg-white flex w-full font-nunito`}>
+				<div className="w-full flex flex-col md:grid md:grid-cols-2 h-full">
+					<div
+						className={`w-full h-44 md:h-full relative ${
+							position % 2 === 0 ? 'md:order-1' : ''
+						}`}
+					>
+						<Image
+							src={card.image}
+							alt={card.title}
+							fill
+							className="object-cover"
+						/>
+					</div>
+					<div className="flex flex-col justify-center w-3/4 mx-auto max-w-[600px] py-8 md:py-12 lg:py-20 xl:py-36 gap-4 md:gap-5 lg:gap-6">
+						<h3 className="text-base md:text-lg lg:text-xl font-bold w-full text-balance text-center md:text-left">
+							{card.title}
+						</h3>
+						<p className="text-sm md:text-sm lg:text-base text-center md:text-justify">
+							{card.text}
+						</p>
+						<div className="w-full md:w-2/3 my-4 md:gap-4 grid grid-cols-2">
+							<Link href={card.firstLink}>
+								<button className="bg-orange-spaces hover:scale-[1.02] w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white shadow-md hover:shadow-lg">
+									BOOK NOW
+								</button>
+							</Link>
+							<Link href={card.firstLink}>
+								<button className="bg-black-spaces hover:scale-[1.02] w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white shadow-md hover:shadow-lg">
+									GET A QUOTE
+								</button>
+							</Link>
+						</div>
+					</div>
+				</div>
+			</div>
+			{/* <div
 			className={`bg-[#F3F3F3] mb-8 md:mb-0 md:py-6 ${
 				position % 2 === 0 ? 'md:bg-white' : ''
 			}`}
@@ -37,7 +74,7 @@ const FacilitiesCard = ({
 					<div className="w-full md:w-2/3 md:gap-4 grid grid-cols-2">
 						<Link href={card.firstLink}>
 							<button className="bg-orange-spaces hover:scale-[1.02] w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white shadow-md hover:shadow-lg">
-								BOOK NOW!
+								BOOK NOW
 							</button>
 						</Link>
 						<Link href={card.firstLink}>
@@ -46,18 +83,10 @@ const FacilitiesCard = ({
 							</button>
 						</Link>
 					</div>
-					<p className="text-sm md:text-base lg:text-lg md:text-left">
-						<span className="font-extrabold">PRICE:</span> €
-						{card.price}
-					</p>
-					{card.subText && (
-						<p className="italic text-[10px] leading-[12px] md:text-xs lg:text-sm w-4/5 mx-auto md:w-full md:text-left">
-							{card.subText}
-						</p>
-					)}
 				</div>
 			</div>
-		</div>
+		</div> */}
+		</>
 	)
 }
 
