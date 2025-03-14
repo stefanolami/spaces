@@ -10,7 +10,19 @@ import PinSvg from '../svgs/pin'
 
 const HomeSection = () => {
 	return (
-		<div className="w-full pt-8 md:pt-12 lg:pt-16">
+		<div className="w-full">
+			<div className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px] my-8 md:my-12 lg:my-16">
+				<p className="font-nunito text-[12px] md:text-[16px] lg:text-[20px] leading-[14px] md:leading-[18px] lg:leading-[22px] text-justify">
+					We provide strategic meeting and event locations. Launched
+					in March 2025, our first location is at the heart of EU
+					decision-making in Brussels. Our focus is on providing the
+					right spaces for your place of action; from board meeting to
+					conferences, and expert round-tables to trainings. We also
+					provide 360°-office support assistance and with a team of
+					dedicated experts, the full spectrum of event management
+					services. Our ultimate aims: A perfect fit and memorable.
+				</p>
+			</div>
 			<h1 className="text-center font-robo text-black-spaces font-bold text-xl lg:text-2xl xl:text-3xl">
 				EXPLORE OUR:
 			</h1>
