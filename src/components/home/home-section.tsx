@@ -57,7 +57,7 @@ const HomeSection = () => {
 					<div className=" w-full aspect-[10/9] md:aspect-[2/1] relative ">
 						<div className="bg-black-spaces/30 absolute inset-0 z-20"></div>
 						<Image
-							src="/group-79.png"
+							src="/hero-map.png"
 							alt="Access"
 							fill
 							className="object-cover"
