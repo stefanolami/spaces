@@ -6,6 +6,10 @@
 	.active-link {
 		@apply font-bold scale-105;
 	}
+
+	.transition-scale-standard {
+		@apply transition-transform duration-300 ease-in-out;
+	}
 }
 
 .active-link::after {

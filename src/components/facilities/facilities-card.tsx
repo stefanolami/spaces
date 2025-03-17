@@ -34,12 +34,12 @@ const FacilitiesCard = ({
 						</p>
 						<div className="w-full md:w-2/3 my-4 md:gap-4 grid grid-cols-2">
 							<Link href={card.firstLink}>
-								<button className="bg-orange-spaces hover:scale-[1.02] w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white shadow-md hover:shadow-lg">
+								<button className="bg-orange-spaces hover:scale-105 transition-scale-standard w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white shadow-md hover:shadow-lg">
 									BOOK NOW
 								</button>
 							</Link>
 							<Link href={card.firstLink}>
-								<button className="bg-black-spaces hover:scale-[1.02] w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white shadow-md hover:shadow-lg">
+								<button className="bg-black-spaces hover:scale-105 transition-scale-standard w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white shadow-md hover:shadow-lg">
 									GET A QUOTE
 								</button>
 							</Link>
