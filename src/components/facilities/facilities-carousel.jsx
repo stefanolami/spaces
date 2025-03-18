@@ -7,17 +7,17 @@ export default function FacilitiesCarousel() {
 	return (
 		<Carousel className="relative w-full h-full">
 			<img
-				src="/room-1.jpg"
+				src="/placeholder-pic-spaces.png"
 				alt="image 1"
 				className="h-full w-full object-cover"
 			/>
 			<img
-				src="/room-2.jpg"
+				src="/office-3.jpg"
 				alt="image 2"
 				className="h-full w-full object-cover"
 			/>
 			<img
-				src="/room-3.jpg"
+				src="/catering.jpg"
 				alt="image 3"
 				className="h-full w-full object-cover"
 			/>
