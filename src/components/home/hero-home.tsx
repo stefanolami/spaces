@@ -7,7 +7,7 @@ const HeroHome = () => {
 	const texts = ['Your access', ' ...within the heart of the EU']
 	return (
 		<ImagesSlider
-			className=" w-full lg:h-[calc(100vh_-_120px)] py-8 md:py-6 xl:py-4"
+			className=" w-full h-[50vh] lg:h-[calc(100vh_-_120px)] py-8 md:py-6 xl:py-4"
 			images={images}
 			texts={texts}
 		>
