@@ -27,7 +27,8 @@
 		"**/*.ts",
 		"**/*.tsx",
 		".next/types/**/*.ts",
-		"src/components/header/nav-mobile.jsx"
+		"src/components/header/nav-mobile.jsx",
+		"src/components/facilities/facilities-carousel.tsx"
 	],
 	"exclude": ["node_modules"]
 }

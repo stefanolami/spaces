@@ -1,6 +1,7 @@
 import { FacilitiesCardType } from '@/lib/types'
-import Image from 'next/image'
+/* import Image from 'next/image' */
 import Link from 'next/link'
+import FacilitiesCarousel from './facilities-carousel'
 
 const FacilitiesCard = ({
 	card,
@@ -18,12 +19,13 @@ const FacilitiesCard = ({
 							position % 2 === 0 ? 'md:order-1' : ''
 						}`}
 					>
-						<Image
+						<FacilitiesCarousel />
+						{/* <Image
 							src={card.image}
 							alt={card.title}
 							fill
 							className="object-cover"
-						/>
+						/> */}
 					</div>
 					<div className="flex flex-col justify-center w-3/4 mx-auto max-w-[600px] py-8 md:py-12 lg:py-20 xl:py-36 gap-4 md:gap-5 lg:gap-6">
 						<h3 className="text-base md:text-lg lg:text-xl font-bold w-full text-balance text-center md:text-left">
