@@ -26,7 +26,7 @@ const HomeSection = () => {
 			<h1 className="text-center font-robo text-black-spaces font-bold text-xl lg:text-2xl xl:text-3xl">
 				EXPLORE OUR:
 			</h1>
-			<div className="my-8 w-[90%] md:my-16 sm:w-3/4 md:w-4/5 lg:w-3/4 xl:w-2/3 mx-auto grid grid-rows-3 md:grid-cols-3 md:grid-rows-1 gap-4">
+			<div className="my-8 w-[90%] md:my-16 sm:w-3/4 md:w-4/5 lg:w-3/4 xl:w-2/3 max-w-[1200px] mx-auto grid grid-rows-3 md:grid-cols-3 md:grid-rows-1 gap-4">
 				<HomeCard
 					title="CONCEPTS"
 					Icon={LaptopSvg}

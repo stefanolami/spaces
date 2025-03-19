@@ -26,7 +26,7 @@ const FacilitiesComponent = () => {
 					will make the most of the facilities.
 				</p>
 			</div>
-			<div className="relative ">
+			<div className="relative max-w-[2000px] mx-auto">
 				{FACILITIES.map((card, index) => (
 					<FacilitiesCard
 						key={index}
