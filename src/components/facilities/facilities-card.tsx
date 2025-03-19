@@ -15,7 +15,7 @@ const FacilitiesCard = ({
 			<div className={`bg-white flex w-full font-nunito`}>
 				<div className="w-full flex flex-col md:grid md:grid-cols-2 h-full">
 					<div
-						className={`w-full h-44 md:h-full relative ${
+						className={`w-full h-52 md:h-full max-h-[600px] relative ${
 							position % 2 === 0 ? 'md:order-1' : ''
 						}`}
 					>
@@ -34,7 +34,7 @@ const FacilitiesCard = ({
 						<p className="text-sm md:text-sm lg:text-base text-center md:text-justify">
 							{card.text}
 						</p>
-						<div className="w-full md:w-2/3 my-4 md:gap-4 grid grid-cols-2">
+						<div className="w-full lg:w-3/4 xl:w-2/3 my-4 md:gap-4 grid grid-cols-2">
 							<Link href={card.firstLink}>
 								<button className="bg-orange-spaces hover:scale-105 transition-scale-standard w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white shadow-md hover:shadow-lg">
 									BOOK NOW
