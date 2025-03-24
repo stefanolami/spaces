@@ -28,7 +28,8 @@
 		"**/*.tsx",
 		".next/types/**/*.ts",
 		"src/components/header/nav-mobile.jsx",
-		"src/components/facilities/facilities-carousel.tsx"
+		"src/components/facilities/facilities-carousel.tsx",
+		"src/components/booking.jsx"
 	],
 	"exclude": ["node_modules"]
 }

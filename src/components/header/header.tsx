@@ -23,7 +23,7 @@ export default function Header() {
 
 	return (
 		<>
-			<motion.div
+			<motion.header
 				variants={{
 					visible: {
 						y: 0,
@@ -62,8 +62,8 @@ export default function Header() {
 					<div className="mx-auto w-[90%] max-w-[1200px]">
 						<div className="h-full w-fit grid grid-cols-2 gap-2 items-center md:gap-4 lg:gap-6 ml-auto">
 							<Link
-								className="w-full flex items-center h-5 md:h-7 xl:h-8 xl:hover:h-10 transition-[height] duration-300 ease-in-out hover:shadow-xl"
-								href="/access"
+								className="w-full flex items-center h-5 md:h-7 xl:h-8 xl:hover:scale-105 transition-transform duration-300 ease-in-out hover:shadow-xl"
+								href="/booking"
 							>
 								<button className="h-full w-full px-2 xl:px-5 bg-orange-spaces font-robo font-bold text-xs md:text-base xl:text-lg">
 									BOOK NOW
@@ -80,7 +80,7 @@ export default function Header() {
 						</div>
 					</div>
 				</div>
-			</motion.div>
+			</motion.header>
 		</>
 	)
 }
