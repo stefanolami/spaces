@@ -169,7 +169,7 @@ export const ImagesSlider = ({
 						animate="visible"
 						exit={direction === 'up' ? 'upExit' : 'downExit'}
 						variants={slideVariants}
-						className="image h-[calc(100vh_-_120px)] w-full absolute inset-0 object-cover object-center"
+						className="image h-[calc(100vh_-_84px)] lg:h-[calc(100vh_-_120px)] w-full absolute inset-0 object-cover object-bottom"
 					/>
 				</AnimatePresence>
 			)}
@@ -189,7 +189,7 @@ export const ImagesSlider = ({
 							transition: { duration: 0.5, delay: 0 },
 						}}
 						transition={{ duration: 0.5, delay: 1 }}
-						className="absolute z-50 text-white text-center font-robo font-bold"
+						className="absolute top-[25%] z-50 text-white text-center font-robo font-bold"
 					>
 						<h1 className="text-3xl md:text-5xl font-bold">
 							{texts[currentIndex]}

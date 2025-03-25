@@ -1,13 +1,13 @@
 'use client'
 /* import { motion } from 'motion/react' */
 import React from 'react'
-import { ImagesSlider } from '../ui/images-slider'
+import { ImagesSlider } from './images-slider'
 const HeroHome = () => {
 	const images = ['/hero/hero-test-map.png', '/hero/hero-test-eu.png']
 	const texts = ['Your access', ' ...within the heart of the EU']
 	return (
 		<ImagesSlider
-			className=" w-full h-[50vh] lg:h-[calc(100vh_-_120px)] py-8 md:py-6 xl:py-4"
+			className=" w-full h-[calc(100vh_-_84px)] md:h-[calc(100vh_-_92px)] lg:h-[calc(100vh_-_120px)] py-8 md:py-6 xl:py-4"
 			images={images}
 			texts={texts}
 		>

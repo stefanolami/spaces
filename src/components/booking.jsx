@@ -2,7 +2,7 @@ import Script from 'next/script'
 
 const BookingComponent = () => {
 	return (
-		<div className="w-full font-nunito mt-20 md:mt-24 xl:mt-32 min-h-[calc(100vh-207px)] md:min-h-[calc(100vh-280px)] lg:min-h-[calc(100vh-316px)]">
+		<div className="w-full font-nunito mt-20 md:mt-24 xl:mt-32 min-h-[calc(100vh-227px)] md:min-h-[calc(100vh-280px)] lg:min-h-[calc(100vh-316px)]">
 			<Script src="https://unpkg.com/vue@3/dist/vue.global.prod.js" />
 			<Script src="https://cdn.anny.co/widget/annyComponents.umd.latest.min.js" />
 			<a-organization-page
