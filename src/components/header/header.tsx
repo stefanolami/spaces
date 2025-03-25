@@ -41,7 +41,7 @@ export default function Header() {
 				<div className="mx-auto w-[90%] max-w-[1200px] flex flex-row items-center justify-between h-full">
 					<div className="flex items-center justify-center h-full">
 						<Link
-							className="w-[100px] md:w-[124px] xl:w-[150px] aspect-[462/175] relative"
+							className="w-[100px] md:w-[124px] xl:w-[150px] aspect-[462/175] relative cursor-pointer"
 							href="/"
 						>
 							<Image
@@ -62,18 +62,18 @@ export default function Header() {
 					<div className="mx-auto w-[90%] max-w-[1200px]">
 						<div className="h-full w-fit grid grid-cols-2 gap-2 items-center md:gap-4 lg:gap-6 ml-auto">
 							<Link
-								className="w-full flex items-center h-5 md:h-7 xl:h-8 xl:hover:scale-105 transition-transform duration-300 ease-in-out hover:shadow-xl"
+								className="w-full flex items-center h-5 md:h-7 xl:h-8 "
 								href="/booking"
 							>
-								<button className="h-full w-full px-2 xl:px-5 bg-orange-spaces font-robo font-bold text-xs md:text-base xl:text-lg">
+								<button className="h-full w-full px-2 xl:px-5 bg-orange-spaces font-robo font-bold text-xs md:text-base xl:text-lg xl:hover:scale-105 hover:shadow-xl">
 									BOOK NOW
 								</button>
 							</Link>
 							<Link
-								className="w-full flex items-center h-5 md:h-7 xl:h-8 xl:hover:h-10 transition-[height] duration-300 ease-in-out hover:shadow-xl"
+								className="w-full flex items-center h-5 md:h-7 xl:h-8"
 								href="/access"
 							>
-								<button className="h-full w-full px-2 xl:px-5 bg-orange-spaces font-robo font-bold text-xs md:text-base xl:text-lg">
+								<button className="h-full w-full px-2 xl:px-5 bg-orange-spaces font-robo font-bold text-xs md:text-base xl:text-lg xl:hover:scale-105 hover:shadow-xl">
 									GET A QUOTE
 								</button>
 							</Link>

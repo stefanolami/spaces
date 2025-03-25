@@ -3,7 +3,7 @@
 import React from 'react'
 import { ImagesSlider } from '../ui/images-slider'
 const HeroHome = () => {
-	const images = ['/hero-map.png', '/hero-eu.jpg']
+	const images = ['/hero/hero-test-map.png', '/hero/hero-test-eu.png']
 	const texts = ['Your access', ' ...within the heart of the EU']
 	return (
 		<ImagesSlider

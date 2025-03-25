@@ -36,7 +36,7 @@ const NavDesktop = () => {
                                 ${
 									path == link.path
 										? 'active-link'
-										: 'hover:scale-105 transition-transform'
+										: 'hover:scale-105'
 								}
                                 `}
 						href={link.path}
