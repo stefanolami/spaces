@@ -1,7 +1,79 @@
 import React from 'react'
+import HeroAccess from './hero-access'
+import Image from 'next/image'
+
+const LIST_ITEMS = [
+	{
+		text: 'METRO STATION MAELBEEK: 60m',
+		icon: '/access/train-icon.png',
+	},
+	{
+		text: 'TRAIN STATION BRUXELLES-LUXEMBOURG: 780m',
+		icon: '/access/train-icon.png',
+	},
+	{
+		text: 'TRAIN STATION BRUXELLES-SCHUMAN: 350m',
+		icon: '/access/train-icon.png',
+	},
+	{
+		text: 'TRAIN STATION BRUXELLES-MIDI (International trains): 5km',
+		icon: '/access/train-icon.png',
+	},
+	{
+		text: 'AIRPORT BRUSSELS-ZAVENTEM: 13km',
+		icon: '/access/plane-icon.png',
+	},
+]
 
 const Access = () => {
-	return <div>Access</div>
+	return (
+		<div>
+			<HeroAccess />
+			<div className="w-[90%] mx-auto max-w-[1000px] text-center mt-10 text-black-spaces">
+				<p className="w-[90%] max-w-[1000px] mx-auto font-nunito text-sm md:text-base lg:text-lg mb-10 lg:mb-20">
+					Rue de la Loi 81A / Wetstraat 81A - 1040 Bruxelles /
+					Brussels
+				</p>
+				<h2 className="font-robo font-bold uppercase text-lg lg:text-2xl">
+					At the heart of the EU district, here is how easy to get to
+					us:
+				</h2>
+				<ul className="w-fit mx-auto space-y-4 mt-10 mb-10 lg:mb-20">
+					{LIST_ITEMS.map((item, index) => (
+						<ListItems
+							key={index}
+							text={item.text}
+							icon={item.icon}
+						/>
+					))}
+				</ul>
+				<h2 className="font-robo font-bold uppercase text-lg lg:text-2xl mb-10">
+					..and how easy it is to get where you might need to be:
+				</h2>
+				<div className="relative w-full aspect-[1193/749] mb-10 lg:mb-20">
+					<Image
+						src={'/access/access-map.png'}
+						fill
+						alt="map"
+					/>
+				</div>
+			</div>
+		</div>
+	)
 }
 
 export default Access
+
+const ListItems = ({ text, icon }: { text: string; icon: string }) => {
+	return (
+		<li className="flex flex-row items-center justify-start gap-2">
+			<Image
+				src={icon}
+				width={20}
+				height={20}
+				alt="icon"
+			/>
+			<span className="block font-nunito text-sm lg:text-lg">{text}</span>
+		</li>
+	)
+}

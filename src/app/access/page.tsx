@@ -1,5 +1,7 @@
+import Access from '@/components/access/access'
+
 const AccessPage = () => {
-	return <div className="bg-beje-spaces min-h-screen "></div>
+	return <Access />
 }
 
 export default AccessPage
