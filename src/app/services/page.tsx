@@ -1,5 +1,7 @@
+import Services from '@/components/services/services'
+
 const ServicesPage = () => {
-	return <div className="bg-beje-spaces min-h-screen "></div>
+	return <Services />
 }
 
 export default ServicesPage
