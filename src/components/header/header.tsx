@@ -71,7 +71,7 @@ export default function Header() {
 							</Link>
 							<Link
 								className="w-full flex items-center h-5 md:h-7 xl:h-8"
-								href="/access"
+								href="/get-quote"
 							>
 								<button className="h-full w-full px-2 xl:px-5 bg-orange-spaces font-robo font-bold text-xs md:text-base xl:text-lg xl:hover:scale-105 hover:shadow-xl">
 									GET A QUOTE
