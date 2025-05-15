@@ -83,8 +83,8 @@ export const FACILITIES: FacilitiesCardType[] = [
 		text: 'This room is designed for either enjoying a buffet or cocktail-style service with standing tables, or if the other meeting rooms are not enough, we can turn it into another board-room style meeting room for max. 8 persons.',
 		images: [
 			'/facilities/facilities-3a.jpeg',
-			'/facilities/facilities-3b.jpeg',
-			'/facilities/facilities-3c.jpeg',
+			'/facilities/facilities-3b.png',
+			'/facilities/facilities-3c.png',
 		],
 		firstLink: '/',
 		secondLink: '/',

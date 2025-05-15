@@ -36,13 +36,13 @@ const HomeSection = () => {
 				<HomeCard
 					title="FACILITIES"
 					Icon={PhoneSvg}
-					image="/hero/hero-facilities.jpeg"
+					image="/hero/hero-facilities.png"
 					link="/facilities"
 				/>
 				<HomeCard
 					title="SERVICES"
 					Icon={CogsSvg}
-					image="/catering.jpg"
+					image="/hero/hero-services.jpg"
 					link="/services"
 				/>
 			</div>

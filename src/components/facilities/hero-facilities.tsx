@@ -5,7 +5,7 @@ const HeroFacilities = () => {
 		<div className="w-full h-screen flex items-center justify-center relative">
 			<div className="absolute inset-0 z-20 bg-black-spaces/50"></div>
 			<Image
-				src="/hero/hero-facilities.jpeg"
+				src="/hero/hero-facilities.png"
 				alt="Facilities hero"
 				fill
 				className="object-cover"
