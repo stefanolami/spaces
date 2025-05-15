@@ -191,7 +191,7 @@ export const ImagesSlider = ({
 						transition={{ duration: 0.5, delay: 1 }}
 						className="absolute top-[25%] z-50 text-white text-center font-robo font-bold"
 					>
-						<h1 className="text-3xl md:text-5xl font-bold">
+						<h1 className="text-4xl md:text-5xl lg:text-7xl font-bold ">
 							{texts[currentIndex]}
 						</h1>
 					</motion.div>

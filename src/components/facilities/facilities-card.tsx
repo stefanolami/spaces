@@ -19,7 +19,7 @@ const FacilitiesCard = ({
 							position % 2 === 0 ? 'md:order-1' : ''
 						}`}
 					>
-						<FacilitiesCarousel />
+						<FacilitiesCarousel images={card.images} />
 						{/* <Image
 							src={card.image}
 							alt={card.title}

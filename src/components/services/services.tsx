@@ -18,22 +18,22 @@ const EQUIPMENT_ITEMS = [
 	{
 		title: 'Screens',
 		desc: 'Available in each room except in the relaxation break-out room. Included in price.',
-		icon: '/services/screens-icon.png',
+		icon: '/services/screen-icon.png',
 	},
 	{
 		title: 'Conference system',
 		desc: 'Available in each room except in the relaxation break-out room. Included in price.',
-		icon: '/services/screens-icon.png',
+		icon: '/services/conf-icon.png',
 	},
 	{
 		title: 'Microphone & speakers (for conference room setting)',
 		desc: 'Available upon request.',
-		icon: '/services/screens-icon.png',
+		icon: '/services/mic-icon.png',
 	},
 	{
 		title: 'White board',
 		desc: 'Available upon request for meeting room 2 & 3.',
-		icon: '/services/screens-icon.png',
+		icon: '/services/board-icon.png',
 	},
 ]
 
@@ -47,10 +47,10 @@ const Services = () => {
 						Our services from the necessary to the extraordinary to
 						support your requirements.
 					</p>
-					<div className="relative w-full aspect-[16/4] lg:aspect-[10/1] flex items-center justify-center mt-6 lg:mt-10">
+					<div className="relative w-full aspect-[16/4] lg:aspect-[20/3] flex items-center justify-center mt-6 lg:mt-10">
 						<div className="absolute inset-0 z-20 bg-black-spaces/30"></div>
 						<Image
-							src="/services/event-management.png"
+							src="/services/services-1.jpg"
 							alt="Concepts"
 							fill
 							className="object-cover"
@@ -91,10 +91,10 @@ const Services = () => {
 					))}
 				</div>
 			</div>
-			<div className="relative w-full aspect-[16/4] lg:aspect-[10/1] flex items-center justify-center mt-6 lg:mt-10">
+			<div className="relative w-full aspect-[16/4] lg:aspect-[20/3] flex items-center justify-center mt-6 lg:mt-10">
 				<div className="absolute inset-0 z-20 bg-black-spaces/30"></div>
 				<Image
-					src="/catering.jpg"
+					src="/services/services-2.jpg"
 					alt="Concepts"
 					fill
 					className="object-cover"
@@ -119,10 +119,10 @@ const Services = () => {
 					sparkling) and ice-cream at no charge.
 				</p>
 			</div>
-			<div className="relative w-full aspect-[16/4] lg:aspect-[10/1] flex items-center justify-center mt-6 lg:mt-10">
+			<div className="relative w-full aspect-[16/4] lg:aspect-[20/3] flex items-center justify-center mt-6 lg:mt-10">
 				<div className="absolute inset-0 z-20 bg-black-spaces/30"></div>
 				<Image
-					src="/catering.jpg"
+					src="/services/services-3.jpg"
 					alt="Concepts"
 					fill
 					className="object-cover"
@@ -147,10 +147,10 @@ const Services = () => {
 					))}
 				</ul>
 			</div>
-			<div className="relative w-full aspect-[16/4] lg:aspect-[10/1] flex items-center justify-center mt-6 lg:mt-10">
+			<div className="relative w-full aspect-[16/4] lg:aspect-[20/3] flex items-center justify-center mt-6 lg:mt-10">
 				<div className="absolute inset-0 z-20 bg-black-spaces/30"></div>
 				<Image
-					src="/services/event-management.png"
+					src="/services/services-4.png"
 					alt="Concepts"
 					fill
 					className="object-cover"

@@ -10,7 +10,7 @@ export type ConceptsCardType = {
 export type FacilitiesCardType = {
 	title: string
 	text: string
-	image: string
+	images: string[]
 	firstLink: string
 	secondLink: string
 }

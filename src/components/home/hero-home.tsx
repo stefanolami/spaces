@@ -3,8 +3,20 @@
 import React from 'react'
 import { ImagesSlider } from './images-slider'
 const HeroHome = () => {
-	const images = ['/hero/hero-test-map.png', '/hero/hero-test-eu.png']
-	const texts = ['Your access', ' ...within the heart of the EU']
+	const images = [
+		'/hero/hero-1.jpeg',
+		'/hero/hero-2.png',
+		'/hero/hero-3.jpg',
+		'/hero/hero-4.jpeg',
+		'/hero/hero-5.png',
+	]
+	const texts = [
+		'Your view',
+		'Your access',
+		'Your voice',
+		'Your place of action',
+		' ...within the heart of the EU',
+	]
 	return (
 		<ImagesSlider
 			className=" w-full h-[calc(100vh_-_84px)] md:h-[calc(100vh_-_92px)] lg:h-[calc(100vh_-_120px)] py-8 md:py-6 xl:py-4"

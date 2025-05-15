@@ -30,13 +30,13 @@ const HomeSection = () => {
 				<HomeCard
 					title="CONCEPTS"
 					Icon={LaptopSvg}
-					image="/office-1.jpg"
+					image="/hero/hero-concepts.jpeg"
 					link="/concepts"
 				/>
 				<HomeCard
 					title="FACILITIES"
 					Icon={PhoneSvg}
-					image="/office-2.jpg"
+					image="/hero/hero-facilities.jpeg"
 					link="/facilities"
 				/>
 				<HomeCard

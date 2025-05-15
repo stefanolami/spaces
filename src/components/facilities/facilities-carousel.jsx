@@ -3,24 +3,17 @@
 import { Carousel } from '@material-tailwind/react'
 import Image from 'next/image'
 
-export default function FacilitiesCarousel() {
+export default function FacilitiesCarousel({ images }) {
 	return (
 		<Carousel className="relative w-full h-full">
-			<img
-				src="/placeholder-pic-spaces.png"
-				alt="image 1"
-				className="h-full w-full object-cover"
-			/>
-			<img
-				src="/office-3.jpg"
-				alt="image 2"
-				className="h-full w-full object-cover"
-			/>
-			<img
-				src="/catering.jpg"
-				alt="image 3"
-				className="h-full w-full object-cover"
-			/>
+			{images.map((image, index) => (
+				<img
+					key={index}
+					src={image}
+					alt={`Facility Image ${index + 1}`}
+					className="h-full w-full object-cover"
+				/>
+			))}
 		</Carousel>
 	)
 }
