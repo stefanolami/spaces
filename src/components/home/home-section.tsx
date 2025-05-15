@@ -60,6 +60,8 @@ const HomeSection = () => {
 							src="/hero-map.png"
 							alt="Access"
 							fill
+							priority
+							sizes="(max-width: 768px) 100vw, 50vw"
 							className="object-cover"
 						/>
 					</div>

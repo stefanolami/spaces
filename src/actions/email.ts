@@ -16,7 +16,7 @@ type EmailResponse = {
 }
 
 export async function sendEmail(data: FormData): Promise<EmailResponse> {
-	const apiEndpoint = 'https://spaces-eta.vercel.app/api/email'
+	const apiEndpoint = 'https://www.timeandspaces.org/api/email'
 
 	try {
 		const res = await fetch(apiEndpoint, {

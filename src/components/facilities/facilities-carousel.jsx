@@ -11,6 +11,7 @@ export default function FacilitiesCarousel({ images }) {
 					key={index}
 					src={image}
 					alt={`Facility Image ${index + 1}`}
+					sizes="(max-width: 768px) 100vw, 50vw"
 					className="h-full w-full object-cover"
 				/>
 			))}

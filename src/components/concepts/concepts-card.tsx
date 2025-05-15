@@ -21,6 +21,7 @@ const ConceptsCard = ({
 						src={concept.image}
 						alt={concept.title}
 						fill
+						sizes="(max-width: 768px) 100vw, 50vw"
 						className="object-cover"
 					/>
 				</div>
