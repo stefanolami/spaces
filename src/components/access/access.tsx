@@ -1,6 +1,7 @@
 import React from 'react'
 import HeroAccess from './hero-access'
 import Image from 'next/image'
+import Map from './map'
 
 const LIST_ITEMS = [
 	{
@@ -47,15 +48,16 @@ const Access = () => {
 						/>
 					))}
 				</ul>
-				<h2 className="font-robo font-bold uppercase text-lg lg:text-2xl mb-10">
+				<h2 className="font-robo font-bold uppercase text-lg lg:text-2xl mb-10 lg:mb-20">
 					..and how easy it is to get where you might need to be:
 				</h2>
-				<div className="relative w-full aspect-[1193/749] mb-10 lg:mb-20">
-					<Image
+				<div className="relative w-full mb-10 lg:mb-28">
+					{/* <Image
 						src={'/access/access-map.png'}
 						fill
 						alt="map"
-					/>
+					/> */}
+					<Map />
 				</div>
 			</div>
 		</div>
