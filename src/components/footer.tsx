@@ -24,7 +24,7 @@ const Footer = () => {
 									className={`relative w-[80px] xl:w-[110px]
                                 ${
 									path == link.path
-										? 'active-link text-orange-spaces'
+										? 'active-link text-eucalyptus-spaces'
 										: 'hover:scale-105 transition-transform'
 								}
                                 `}
@@ -58,13 +58,13 @@ const Footer = () => {
 								</Link>
 							))}
 						</div>
-						<span className="text-white mt-4 hidden md:block text-base">
+						<span className="text-white-spaces mt-4 hidden md:block text-base">
 							+32 (0) 485 382 221 - info@timeandspaces.org
 						</span>
 					</div>
 				</div>
 			</div>
-			<div className="w-full h-auto py-2 md:h-12 md:py-0 xl:h-14 bg-blue-spaces">
+			<div className="w-full h-auto py-2 md:h-12 md:py-0 xl:h-14 bg-eucalyptus-spaces">
 				<div className="h-full flex items-center justify-center text-center  text-[8px] md:text-sm xl:text-base italic text-white">
 					<p>
 						© 2025 Time&Spaces - pillar of Time&Place Group. All

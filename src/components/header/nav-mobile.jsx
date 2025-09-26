@@ -64,7 +64,7 @@ const NavLink = ({ children, href, idx }) => {
 			exit={{ opacity: 0, y: -8 }}
 			href={href}
 			className={`block text-4xl font-semibold font-nunito text-center ${
-				path === href ? 'text-orange-spaces' : 'text-white'
+				path === href ? 'text-midnight-spaces' : 'text-white'
 			}`}
 		>
 			{children}
@@ -84,7 +84,7 @@ const Logo = () => {
 			}}
 			exit={{ opacity: 0, y: -12 }}
 			href="/"
-			className="grid h-20 w-full place-content-center rounded-tl-xl bg-orange-spaces"
+			className="grid h-20 w-full place-content-center rounded-tl-xl bg-midnight-spaces"
 		>
 			<Image
 				src="/header-logo.png"
@@ -116,17 +116,17 @@ const HamburgerButton = ({ active, setActive }) => {
 			>
 				<motion.span
 					variants={HAMBURGER_VARIANTS.top}
-					className="absolute block h-1 w-7 bg-white rounded-sm"
+					className="absolute block h-1 w-7 bg-white-spaces rounded-sm"
 					style={{ y: '-50%', left: '50%', x: '-50%' }}
 				/>
 				<motion.span
 					variants={HAMBURGER_VARIANTS.middle}
-					className="absolute block h-1 w-7 bg-white rounded-sm"
+					className="absolute block h-1 w-7 bg-white-spaces rounded-sm"
 					style={{ left: '50%', x: '-50%', top: '50%', y: '-50%' }}
 				/>
 				<motion.span
 					variants={HAMBURGER_VARIANTS.bottom}
-					className="absolute block h-1 w-4 bg-white rounded-sm"
+					className="absolute block h-1 w-4 bg-white-spaces rounded-sm"
 					style={{ x: '-50%', y: '50%' }}
 				/>
 			</motion.button>
@@ -158,12 +158,12 @@ const UNDERLAY_VARIANTS = {
 		width: 'calc(100% - 24px)',
 		height: '400px',
 		transition: { type: 'spring', mass: 3, stiffness: 400, damping: 50 },
-		backgroundColor: '#2A2A2A',
+		backgroundColor: '#2D2D2D',
 	},
 	closed: {
 		width: '40px',
 		height: '40px',
-		backgroundColor: '#0F2CCA',
+		backgroundColor: '#385F80',
 		transition: {
 			delay: 0.75,
 			type: 'spring',

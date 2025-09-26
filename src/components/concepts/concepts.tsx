@@ -13,7 +13,7 @@ const Concepts = () => {
 						Our{' '}
 						<Link
 							href="/facilities"
-							className="text-orange-spaces font-bold"
+							className="text-coral-spaces font-bold"
 						>
 							facilities
 						</Link>{' '}
@@ -21,7 +21,7 @@ const Concepts = () => {
 						needs. And, our{' '}
 						<Link
 							href="/services"
-							className="text-orange-spaces font-bold"
+							className="text-coral-spaces font-bold"
 						>
 							services
 						</Link>{' '}
@@ -42,7 +42,7 @@ const Concepts = () => {
 						Our{' '}
 						<Link
 							href="/facilities"
-							className="text-orange-spaces font-bold"
+							className="text-coral-spaces font-bold"
 						>
 							facilities
 						</Link>{' '}
@@ -50,7 +50,7 @@ const Concepts = () => {
 						needs. And, our{' '}
 						<Link
 							href="/services"
-							className="text-orange-spaces font-bold"
+							className="text-coral-spaces font-bold"
 						>
 							services
 						</Link>{' '}
@@ -58,7 +58,7 @@ const Concepts = () => {
 					</p>
 				</div>
 			</div>
-			<div className="w-full bg-orange-spaces h-[2px]"></div>
+			<div className="w-full bg-coral-spaces h-[2px]"></div>
 		</>
 	)
 }

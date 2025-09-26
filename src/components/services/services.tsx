@@ -31,7 +31,7 @@ const EQUIPMENT_ITEMS = [
 		icon: '/services/mic-icon.png',
 	},
 	{
-		title: 'White board',
+		title: 'white-spaces board',
 		desc: 'Available upon request for meeting room 2 & 3.',
 		icon: '/services/board-icon.png',
 	},
@@ -55,7 +55,7 @@ const Services = () => {
 							fill
 							className="object-cover"
 						/>
-						<div className="z-20 text-white flex flex-col items-center justify-center">
+						<div className="z-20 text-white-spaces flex flex-col items-center justify-center">
 							<h2 className="font-robo font-bold uppercase text-xl lg:text-3xl">
 								Facility-related equipment
 							</h2>
@@ -66,14 +66,14 @@ const Services = () => {
 						through the{' '}
 						<Link
 							href="/concepts"
-							className="text-blue-spaces font-bold"
+							className="text-eucalyptus-spaces font-bold"
 						>
 							booking system
 						</Link>{' '}
 						or through the{' '}
 						<Link
 							href="/services"
-							className="text-blue-spaces font-bold"
+							className="text-eucalyptus-spaces font-bold"
 						>
 							request for a quote
 						</Link>{' '}
@@ -99,7 +99,7 @@ const Services = () => {
 					fill
 					className="object-cover"
 				/>
-				<div className="z-20 text-white flex flex-col items-center justify-center">
+				<div className="z-20 text-white-spaces flex flex-col items-center justify-center">
 					<h2 className="font-robo font-bold uppercase text-xl lg:text-3xl">
 						Catering services
 					</h2>
@@ -127,7 +127,7 @@ const Services = () => {
 					fill
 					className="object-cover"
 				/>
-				<div className="z-20 text-white flex flex-col items-center justify-center">
+				<div className="z-20 text-white-spaces flex flex-col items-center justify-center">
 					<h2 className="font-robo font-bold uppercase text-xl lg:text-3xl">
 						Additional Services
 					</h2>
@@ -155,7 +155,7 @@ const Services = () => {
 					fill
 					className="object-cover"
 				/>
-				<div className="z-20 text-white flex flex-col items-center justify-center">
+				<div className="z-20 text-white-spaces flex flex-col items-center justify-center">
 					<h2 className="font-robo font-bold uppercase text-xl lg:text-3xl">
 						Event Management Services
 					</h2>
@@ -171,7 +171,7 @@ const Services = () => {
 					your message through. You can find more details{' '}
 					<Link
 						href="https://timeandplaceconsulting.com/service/event-organisation"
-						className="text-blue-spaces font-bold"
+						className="text-eucalyptus-spaces font-bold"
 					>
 						here
 					</Link>

@@ -12,7 +12,7 @@ const FacilitiesCard = ({
 }) => {
 	return (
 		<>
-			<div className={`bg-white flex w-full font-nunito`}>
+			<div className={`bg-white-spaces flex w-full font-nunito`}>
 				<div className="w-full flex flex-col md:grid md:grid-cols-2 h-full">
 					<div
 						className={`w-full h-52 md:h-full max-h-[600px] relative ${
@@ -30,12 +30,12 @@ const FacilitiesCard = ({
 						</p>
 						<div className="w-full lg:w-3/4 xl:w-2/3 my-4 md:gap-4 grid grid-cols-2">
 							<Link href={card.firstLink}>
-								<button className="bg-orange-spaces hover:scale-105 transition-scale-standard w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white shadow-md hover:shadow-lg">
+								<button className="bg-midnight-spaces hover:scale-105 transition-scale-standard w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white-spaces shadow-md hover:shadow-lg">
 									BOOK NOW
 								</button>
 							</Link>
 							<Link href={card.firstLink}>
-								<button className="bg-black-spaces hover:scale-105 transition-scale-standard w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white shadow-md hover:shadow-lg">
+								<button className="bg-black-spaces hover:scale-105 transition-scale-standard w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white-spaces shadow-md hover:shadow-lg">
 									GET A QUOTE
 								</button>
 							</Link>

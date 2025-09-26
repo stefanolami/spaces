@@ -10,7 +10,7 @@ const HeroConcepts = () => {
 				fill
 				className="object-cover"
 			/>
-			<h1 className="font-robo z-30 text-4xl md:text-5xl lg:text-7xl font-bold text-center text-white mt-20">
+			<h1 className="font-robo z-30 text-4xl md:text-5xl lg:text-7xl font-bold text-center text-white-spaces mt-20">
 				CONCEPTS
 			</h1>
 		</div>

@@ -53,7 +53,7 @@ export default function NavMobile() {
 					animate={active ? 'open' : 'closed'}
 				>
 					<motion.span
-						className="absolute h-1 w-6 bg-white rounded-sm"
+						className="absolute h-1 w-6 bg-white-spaces rounded-sm"
 						style={{
 							left: '50%',
 							top: '34%',
@@ -72,7 +72,7 @@ export default function NavMobile() {
 						}}
 					/>
 					<motion.span
-						className="absolute h-1 w-6 bg-white rounded-sm"
+						className="absolute h-1 w-6 bg-white-spaces rounded-sm"
 						style={{
 							left: '50%',
 							top: '50%',
@@ -89,7 +89,7 @@ export default function NavMobile() {
 						}}
 					/>
 					<motion.span
-						className="absolute h-1 w-6 bg-white rounded-sm"
+						className="absolute h-1 w-6 bg-white-spaces rounded-sm"
 						style={{
 							left: '50%',
 							bottom: '34%',
@@ -128,7 +128,7 @@ export default function NavMobile() {
 							},
 						}}
 					>
-						<nav className="flex flex-col justify-center gap-6 items-center text-lg text-white font-robo">
+						<nav className="flex flex-col justify-center gap-6 items-center text-lg text-white-spaces font-robo">
 							{LINKS.map((link, index) => (
 								<Link
 									key={index}
@@ -136,7 +136,7 @@ export default function NavMobile() {
 									onClick={() => setActive(false)}
 									className={`${
 										path == link.path
-											? 'font-bold text-orange-spaces'
+											? 'font-bold text-midnight-spaces'
 											: ''
 									}`}
 								>

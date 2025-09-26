@@ -66,9 +66,9 @@ const HomeSection = () => {
 						/>
 					</div>
 
-					<div className="w-full h-12 lg:h-20 flex flex-row items-center justify-center gap-4 transition duration-300 ease-in-out bg-black-spaces md:group-hover:bg-orange-spaces text-white font-robo">
+					<div className="w-full h-12 lg:h-20 flex flex-row items-center justify-center gap-4 transition duration-300 ease-in-out bg-black-spaces md:group-hover:bg-midnight-spaces text-white-spaces font-robo">
 						<div className="relative w-8 h-8 lg:w-12 lg:h-12">
-							<PinSvg className="transition duration-300 ease-in-out fill-orange-spaces md:group-hover:fill-black-spaces" />
+							<PinSvg className="transition duration-300 ease-in-out fill-midnight-spaces md:group-hover:fill-coral-spaces" />
 						</div>
 						<span className="font-bold text-lg lg:text-2xl">
 							ACCESS
@@ -81,7 +81,7 @@ const HomeSection = () => {
 					href="/booking"
 					className="w-full h-full"
 				>
-					<button className="w-full h-full bg-orange-spaces flex items-center justify-center font-nunito font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-white px-6 md:px-8 lg:px-10 xl:px-12 py-2 lg:py-3 xl:py-4 shadow-md hover:shadow-lg hover:scale-105">
+					<button className="w-full h-full bg-midnight-spaces flex items-center justify-center font-nunito font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-white-spaces px-6 md:px-8 lg:px-10 xl:px-12 py-2 lg:py-3 xl:py-4 shadow-md hover:shadow-lg hover:scale-105">
 						BOOK NOW
 					</button>
 				</Link>
@@ -89,7 +89,7 @@ const HomeSection = () => {
 					href="/"
 					className="w-full h-full"
 				>
-					<button className="w-full h-full bg-black-spaces flex items-center justify-center font-nunito font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-white px-6 md:px-8 lg:px-10 xl:px-12 py-2 lg:py-3 xl:py-4 shadow-md hover:shadow-lg hover:scale-105">
+					<button className="w-full h-full bg-black-spaces flex items-center justify-center font-nunito font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-white-spaces px-6 md:px-8 lg:px-10 xl:px-12 py-2 lg:py-3 xl:py-4 shadow-md hover:shadow-lg hover:scale-105">
 						GET A QUOTE
 					</button>
 				</Link>

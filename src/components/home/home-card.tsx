@@ -30,9 +30,9 @@ const HomeCard = ({
 					/>
 				</div>
 
-				<div className="w-full h-12 lg:h-20 flex flex-row items-center justify-center gap-4 transition duration-300 ease-in-out bg-black-spaces md:group-hover:bg-orange-spaces text-white font-robo">
+				<div className="w-full h-12 lg:h-20 flex flex-row items-center justify-center gap-4 transition duration-300 ease-in-out bg-black-spaces md:group-hover:bg-midnight-spaces text-white-spaces font-robo">
 					<div className="relative w-8 h-8 lg:w-12 lg:h-12">
-						<Icon className="transition duration-300 ease-in-out fill-orange-spaces md:group-hover:fill-black-spaces" />
+						<Icon className="transition duration-300 ease-in-out fill-midnight-spaces md:group-hover:fill-coral-spaces" />
 					</div>
 					<span className="font-bold text-lg lg:text-2xl">
 						{title}

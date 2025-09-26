@@ -36,7 +36,7 @@ const ConceptsCard = ({
 					</p>
 					<Link href={concept.link}>
 						<button
-							className={`w-36 h-8 mx-auto mt-4 md:w-40 md:h-10 lg:w-48 bg-white text-black-spaces hover:scale-105 transition-scale-standard  flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold shadow-md hover:shadow-lg`}
+							className={`w-36 h-8 mx-auto mt-4 md:w-40 md:h-10 lg:w-48 bg-white-spaces text-black-spaces hover:scale-105 transition-scale-standard  flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold shadow-md hover:shadow-lg`}
 						>
 							GET A QUOTE
 						</button>

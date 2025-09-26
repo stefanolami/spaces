@@ -35,7 +35,7 @@ export default function Header() {
 				animate={hidden ? 'hidden' : 'visible'}
 				transition={{ duration: 0.3, ease: 'easeInOut' }}
 				className={
-					'fixed top-0 w-full text-white bg-blue-spaces z-50 h-16 xl:h-20'
+					'fixed top-0 w-full text-white-spaces bg-eucalyptus-spaces z-50 h-16 xl:h-20'
 				}
 			>
 				<div className="mx-auto w-[90%] max-w-[1200px] flex flex-row items-center justify-between h-full">
@@ -65,7 +65,7 @@ export default function Header() {
 								className="w-full flex items-center h-5 md:h-7 xl:h-8 "
 								href="/booking"
 							>
-								<button className="h-full w-full px-2 xl:px-5 bg-orange-spaces font-robo font-bold text-xs md:text-base xl:text-lg xl:hover:scale-105 hover:shadow-xl">
+								<button className="h-full w-full px-2 xl:px-5 bg-midnight-spaces font-robo font-bold text-xs md:text-base xl:text-lg xl:hover:scale-105 hover:shadow-xl">
 									BOOK NOW
 								</button>
 							</Link>
@@ -73,7 +73,7 @@ export default function Header() {
 								className="w-full flex items-center h-5 md:h-7 xl:h-8"
 								href="/get-quote"
 							>
-								<button className="h-full w-full px-2 xl:px-5 bg-orange-spaces font-robo font-bold text-xs md:text-base xl:text-lg xl:hover:scale-105 hover:shadow-xl">
+								<button className="h-full w-full px-2 xl:px-5 bg-midnight-spaces border-2 border-coral-spaces font-robo font-bold text-xs md:text-base xl:text-lg xl:hover:scale-105 hover:shadow-xl">
 									GET A QUOTE
 								</button>
 							</Link>
