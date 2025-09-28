@@ -64,7 +64,7 @@ const NavLink = ({ children, href, idx }) => {
 			exit={{ opacity: 0, y: -8 }}
 			href={href}
 			className={`block text-4xl font-semibold font-nunito text-center ${
-				path === href ? 'text-midnight-spaces' : 'text-white'
+				path === href ? 'text-coral-spaces' : 'text-white'
 			}`}
 		>
 			{children}
@@ -163,7 +163,7 @@ const UNDERLAY_VARIANTS = {
 	closed: {
 		width: '40px',
 		height: '40px',
-		backgroundColor: '#385F80',
+		backgroundColor: '#53939D',
 		transition: {
 			delay: 0.75,
 			type: 'spring',

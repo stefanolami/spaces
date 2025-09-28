@@ -2,10 +2,10 @@ import Image from 'next/image'
 
 const HeroAccess = () => {
 	return (
-		<div className="w-full h-screen flex items-center justify-center relative">
+		<div className="w-full h-screen flex items-center justify-center relative select-none">
 			<div className="absolute inset-0 z-20 bg-black-spaces/50"></div>
 			<Image
-				src="/hero/hero-2.png"
+				src="/hero/hero-map.png"
 				alt="Facilities hero"
 				fill
 				className="object-cover"

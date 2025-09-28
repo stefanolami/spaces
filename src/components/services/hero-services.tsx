@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 const HeroServices = () => {
 	return (
-		<div className="w-full h-screen flex items-center justify-center relative">
+		<div className="w-full h-screen flex items-center justify-center relative select-none">
 			<div className="absolute inset-0 z-20 bg-black-spaces/50"></div>
 			<Image
 				src="/hero/hero-services.jpg"

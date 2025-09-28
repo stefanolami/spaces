@@ -19,7 +19,7 @@ const HeroHome = () => {
 	]
 	return (
 		<ImagesSlider
-			className=" w-full h-[calc(100vh_-_84px)] md:h-[calc(100vh_-_92px)] lg:h-[calc(100vh_-_120px)] py-8 md:py-6 xl:py-4"
+			className=" w-full h-[calc(100vh_-_84px)] md:h-[calc(100vh_-_92px)] lg:h-[calc(100vh_-_120px)] py-8 md:py-6 xl:py-4 select-none"
 			images={images}
 			texts={texts}
 		>
