@@ -1,4 +1,20 @@
 import React from 'react'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: 'Privacy Policy | Time&Spaces',
+	description:
+		'Read the Time&Spaces Privacy Policy to understand how we collect, use, and protect your personal data.',
+	alternates: { canonical: '/privacy-policy' },
+	openGraph: {
+		title: 'Privacy Policy | Time&Spaces',
+		description:
+			'Learn how Time&Spaces collects, uses, and protects your personal data.',
+		url: 'https://www.timeandspaces.org/privacy-policy',
+		siteName: 'Time&Spaces',
+		type: 'article',
+	},
+}
 
 const PrivacyPolicyPage = () => {
 	return (

@@ -1,4 +1,20 @@
 import React from 'react'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: 'Terms and Conditions | Time&Spaces',
+	description:
+		'Read the Time&Spaces Terms and Conditions governing use of our site and services.',
+	alternates: { canonical: '/terms-and-conditions' },
+	openGraph: {
+		title: 'Terms and Conditions | Time&Spaces',
+		description:
+			'Terms and Conditions for using Time&Spaces services and website.',
+		url: 'https://www.timeandspaces.org/terms-and-conditions',
+		siteName: 'Time&Spaces',
+		type: 'article',
+	},
+}
 
 const TermsAndConditionsPage = () => {
 	return (
