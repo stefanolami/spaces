@@ -59,7 +59,7 @@ const Footer = () => {
 							))}
 						</div>
 						<span className="text-white-spaces mt-4 hidden md:block text-base">
-							+32 (0) 485 382 221 - info@timeandspaces.org
+							+32 (0) 485 382 221 - contact@timeandspaces.org
 						</span>
 					</div>
 				</div>
