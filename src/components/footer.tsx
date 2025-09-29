@@ -99,15 +99,15 @@ const POLICIES_LINKS = [
 const SOCIAL_LINKS = [
 	{
 		icon: BsFacebook,
-		path: 'https://facebook.com/',
+		path: 'https://www.facebook.com/profile.php?id=61581445200111',
 	},
 	{
 		icon: BsLinkedin,
-		path: 'https://linkedin.com/',
+		path: 'https://www.linkedin.com/company/time-spaces/?viewAsMember=true',
 	},
 	{
 		icon: BsInstagram,
-		path: 'https://instagram.com/',
+		path: 'https://www.instagram.com/time.spaces/',
 	},
 ]
 

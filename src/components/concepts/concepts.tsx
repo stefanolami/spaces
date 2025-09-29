@@ -7,9 +7,9 @@ const Concepts = () => {
 	return (
 		<>
 			<HeroConcepts />
-			<div className="bg-black-spaces">
+			<div className="bg-white-spaces">
 				<div className="w-full  py-8 md:py-12 lg:py-16">
-					<p className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px]  font-nunito text-xs md:text-base lg:text-xl text-center text-white">
+					<p className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px]  font-nunito text-xs md:text-base lg:text-xl text-center text-black-spaces">
 						Our{' '}
 						<Link
 							href="/facilities"
@@ -37,8 +37,8 @@ const Concepts = () => {
 						/>
 					))}
 				</div>
-				<div className="w-full bg-black-spaces py-8 md:py-12 lg:py-16">
-					<p className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px]  font-nunito text-xs md:text-base lg:text-xl text-center text-white">
+				<div className="w-full bg-white-spaces py-8 md:py-12 lg:py-16">
+					<p className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px]  font-nunito text-xs md:text-base lg:text-xl text-center text-black-spaces">
 						Our{' '}
 						<Link
 							href="/facilities"
@@ -58,7 +58,7 @@ const Concepts = () => {
 					</p>
 				</div>
 			</div>
-			<div className="w-full bg-coral-spaces h-[2px]"></div>
+			{/* <div className="w-full bg-coral-spaces h-[2px]"></div> */}
 		</>
 	)
 }

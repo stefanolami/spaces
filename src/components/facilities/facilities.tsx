@@ -12,14 +12,14 @@ const FacilitiesComponent = () => {
 					Our facilities can be mixed and matched to various{' '}
 					<Link
 						href="/concepts"
-						className="text-midnight-spaces font-bold"
+						className="text-coral-spaces font-bold"
 					>
 						concepts
 					</Link>{' '}
 					for your needs. And, our{' '}
 					<Link
 						href="/services"
-						className="text-midnight-spaces font-bold"
+						className="text-coral-spaces font-bold"
 					>
 						services
 					</Link>{' '}

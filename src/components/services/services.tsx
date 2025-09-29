@@ -24,12 +24,12 @@ const EQUIPMENT_ITEMS = [
 		icon: '/services/conf-icon.png',
 	},
 	{
-		title: 'Microphone & speakers (for the conference room setting)',
+		title: 'Microphone & speakers',
 		desc: 'Available upon request.',
 		icon: '/services/mic-icon.png',
 	},
 	{
-		title: 'White board',
+		title: 'Whiteboard',
 		desc: 'Available upon request.',
 		icon: '/services/board-icon.png',
 	},

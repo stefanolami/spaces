@@ -75,7 +75,9 @@ const ListItems = ({ text, icon }: { text: string; icon: string }) => {
 				height={20}
 				alt="icon"
 			/>
-			<span className="block font-nunito text-sm lg:text-lg">{text}</span>
+			<span className="block font-nunito text-sm lg:text-lg text-left">
+				{text}
+			</span>
 		</li>
 	)
 }

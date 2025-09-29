@@ -6,8 +6,8 @@ export const CONCEPTS: ConceptsCardType[] = [
 		text: 'A large board meeting room with additional areas for more private discussions and full catering service. We are happy to provide you with additional VIP services, ranging from arranged transportation or dry-cleaning to special board room decorative arrangements.',
 		image: '/concepts/concepts-1.jpeg',
 		link: '/get-a-quote',
-		containerClasses: 'bg-black-spaces text-white-spaces text-left',
-		buttonClasses: 'bg-white-spaces text-black-spaces',
+		containerClasses: 'bg-white-spaces text-black-spaces text-left',
+		buttonClasses: 'bg-midnight-spaces text-white-spaces',
 	},
 	{
 		title: 'Mini-Conferences, Panel Discussions & Keynote Speeches',
@@ -15,16 +15,16 @@ export const CONCEPTS: ConceptsCardType[] = [
 		image: '/concepts/concepts-2.png',
 		link: '/get-a-quote',
 		containerClasses:
-			'bg-black-spaces text-white-spaces text-right lg:text-left',
-		buttonClasses: 'bg-white-spaces text-black-spaces',
+			'bg-white-spaces text-black-spaces text-right lg:text-left',
+		buttonClasses: 'bg-midnight-spaces text-white-spaces',
 	},
 	{
 		title: 'Trainings, Seminars & Action Tanks',
 		text: 'Our facilities will accommodate either boardroom-style seminar discussions or mini-auditorium seating arrangements. Apart from break-out areas for the smaller action groups, we also provide areas for relaxing and dining in-between the sessions.',
 		image: '/concepts/concepts-3.jpg',
 		link: '/get-a-quote',
-		containerClasses: 'bg-black-spaces text-white-spaces text-left',
-		buttonClasses: 'bg-white-spaces text-black-spaces',
+		containerClasses: 'bg-white-spaces text-black-spaces text-left',
+		buttonClasses: 'bg-midnight-spaces text-white-spaces',
 	},
 ]
 
