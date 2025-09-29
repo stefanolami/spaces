@@ -40,6 +40,8 @@ const Footer = () => {
 									className="w-5 h-5 md:w-6 md:h-6 xl:w-8 xl:h-8 rounded-full flex items-center justify-center bg-white"
 									key={index}
 									href={link.path}
+									target="_blank"
+									rel="noopener noreferrer"
 								>
 									<link.icon className="text-xs md:text-sm xl:text-lg" />
 								</Link>
@@ -59,7 +61,7 @@ const Footer = () => {
 							))}
 						</div>
 						<span className="text-white mt-4 hidden md:block text-base">
-							+32 (0) 485 382 221 - info@timeandspaces.org
+							+32 (0) 485 382 221 - contact@timeandspaces.org
 						</span>
 					</div>
 				</div>
@@ -99,15 +101,15 @@ const POLICIES_LINKS = [
 const SOCIAL_LINKS = [
 	{
 		icon: BsFacebook,
-		path: 'https://facebook.com/',
+		path: 'https://www.facebook.com/profile.php?id=61581445200111',
 	},
 	{
 		icon: BsLinkedin,
-		path: 'https://linkedin.com/',
+		path: 'https://www.linkedin.com/company/time-spaces/?viewAsMember=true',
 	},
 	{
 		icon: BsInstagram,
-		path: 'https://instagram.com/',
+		path: 'https://www.instagram.com/time.spaces/',
 	},
 ]
 
