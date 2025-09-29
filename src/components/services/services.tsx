@@ -5,12 +5,10 @@ import { GoCheckbox } from 'react-icons/go'
 
 const LIST_ITEMS = [
 	'Camera team to capture your event (video or static)',
-	'Baby-sitting',
 	'Dog walking services',
 	'Limousine or general pick-up services',
 	'Dry cleaning',
 	'Gym access (offsite)',
-	'Massage (offsite)',
 	'Give-aways or meeting paraphernalia with your logo',
 ]
 
@@ -26,13 +24,13 @@ const EQUIPMENT_ITEMS = [
 		icon: '/services/conf-icon.png',
 	},
 	{
-		title: 'Microphone & speakers (for conference room setting)',
+		title: 'Microphone & speakers (for the conference room setting)',
 		desc: 'Available upon request.',
 		icon: '/services/mic-icon.png',
 	},
 	{
-		title: 'white-spaces board',
-		desc: 'Available upon request for meeting room 2 & 3.',
+		title: 'White board',
+		desc: 'Available upon request.',
 		icon: '/services/board-icon.png',
 	},
 ]
@@ -109,14 +107,14 @@ const Services = () => {
 				<p className="">
 					Dare us to satisfy your tastes. We have a long list of
 					various catering services to offer, from warm buffet to cold
-					cuts, from Brazilian cuisine to Japanese flavours. We can
-					also organize a wine tasting, a mixologist for delicious
-					cocktails, or a barista to make that cappuccino extra
-					special.   
+					cuts, from Brazilian cuisine and Scandic specialities to
+					Japanese flavours. We can also organize a wine tasting, a
+					mixologist for delicious cocktails, or a barista to make
+					that cappuccino extra special.
 				</p>
 				<p className="italic">
-					Keep in mind, we offer coffee, tea, water (flat and
-					sparkling) and ice-cream at no charge.
+					Keep in mind, we offer coffee, tea and water (flat and
+					sparkling) at no charge.
 				</p>
 			</div>
 			<div className="relative w-full aspect-[16/4] lg:aspect-[20/3] flex items-center justify-center mt-6 lg:mt-10">
@@ -164,7 +162,7 @@ const Services = () => {
 			<div className="w-4/5 max-w-[1000px] mx-auto space-y-2 lg:space-y-4 mt-6 lg:mt-12 mb-10 lg:mb-20 text-center text-xs md:text-sm lg:text-lg">
 				<p className="">
 					Our sister company Time&Place Consulting can help you
-					organize your event from a 360 perspective, from
+					organize your event from a 360-perspective, from
 					pre-planning and execution to post-event activities. This
 					includes inviting the right audience and speakers to
 					developing multi-channel communication tools so that you get

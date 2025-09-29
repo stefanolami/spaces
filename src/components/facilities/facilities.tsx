@@ -39,8 +39,8 @@ const FacilitiesComponent = () => {
 				<p className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px]  font-nunito text-xs md:text-base lg:text-xl text-center text-black-spaces">
 					Please note: All rooms except the relaxation room have large
 					screens and video-conferencing capacities. All bookings
-					include coffee, tea, water (flat and sparkling) and
-					ice-cream included at no charge.
+					include coffee, tea and water (flat and sparkling) at no
+					charge.
 				</p>
 			</div>
 		</>

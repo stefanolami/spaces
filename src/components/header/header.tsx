@@ -65,7 +65,7 @@ export default function Header() {
 								className="w-full flex items-center h-5 md:h-7 xl:h-8 "
 								href="/booking"
 							>
-								<button className="h-full w-full px-2 xl:px-5 bg-midnight-spaces font-robo font-bold text-xs md:text-base xl:text-lg xl:hover:scale-105 hover:shadow-xl">
+								<button className="h-full w-full px-2 xl:px-5 bg-midnight-spaces border-2 border-midnight-spaces hover:border-coral-spaces font-robo font-bold text-xs md:text-base xl:text-lg xl:hover:scale-105 hover:shadow-xl">
 									BOOK NOW
 								</button>
 							</Link>
@@ -73,7 +73,7 @@ export default function Header() {
 								className="w-full flex items-center h-5 md:h-7 xl:h-8"
 								href="/get-quote"
 							>
-								<button className="h-full w-full px-2 xl:px-5 bg-midnight-spaces border-2 border-coral-spaces font-robo font-bold text-xs md:text-base xl:text-lg xl:hover:scale-105 hover:shadow-xl">
+								<button className="h-full w-full px-2 xl:px-5 bg-midnight-spaces border-2 border-midnight-spaces hover:border-coral-spaces font-robo font-bold text-xs md:text-base xl:text-lg xl:hover:scale-105 hover:shadow-xl">
 									GET A QUOTE
 								</button>
 							</Link>
