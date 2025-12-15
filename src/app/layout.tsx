@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { nunito, robo } from '@/app/fonts'
-import './globals.css'
+import '@/app/globals.css'
 import { RenderMounted } from '@/components/render-mounted'
 import Header from '@/components/header/header'
 import Footer from '@/components/footer'
@@ -33,7 +33,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${robo.variable} ${nunito.variable} antialiased`}>
+			<body
+				className={`${robo.variable} ${nunito.variable} antialiased bg-white-spaces`}
+			>
 				<RenderMounted>
 					<Header />
 					<main className="">{children}</main>

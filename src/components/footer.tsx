@@ -37,9 +37,11 @@ const Footer = () => {
 						<div className="flex flex-row justify-center gap-4 my-4 md:my-0">
 							{SOCIAL_LINKS.map((link, index) => (
 								<Link
-									className="w-5 h-5 md:w-6 md:h-6 xl:w-8 xl:h-8 rounded-full flex items-center justify-center bg-white"
+									className="w-5 h-5 md:w-6 md:h-6 xl:w-8 xl:h-8 rounded-full flex items-center justify-center bg-white-spaces text-black-spaces hover:scale-110 transition-transform"
 									key={index}
 									href={link.path}
+									target="_blank"
+									rel="noopener noreferrer"
 								>
 									<link.icon className="text-xs md:text-sm xl:text-lg" />
 								</Link>

@@ -5,7 +5,7 @@ import { ImagesSlider } from './images-slider'
 const HeroHome = () => {
 	const images = [
 		'/hero/hero-1.jpeg',
-		'/hero/hero-map.png',
+		'/hero/hero-map.jpg',
 		'/hero/hero-3.jpg',
 		'/hero/hero-4.png',
 		'/hero/hero-5.png',

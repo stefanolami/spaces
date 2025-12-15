@@ -41,11 +41,11 @@ export default function Header() {
 				<div className="mx-auto w-[90%] max-w-[1200px] flex flex-row items-center justify-between h-full">
 					<div className="flex items-center justify-center h-full">
 						<Link
-							className="w-[100px] md:w-[124px] xl:w-[150px] aspect-[462/175] relative cursor-pointer"
+							className="w-[150px] md:w-[124px] xl:w-[150px] aspect-[784/450] relative cursor-pointer"
 							href="/"
 						>
 							<Image
-								src="/header-logo.png"
+								src="/logo.png"
 								alt="T&S Logo"
 								fill
 								sizes="(max-width: 640px) 35vw, 20vw"
