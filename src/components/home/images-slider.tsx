@@ -3,6 +3,7 @@
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
 
 export const ImagesSlider = ({
 	images,
@@ -24,8 +25,7 @@ export const ImagesSlider = ({
 	direction?: 'up' | 'down'
 }) => {
 	const [currentIndex, setCurrentIndex] = useState(0)
-	/* const [loading, setLoading] = useState(false) */
-	const [loadedImages, setLoadedImages] = useState<string[]>([])
+	const [isReady, setIsReady] = useState(false)
 
 	const handleNext = () => {
 		setCurrentIndex((prevIndex) =>
@@ -39,43 +39,71 @@ export const ImagesSlider = ({
 		)
 	} */
 
+	// Decode utility to ensure image is fully decoded before swap
+	const decodeImage = (src: string) => {
+		return new Promise<void>((resolve) => {
+			const img = new window.Image()
+			img.src = src
+			if ('decode' in img && typeof img.decode === 'function') {
+				img.decode()
+					.then(() => resolve())
+					.catch(() => resolve())
+			} else {
+				img.onload = () => resolve()
+				img.onerror = () => resolve()
+			}
+		})
+	}
+
+	// Prepare first image and opportunistically preload the next
 	useEffect(() => {
-		loadImages()
+		let cancelled = false
+		const prepare = async () => {
+			if (!images?.length) return
+			await decodeImage(images[0])
+			if (!cancelled) setIsReady(true)
+			const nextIdx = (0 + 1) % images.length
+			decodeImage(images[nextIdx])
+		}
+		prepare()
+		return () => {
+			cancelled = true
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
-
-	const loadImages = () => {
-		/* setLoading(true) */
-		const loadPromises = images.map((image) => {
-			return new Promise((resolve, reject) => {
-				const img = new Image()
-				img.src = image
-				img.onload = () => resolve(image)
-				img.onerror = reject
-			})
-		})
-
-		Promise.all(loadPromises)
-			.then((loadedImages) => {
-				setLoadedImages(loadedImages as string[])
-				/* setLoading(false) */
-			})
-			.catch((error) => console.error('Failed to load images', error))
-	}
 	useEffect(() => {
-		// autoplay
-		let interval: NodeJS.Timeout
-		if (autoplay) {
+		// autoplay with visibility guard
+		let interval: NodeJS.Timeout | undefined
+		const start = () => {
+			if (!autoplay) return
 			interval = setInterval(() => {
 				handleNext()
 			}, 5000)
 		}
-
+		const stop = () => {
+			if (interval) clearInterval(interval)
+			interval = undefined
+		}
+		const handleVisibility = () => {
+			if (document.hidden) stop()
+			else start()
+		}
+		start()
+		document.addEventListener('visibilitychange', handleVisibility)
 		return () => {
-			clearInterval(interval)
+			document.removeEventListener('visibilitychange', handleVisibility)
+			stop()
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [autoplay])
+
+	// Preload the next image after index updates
+	useEffect(() => {
+		if (!images?.length) return
+		const nextIdx = (currentIndex + 1) % images.length
+		decodeImage(images[nextIdx])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentIndex])
 
 	/* const slideVariants = {
 		initial: {
@@ -138,7 +166,7 @@ export const ImagesSlider = ({
 		},
 	}
 
-	const areImagesLoaded = loadedImages.length > 0
+	const areImagesLoaded = isReady
 
 	return (
 		<div
@@ -161,17 +189,28 @@ export const ImagesSlider = ({
 			)}
 
 			{areImagesLoaded && (
-				<AnimatePresence>
-					<motion.img
+				<AnimatePresence initial={false}>
+					<motion.div
 						key={currentIndex}
-						src={loadedImages[currentIndex]}
 						initial="initial"
 						animate="visible"
 						exit={direction === 'up' ? 'upExit' : 'downExit'}
 						variants={slideVariants}
-						sizes="100vw"
-						className="image h-[calc(100vh_-_84px)] lg:h-[calc(100vh_-_120px)] w-full absolute inset-0 object-cover object-center"
-					/>
+						className="absolute inset-0 transform-gpu will-change-transform"
+					>
+						<Image
+							src={images[currentIndex]}
+							alt=""
+							fill
+							sizes="100vw"
+							priority={currentIndex === 0}
+							quality={85}
+							style={{
+								objectFit: 'cover',
+								objectPosition: 'center',
+							}}
+						/>
+					</motion.div>
 				</AnimatePresence>
 			)}
 			{areImagesLoaded && (
@@ -190,7 +229,7 @@ export const ImagesSlider = ({
 							transition: { duration: 0.5, delay: 0 },
 						}}
 						transition={{ duration: 0.5, delay: 1 }}
-						className="absolute top-[25%] z-50 text-white-spaces text-center font-robo font-bold"
+						className="absolute top-[25%] z-50 text-white-spaces text-center font-robo font-bold transform-gpu will-change-transform"
 					>
 						<h1 className="text-4xl md:text-5xl lg:text-7xl font-bold ">
 							{texts[currentIndex]}
