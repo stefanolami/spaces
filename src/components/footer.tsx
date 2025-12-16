@@ -9,7 +9,7 @@ const Footer = () => {
 
 	return (
 		<footer className="w-full">
-			<div className="w-full py-4  bg-black-spaces font-nunito">
+			<div className="w-full py-6 lg:py-10 bg-black-spaces font-nunito">
 				<div className="md:hidden flex flex-row items-center justify-center gap-4 text-xs text-white">
 					<span>+32 (0) 485 382 221</span>
 					<span>|</span>

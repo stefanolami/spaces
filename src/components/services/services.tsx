@@ -47,7 +47,7 @@ const Services = () => {
 					<div className="relative w-full aspect-[16/4] lg:aspect-[20/3] flex items-center justify-center">
 						<div className="absolute inset-0 z-20 bg-black-spaces/30"></div>
 						<Image
-							src="/services/services-1.jpg"
+							src="/services/services-1.png"
 							alt="Concepts"
 							fill
 							className="object-cover"
@@ -91,7 +91,7 @@ const Services = () => {
 			<div className="relative w-full aspect-[16/4] lg:aspect-[20/3] flex items-center justify-center mt-6 lg:mt-10 2xl:mt-20">
 				<div className="absolute inset-0 z-20 bg-black-spaces/30"></div>
 				<Image
-					src="/services/services-2.jpg"
+					src="/services/services-2.png"
 					alt="Concepts"
 					fill
 					className="object-cover"
@@ -119,7 +119,7 @@ const Services = () => {
 			<div className="relative w-full aspect-[16/4] lg:aspect-[20/3] flex items-center justify-center">
 				<div className="absolute inset-0 z-20 bg-black-spaces/30"></div>
 				<Image
-					src="/services/services-3.jpg"
+					src="/services/services-3.png"
 					alt="Concepts"
 					fill
 					className="object-cover"

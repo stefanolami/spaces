@@ -11,7 +11,7 @@ import PinSvg from '../svgs/pin'
 const HomeSection = () => {
 	return (
 		<div className="w-full">
-			<div className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px] my-8 md:my-12 lg:my-16">
+			<div className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px] my-10 lg:my-20 2xl:my-32">
 				<p className="font-nunito text-[12px] md:text-[16px] lg:text-[20px] leading-[14px] md:leading-[18px] lg:leading-[22px] text-justify">
 					We provide strategic meeting and event locations. Launched
 					in March 2025, our first location is at the heart of EU
@@ -30,7 +30,7 @@ const HomeSection = () => {
 				<HomeCard
 					title="CONCEPTS"
 					Icon={LaptopSvg}
-					image="/hero/hero-concepts.jpeg"
+					image="/hero/hero-concepts.png"
 					link="/concepts"
 				/>
 				<HomeCard
@@ -42,7 +42,7 @@ const HomeSection = () => {
 				<HomeCard
 					title="SERVICES"
 					Icon={CogsSvg}
-					image="/hero/hero-services.jpg"
+					image="/hero/hero-services.png"
 					link="/services"
 				/>
 			</div>

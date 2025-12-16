@@ -8,7 +8,7 @@ const FacilitiesComponent = () => {
 		<>
 			<HeroFacilities />
 			<div className="w-full bg-white-spaces my-10 lg:my-20 3xl:my-32 font-nunito">
-				<p className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px]  font-nunito text-xs md:text-base lg:text-xl text-center text-black-spaces">
+				<p className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px]  font-nunito text-xs md:text-base lg:text-xl text-center text-midnight-spaces font-bold">
 					Our facilities can be mixed and matched to various{' '}
 					<Link
 						href="/concepts"

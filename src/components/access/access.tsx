@@ -31,7 +31,7 @@ const Access = () => {
 		<div>
 			<HeroAccess />
 			<div className="w-[90%] mx-auto max-w-[1000px] text-center mt-10 lg:mt-20 text-black-spaces">
-				<p className="w-[90%] max-w-[1000px] mx-auto font-nunito text-sm md:text-base lg:text-lg mb-10 lg:mb-20 text-midnight-spaces font-bold">
+				<p className="w-[90%] max-w-[1000px] mx-auto font-nunito text-sm md:text-base lg:text-lg mb-10 lg:mb-20 2xl:mt-32 text-midnight-spaces font-bold">
 					Rue de la Loi 81A / Wetstraat 81A - 1040 Bruxelles /
 					Brussels
 				</p>
