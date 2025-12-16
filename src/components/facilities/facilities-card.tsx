@@ -2,6 +2,7 @@ import { FacilitiesCardType } from '@/lib/types'
 /* import Image from 'next/image' */
 import Link from 'next/link'
 import FacilitiesCarousel from './facilities-carousel'
+import Image from 'next/image'
 
 const FacilitiesCard = ({
 	card,
@@ -21,7 +22,15 @@ const FacilitiesCard = ({
 					>
 						<FacilitiesCarousel images={card.images} />
 					</div>
-					<div className="flex flex-col justify-center w-3/4 mx-auto max-w-[600px] py-8 md:py-12 lg:py-20 xl:py-36 gap-4 md:gap-5 lg:gap-6">
+					<div className="flex flex-col justify-center w-3/4 mx-auto max-w-[600px] gap-4 md:gap-5 lg:gap-6">
+						<div className="relative aspect-[132/108] mx-auto md:mx-0 w-40 md:w-52 lg:w-60 xl:w-72 mt-2 lg:mt-0">
+							<Image
+								src={card.floorplan}
+								alt={card.title + ' floorplan'}
+								fill
+								className="object-contain"
+							/>
+						</div>
 						<h3 className="text-base md:text-lg lg:text-xl font-bold w-full text-balance text-center md:text-left">
 							{card.title}
 						</h3>

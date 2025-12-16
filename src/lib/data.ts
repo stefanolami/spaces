@@ -67,6 +67,7 @@ export const FACILITIES: FacilitiesCardType[] = [
 		],
 		firstLink: '/',
 		secondLink: '/',
+		floorplan: '/facilities/floorplans/conference.png',
 	},
 	{
 		title: 'Relaxation Break-Out Room',
@@ -78,6 +79,7 @@ export const FACILITIES: FacilitiesCardType[] = [
 		],
 		firstLink: '/',
 		secondLink: '/',
+		floorplan: '/facilities/floorplans/lounge.png',
 	},
 	{
 		title: 'Catering or Meeting Room 2',
@@ -89,6 +91,7 @@ export const FACILITIES: FacilitiesCardType[] = [
 		],
 		firstLink: '/',
 		secondLink: '/',
+		floorplan: '/facilities/floorplans/catering.png',
 	},
 	{
 		title: 'Meeting Room 3',
@@ -100,5 +103,6 @@ export const FACILITIES: FacilitiesCardType[] = [
 		],
 		firstLink: '/',
 		secondLink: '/',
+		floorplan: '/facilities/floorplans/small-meeting.png',
 	},
 ]

@@ -13,4 +13,5 @@ export type FacilitiesCardType = {
 	images: string[]
 	firstLink: string
 	secondLink: string
+	floorplan: string
 }
