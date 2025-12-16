@@ -73,7 +73,6 @@ const NavLink = ({ children, href, idx }) => {
 }
 
 const Logo = () => {
-	// Temp logo from https://logoipsum.com/
 	return (
 		<motion.a
 			initial={{ opacity: 0, y: -12 }}
@@ -84,10 +83,10 @@ const Logo = () => {
 			}}
 			exit={{ opacity: 0, y: -12 }}
 			href="/"
-			className="grid h-20 w-full place-content-center rounded-tl-xl bg-midnight-spaces"
+			className="grid h-28 w-full place-content-center rounded-tl-xl bg-midnight-spaces"
 		>
 			<Image
-				src="/header-logo.png"
+				src="/header-logo-vertical.png"
 				alt="Logo"
 				width={150}
 				height={57}
@@ -156,7 +155,7 @@ const LINKS = [
 const UNDERLAY_VARIANTS = {
 	open: {
 		width: 'calc(100% - 24px)',
-		height: '400px',
+		height: '430px',
 		transition: { type: 'spring', mass: 3, stiffness: 400, damping: 50 },
 		backgroundColor: '#2D2D2D',
 	},
