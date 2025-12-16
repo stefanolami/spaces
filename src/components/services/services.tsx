@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import HeroServices from './hero-services'
 import Image from 'next/image'
-import { GoCheckbox } from 'react-icons/go'
 
 const LIST_ITEMS = [
 	'Camera team to capture your event (video or static)',
@@ -39,13 +38,13 @@ const Services = () => {
 	return (
 		<div>
 			<HeroServices />
-			<div className="mt-10 text-black-spaces">
+			<div className="text-black-spaces">
 				<div className="text-center">
-					<p className="w-[90%] max-w-[1000px] mx-auto font-nunito text-sm md:text-base lg:text-lg mb-10 lg:mb-20">
+					<p className="w-[90%] max-w-[1000px] mx-auto text-midnight-spaces font-nunito font-bold text-sm md:text-base lg:text-lg xl:text-xl my-10 lg:my-20 2xl:my-32">
 						Our services from the necessary to the extraordinary to
 						support your requirements.
 					</p>
-					<div className="relative w-full aspect-[16/4] lg:aspect-[20/3] flex items-center justify-center mt-6 lg:mt-10">
+					<div className="relative w-full aspect-[16/4] lg:aspect-[20/3] flex items-center justify-center">
 						<div className="absolute inset-0 z-20 bg-black-spaces/30"></div>
 						<Image
 							src="/services/services-1.jpg"
@@ -59,7 +58,7 @@ const Services = () => {
 							</h2>
 						</div>
 					</div>
-					<p className="w-[90%] font-nunito text-xs md:text-base lg:text-xl text-center italic mt-6 lg:mt-10 max-w-[800px] mx-auto">
+					<p className="w-[90%] font-nunito text-xs md:text-base lg:text-xl text-center italic mt-6 lg:mt-10 2xl:mt-20 max-w-[800px] mx-auto">
 						These are included, or can be specifically requested
 						through the{' '}
 						<Link
@@ -89,7 +88,7 @@ const Services = () => {
 					))}
 				</div>
 			</div>
-			<div className="relative w-full aspect-[16/4] lg:aspect-[20/3] flex items-center justify-center mt-6 lg:mt-10">
+			<div className="relative w-full aspect-[16/4] lg:aspect-[20/3] flex items-center justify-center mt-6 lg:mt-10 2xl:mt-20">
 				<div className="absolute inset-0 z-20 bg-black-spaces/30"></div>
 				<Image
 					src="/services/services-2.jpg"
@@ -103,7 +102,7 @@ const Services = () => {
 					</h2>
 				</div>
 			</div>
-			<div className="w-4/5 max-w-[1000px] mx-auto space-y-2 lg:space-y-4 mt-6 lg:mt-12 mb-6 lg:mb-12 text-center text-xs md:text-sm lg:text-lg">
+			<div className="w-4/5 max-w-[1000px] mx-auto space-y-2 lg:space-y-4 my-6 lg:my-10 2xl:my-20 text-center text-xs md:text-sm lg:text-lg">
 				<p className="">
 					Dare us to satisfy your tastes. We have a long list of
 					various catering services to offer, from warm buffet to cold
@@ -117,7 +116,7 @@ const Services = () => {
 					sparkling) at no charge.
 				</p>
 			</div>
-			<div className="relative w-full aspect-[16/4] lg:aspect-[20/3] flex items-center justify-center mt-6 lg:mt-10">
+			<div className="relative w-full aspect-[16/4] lg:aspect-[20/3] flex items-center justify-center">
 				<div className="absolute inset-0 z-20 bg-black-spaces/30"></div>
 				<Image
 					src="/services/services-3.jpg"
@@ -131,12 +130,12 @@ const Services = () => {
 					</h2>
 				</div>
 			</div>
-			<div className="w-4/5 max-w-[1000px] mx-auto mt-6 lg:mt-12 mb-6 lg:mb-12 text-center text-xs md:text-sm lg:text-lg">
+			<div className="w-4/5 max-w-[1000px] mx-auto  my-6 lg:my-10 2xl:my-20 text-center text-xs md:text-sm lg:text-lg">
 				<p className="">
 					If you do not find what you need on the list below,
 					challenge us to satisfy your requirements.
 				</p>
-				<ul className="mt-8 lg:mt-12 w-fit mx-auto lg:grid lg:grid-cols-2 lg:gap-x-4">
+				<ul className="mt-8 lg:mt-12 w-fit mx-auto lg:grid xl:grid-cols-2 xl:gap-x-4">
 					{LIST_ITEMS.map((item, index) => (
 						<ListItem
 							key={index}
@@ -159,7 +158,7 @@ const Services = () => {
 					</h2>
 				</div>
 			</div>
-			<div className="w-4/5 max-w-[1000px] mx-auto space-y-2 lg:space-y-4 mt-6 lg:mt-12 mb-10 lg:mb-20 text-center text-xs md:text-sm lg:text-lg">
+			<div className="w-4/5 max-w-[1000px] mx-auto space-y-2 lg:space-y-4 my-6 lg:my-10 2xl:my-20 text-center text-xs md:text-sm lg:text-lg">
 				<p className="">
 					Our sister company Time&Place Consulting can help you
 					organize your event from a 360-perspective, from
@@ -184,8 +183,14 @@ export default Services
 
 const ListItem = ({ text }: { text: string }) => {
 	return (
-		<li className="flex flex-row items-start justify-start text-xs md:text-sm lg:text-lg font-nunito text-left text-black-spaces mb-2 lg:mb-3">
-			<GoCheckbox className="text-black-spaces mr-2 text-lg mt-[2px] lg:mt-1" />
+		<li className="flex flex-row items-center gap-2 justify-start text-xs md:text-sm lg:text-lg font-nunito text-left text-black-spaces mb-2 lg:mb-3">
+			<Image
+				src="/services/checkmark-icon.png"
+				width={20}
+				height={20}
+				className=""
+				alt="screen icon"
+			/>
 			<span>{text}</span>
 		</li>
 	)
@@ -210,7 +215,7 @@ const EquipmentItems = ({
 				alt="screen icon"
 			/>
 			<div className="flex flex-col items-start justify-start ml-4">
-				<span className="font-extrabold font-nunito text-lg lg:text-2xl">
+				<span className="font-extrabold font-nunito text-lg lg:text-2xl text-midnight-spaces">
 					{title}
 				</span>
 				<span className="font-nunito text-xs lg:text-base">{desc}</span>
