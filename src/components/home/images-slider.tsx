@@ -8,6 +8,7 @@ import Image from 'next/image'
 export const ImagesSlider = ({
 	images,
 	texts,
+	positions,
 	children,
 	overlay = true,
 	overlayClassName,
@@ -17,6 +18,7 @@ export const ImagesSlider = ({
 }: {
 	images: string[]
 	texts: string[]
+	positions: string[]
 	children?: React.ReactNode
 	overlay?: React.ReactNode
 	overlayClassName?: string
@@ -32,12 +34,6 @@ export const ImagesSlider = ({
 			prevIndex + 1 === images.length ? 0 : prevIndex + 1
 		)
 	}
-
-	/* const handlePrevious = () => {
-		setCurrentIndex((prevIndex) =>
-			prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1
-		)
-	} */
 
 	// Decode utility to ensure image is fully decoded before swap
 	const decodeImage = (src: string) => {
@@ -104,37 +100,6 @@ export const ImagesSlider = ({
 		decodeImage(images[nextIdx])
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentIndex])
-
-	/* const slideVariants = {
-		initial: {
-			scale: 0,
-			opacity: 0,
-			rotateX: 45,
-		},
-		visible: {
-			scale: 1,
-			rotateX: 0,
-			opacity: 1,
-			transition: {
-				duration: 0.5,
-				ease: [0.645, 0.045, 0.355, 1.0],
-			},
-		},
-		upExit: {
-			opacity: 1,
-			x: '-150%',
-			transition: {
-				duration: 1,
-			},
-		},
-		downExit: {
-			opacity: 1,
-			x: '150%',
-			transition: {
-				duration: 1,
-			},
-		},
-	} */
 
 	const slideVariants = {
 		initial: {
@@ -207,7 +172,8 @@ export const ImagesSlider = ({
 							quality={85}
 							style={{
 								objectFit: 'cover',
-								objectPosition: 'center',
+								objectPosition:
+									positions[currentIndex] || 'center',
 							}}
 						/>
 					</motion.div>
@@ -229,7 +195,7 @@ export const ImagesSlider = ({
 							transition: { duration: 0.5, delay: 0 },
 						}}
 						transition={{ duration: 0.5, delay: 1 }}
-						className="absolute top-[25%] z-50 text-white-spaces text-center font-robo font-bold transform-gpu will-change-transform"
+						className="absolute top-[35%] z-50 text-white-spaces text-center font-robo font-bold transform-gpu will-change-transform"
 					>
 						<h1 className="text-4xl md:text-5xl lg:text-7xl font-bold ">
 							{texts[currentIndex]}
