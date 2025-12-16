@@ -7,7 +7,7 @@ const FacilitiesComponent = () => {
 	return (
 		<>
 			<HeroFacilities />
-			<div className="w-full bg-white-spaces py-8 md:py-12 lg:py-16 font-nunito">
+			<div className="w-full bg-white-spaces my-10 lg:my-20 3xl:my-32 font-nunito">
 				<p className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px]  font-nunito text-xs md:text-base lg:text-xl text-center text-black-spaces">
 					Our facilities can be mixed and matched to various{' '}
 					<Link
@@ -35,7 +35,7 @@ const FacilitiesComponent = () => {
 					/>
 				))}
 			</div>
-			<div className="w-full bg-white-spaces py-8 md:py-12 lg:py-16">
+			<div className="w-full bg-white-spaces my-10 lg:my-20 3xl:my-32">
 				<p className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px]  font-nunito text-xs md:text-base lg:text-xl text-center text-black-spaces">
 					Please note: All rooms except the relaxation room have large
 					screens and video-conferencing capacities. All bookings

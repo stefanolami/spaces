@@ -6,7 +6,7 @@ import Map from './map'
 const LIST_ITEMS = [
 	{
 		text: 'METRO STATION MAELBEEK: 60m',
-		icon: '/access/train-icon.png',
+		icon: '/access/metro-icon.png',
 	},
 	{
 		text: 'TRAIN STATION BRUXELLES-LUXEMBOURG: 780m',
@@ -30,8 +30,8 @@ const Access = () => {
 	return (
 		<div>
 			<HeroAccess />
-			<div className="w-[90%] mx-auto max-w-[1000px] text-center mt-10 text-black-spaces">
-				<p className="w-[90%] max-w-[1000px] mx-auto font-nunito text-sm md:text-base lg:text-lg mb-10 lg:mb-20">
+			<div className="w-[90%] mx-auto max-w-[1000px] text-center mt-10 lg:mt-20 text-black-spaces">
+				<p className="w-[90%] max-w-[1000px] mx-auto font-nunito text-sm md:text-base lg:text-lg mb-10 lg:mb-20 text-midnight-spaces font-bold">
 					Rue de la Loi 81A / Wetstraat 81A - 1040 Bruxelles /
 					Brussels
 				</p>
@@ -71,8 +71,8 @@ const ListItems = ({ text, icon }: { text: string; icon: string }) => {
 		<li className="flex flex-row items-center justify-start gap-2">
 			<Image
 				src={icon}
-				width={20}
-				height={20}
+				width={25}
+				height={25}
 				alt="icon"
 			/>
 			<span className="block font-nunito text-sm lg:text-lg text-left">
