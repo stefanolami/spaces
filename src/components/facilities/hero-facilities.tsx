@@ -13,7 +13,7 @@ const HeroFacilities = () => {
 				priority
 			/>
 
-			<h1 className="font-robo z-30 text-4xl md:text-5xl lg:text-7xl xl:text-6xl 2xl:text-6xl font-bold text-center text-white-spaces mt-20">
+			<h1 className="font-robo z-30 text-5xl lg:text-6xl xl:text-7xl font-bold text-center text-white-spaces mt-96">
 				FACILITIES
 			</h1>
 		</div>

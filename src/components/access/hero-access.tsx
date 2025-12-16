@@ -8,9 +8,9 @@ const HeroAccess = () => {
 				src="/hero/hero-map.jpg"
 				alt="Facilities hero"
 				fill
-				className="object-contain object-center mt-10"
+				className="object-cover lg:object-contain object-center mt-10"
 			/>
-			<h1 className="font-robo z-30 text-4xl md:text-5xl lg:text-7xl font-bold text-center text-white-spaces mt-20">
+			<h1 className="font-robo z-30 text-5xl lg:text-6xl xl:text-7xl font-bold text-center text-white-spaces mt-96">
 				ACCESS
 			</h1>
 		</div>
