@@ -34,11 +34,11 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body
-				className={`${robo.variable} ${nunito.variable} antialiased bg-white-spaces`}
+				className={`${robo.variable} ${nunito.variable} antialiased bg-white-spaces min-h-screen flex flex-col`}
 			>
 				<RenderMounted>
 					<Header />
-					<main className="">{children}</main>
+					<main className="flex-1">{children}</main>
 					<Footer />
 				</RenderMounted>
 			</body>
@@ -46,4 +46,4 @@ export default function RootLayout({
 	)
 }
 
-/* pt-[84px] md:pt-[92px] xl:pt-[120px] */
+/* Header is fixed: base total 92px (64+28), xl total 120px (80+40) */

@@ -41,3 +41,38 @@ export async function sendEmail(data: FormData): Promise<EmailResponse> {
 		return { success: false, error: (err as Error).message }
 	}
 }
+
+// Contact form types and sender
+type ContactFormData = {
+	name: string
+	email: string
+	subject: string
+	message: string
+}
+
+export async function sendContactEmail(
+	data: ContactFormData
+): Promise<EmailResponse> {
+	// Use a relative URL so it works in dev and prod environments
+	const apiEndpoint = 'http://localhost:3000/api/contact'
+
+	try {
+		const res = await fetch(apiEndpoint, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+
+		if (!res.ok) {
+			throw new Error(`HTTP error! status: ${res.status}`)
+		}
+
+		const responseData = await res.json()
+		return { success: true, data: responseData }
+	} catch (err) {
+		console.error('Error sending contact email:', err)
+		return { success: false, error: (err as Error).message }
+	}
+}
