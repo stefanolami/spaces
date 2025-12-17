@@ -56,8 +56,8 @@ const NavLink = ({ children, href, idx }) => {
 				opacity: 1,
 				y: 0,
 				transition: {
-					delay: 0.75 + idx * 0.125,
-					duration: 0.5,
+					delay: 0.5 + idx * 0.08,
+					duration: 0.35,
 					ease: 'easeInOut',
 				},
 			}}
@@ -79,7 +79,7 @@ const Logo = () => {
 			animate={{
 				opacity: 1,
 				y: 0,
-				transition: { delay: 0.5, duration: 0.5, ease: 'easeInOut' },
+				transition: { delay: 0.35, duration: 0.35, ease: 'easeInOut' },
 			}}
 			exit={{ opacity: 0, y: -12 }}
 			href="/"
@@ -156,7 +156,7 @@ const UNDERLAY_VARIANTS = {
 	open: {
 		width: 'calc(100% - 24px)',
 		height: '430px',
-		transition: { type: 'spring', mass: 3, stiffness: 400, damping: 50 },
+		transition: { type: 'spring', mass: 1.5, stiffness: 550, damping: 55 },
 		backgroundColor: '#2D2D2D',
 	},
 	closed: {
@@ -164,11 +164,11 @@ const UNDERLAY_VARIANTS = {
 		height: '40px',
 		backgroundColor: '#53939D',
 		transition: {
-			delay: 0.75,
+			delay: 0.35,
 			type: 'spring',
-			mass: 3,
-			stiffness: 400,
-			damping: 50,
+			mass: 1.5,
+			stiffness: 550,
+			damping: 55,
 		},
 	},
 }

@@ -30,6 +30,44 @@ export const ImagesSlider = ({
 	const [isReady, setIsReady] = useState(false)
 	const prefersReducedMotion = useReducedMotion()
 
+	// Mobile last-line tracking for underline alignment
+	const wrapperRef = React.useRef<HTMLDivElement | null>(null)
+	const textInlineRef = React.useRef<HTMLSpanElement | null>(null)
+	const [underlineMetrics, setUnderlineMetrics] = useState<{
+		left: number
+		width: number
+	} | null>(null)
+
+	const computeUnderlineMetrics = React.useCallback(() => {
+		if (typeof window === 'undefined') return
+		const isMobile = window.innerWidth < 768 // Tailwind md breakpoint
+		const wrapperEl = wrapperRef.current
+		const inlineEl = textInlineRef.current
+		if (!wrapperEl || !inlineEl) return
+		if (!isMobile) {
+			setUnderlineMetrics(null)
+			return
+		}
+		const rects = inlineEl.getClientRects()
+		const lastRect = rects.length
+			? rects[rects.length - 1]
+			: inlineEl.getBoundingClientRect()
+		const wrapperRect = wrapperEl.getBoundingClientRect()
+		const overshootBack = 8 // px
+		const left = lastRect.left - wrapperRect.left - overshootBack * 0.5
+		const width = lastRect.width + overshootBack
+		setUnderlineMetrics({ left, width })
+	}, [])
+
+	useEffect(() => {
+		computeUnderlineMetrics()
+		const onResize = () => computeUnderlineMetrics()
+		window.addEventListener('resize', onResize)
+		return () => {
+			window.removeEventListener('resize', onResize)
+		}
+	}, [computeUnderlineMetrics, currentIndex])
+
 	const handleNext = () => {
 		setCurrentIndex((prevIndex) =>
 			prevIndex + 1 === images.length ? 0 : prevIndex + 1
@@ -211,10 +249,18 @@ export const ImagesSlider = ({
 						style={{ transform: 'translateZ(40px)' }}
 					>
 						{/* Wrapper to align underline with text width */}
-						<div className="relative inline-block">
+						<div
+							ref={wrapperRef}
+							className="relative inline-block"
+						>
 							{/* Base text layer */}
-							<h1 className="relative z-10 text-5xl lg:text-6xl xl:text-7xl font-bold uppercase text-white-spaces/80 tracking-[0.01em]">
-								{texts[currentIndex]}
+							<h1 className="relative z-10 text-5xl lg:text-6xl xl:text-7xl font-bold uppercase text-white-spaces tracking-[0.01em] [text-wrap:balance]">
+								<span
+									ref={textInlineRef}
+									className="inline"
+								>
+									{texts[currentIndex]}
+								</span>
 							</h1>
 
 							{/* Revealed text layer via moving clip-path (right -> left) */}
@@ -268,7 +314,15 @@ export const ImagesSlider = ({
 									x: prefersReducedMotion ? 0 : '-100%',
 									transition: { duration: 0.3 },
 								}}
-								className="pointer-events-none absolute -left-2 -bottom-2 z-40 h-[10px] w-[110%] bg-eucalyptus-spaces"
+								className="pointer-events-none absolute -left-2 -bottom-2 z-40 h-[10px] w-[100%] bg-eucalyptus-spaces"
+								style={{
+									left: underlineMetrics
+										? underlineMetrics.left - 4
+										: undefined,
+									width: underlineMetrics
+										? underlineMetrics.width
+										: undefined,
+								}}
 							/>
 
 							{/* Underline – front layer (slight overlap over descenders) */}
@@ -295,7 +349,18 @@ export const ImagesSlider = ({
 									x: prefersReducedMotion ? 0 : '-100%',
 									transition: { duration: 0.3 },
 								}}
-								className="pointer-events-none absolute left-0 -bottom-[6px] z-30 h-[40px] w-[115%] bg-coral-spaces/90 mix-blend-overlay opacity-80"
+								className="pointer-events-none absolute left-0 -bottom-[6px] z-30 h-[30px] lg:h-[35px] xl:h-[40px] w-[calc(100%_+_40px)] bg-coral-spaces/90 mix-blend-overlay opacity-80"
+								style={{
+									left: underlineMetrics
+										? underlineMetrics.left + 2
+										: undefined,
+									width: underlineMetrics
+										? Math.max(
+												underlineMetrics.width + 4,
+												0
+										  )
+										: undefined,
+								}}
 							/>
 						</div>
 					</motion.div>

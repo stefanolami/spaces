@@ -3,7 +3,7 @@ import Image from 'next/image'
 const HeroFacilities = () => {
 	return (
 		<div className="relative w-full h-[100vh] max-h-[900px] xl:max-h-[800px] 2xl:max-h-[750px] flex items-center justify-center select-none">
-			<div className="absolute inset-0 z-20 bg-black-spaces/50"></div>
+			<div className="absolute inset-0 z-20 bg-black-spaces/30"></div>
 
 			<Image
 				src="/hero/hero-facilities.png"
