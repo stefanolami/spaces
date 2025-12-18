@@ -22,7 +22,7 @@ const FacilitiesCard = ({
 					>
 						<FacilitiesCarousel images={card.images} />
 					</div>
-					<div className="flex flex-col justify-center w-3/4 mx-auto max-w-[600px] gap-4 md:gap-5 lg:gap-6">
+					<div className="flex flex-col justify-center w-3/4 mx-auto max-w-[600px] gap-4 lg:p-8 md:gap-5 lg:gap-6 p-4">
 						<div className="relative aspect-[132/108] mx-auto md:mx-0 w-40 md:w-52 lg:w-60 xl:w-72 mt-2 lg:mt-0">
 							<Image
 								src={card.floorplan}
