@@ -18,12 +18,20 @@ const HeroHome = () => {
 		' ...within the heart of the EU',
 	]
 	const positions = ['top', 'top', 'center', 'center', 'top']
+	const mobileUnderlineWords = [
+		['view'],
+		['access'],
+		['voice'],
+		['action'],
+		['heart', 'EU'],
+	]
 	return (
 		<ImagesSlider
 			className=" w-full h-[100vh] py-8 md:py-6 xl:py-4 select-none"
 			images={images}
 			texts={texts}
 			positions={positions}
+			mobileUnderlineWords={mobileUnderlineWords}
 		>
 			{/* <motion.div
 				initial={{

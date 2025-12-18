@@ -15,6 +15,7 @@ export const ImagesSlider = ({
 	className,
 	autoplay = true,
 	direction = 'up',
+	mobileUnderlineWords,
 }: {
 	images: string[]
 	texts: string[]
@@ -25,6 +26,7 @@ export const ImagesSlider = ({
 	className?: string
 	autoplay?: boolean
 	direction?: 'up' | 'down'
+	mobileUnderlineWords?: (string[] | undefined)[]
 }) => {
 	const [currentIndex, setCurrentIndex] = useState(0)
 	const [isReady, setIsReady] = useState(false)
@@ -248,124 +250,227 @@ export const ImagesSlider = ({
 						className="absolute bottom-[17%] z-50 text-white-spaces text-center font-robo font-bold transform-gpu will-change-transform"
 						style={{ transform: 'translateZ(40px)' }}
 					>
-						{/* Wrapper to align underline with text width */}
-						<div
-							ref={wrapperRef}
-							className="relative inline-block"
-						>
-							{/* Base text layer */}
-							<h1 className="relative z-10 text-5xl lg:text-6xl xl:text-7xl font-bold uppercase text-white-spaces tracking-[0.01em] [text-wrap:balance]">
-								<span
-									ref={textInlineRef}
-									className="inline"
-								>
-									{texts[currentIndex]}
-								</span>
+						{/* Desktop version (md+) with existing full underline */}
+						<div className="hidden md:block">
+							<div
+								ref={wrapperRef}
+								className="relative inline-block"
+							>
+								<h1 className="relative z-10 text-5xl lg:text-6xl xl:text-7xl font-bold uppercase text-white-spaces tracking-[0.01em] [text-wrap:balance]">
+									<span
+										ref={textInlineRef}
+										className="inline"
+									>
+										{texts[currentIndex]}
+									</span>
+								</h1>
+								<motion.h1
+									aria-hidden
+									initial={{
+										clipPath:
+											'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)',
+									}}
+									animate={{
+										clipPath: prefersReducedMotion
+											? 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
+											: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+										transition: {
+											duration: prefersReducedMotion
+												? 0.2
+												: 0.8,
+											delay: 1.05,
+											ease: [0.22, 1, 0.36, 1],
+										},
+									}}
+									exit={{
+										clipPath:
+											'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)',
+										transition: { duration: 0.3 },
+									}}
+									className="pointer-events-none absolute inset-0 z-20 text-5xl lg:text-6xl xl:text-7xl font-bold uppercase text-white-spaces tracking-[0.01em] will-change-[clip-path]"
+								/>
+								<motion.span
+									aria-hidden
+									initial={{
+										x: prefersReducedMotion ? 0 : '120%',
+										scaleX: 1,
+									}}
+									animate={{
+										x: 0,
+										scaleX: prefersReducedMotion
+											? 1
+											: [1, 1.15, 1],
+										transition: {
+											duration: prefersReducedMotion
+												? 0.2
+												: 0.9,
+											delay: 1.05,
+											ease: [0.22, 1, 0.36, 1],
+										},
+									}}
+									exit={{
+										x: prefersReducedMotion ? 0 : '-100%',
+										transition: { duration: 0.3 },
+									}}
+									className="pointer-events-none absolute -left-2 -bottom-2 z-40 h-[10px] w-[100%] bg-eucalyptus-spaces"
+									style={{
+										left: underlineMetrics
+											? underlineMetrics.left - 4
+											: undefined,
+										width: underlineMetrics
+											? underlineMetrics.width
+											: undefined,
+									}}
+								/>
+								<motion.span
+									aria-hidden
+									initial={{
+										x: prefersReducedMotion ? 0 : '130%',
+										scaleX: 1,
+									}}
+									animate={{
+										x: 0,
+										scaleX: prefersReducedMotion
+											? 1
+											: [1, 1.12, 1],
+										transition: {
+											duration: prefersReducedMotion
+												? 0.2
+												: 0.9,
+											delay: 1.08,
+											ease: [0.22, 1, 0.36, 1],
+										},
+									}}
+									exit={{
+										x: prefersReducedMotion ? 0 : '-100%',
+										transition: { duration: 0.3 },
+									}}
+									className="pointer-events-none absolute left-0 -bottom-[6px] z-30 h-[30px] lg:h-[35px] xl:h-[40px] w-[calc(100%_+_40px)] bg-coral-spaces/90 mix-blend-overlay opacity-80"
+									style={{
+										left: underlineMetrics
+											? underlineMetrics.left + 2
+											: undefined,
+										width: underlineMetrics
+											? Math.max(
+													underlineMetrics.width + 4,
+													0
+											  )
+											: undefined,
+									}}
+								/>
+							</div>
+						</div>
+
+						{/* Mobile version (below md): per-word underline */}
+						<div className="block md:hidden">
+							<h1 className="relative z-10 text-4xl sm:text-5xl font-bold uppercase text-white-spaces tracking-[0.01em] [text-wrap:balance] mx-2">
+								<MobileUnderlineText
+									text={texts[currentIndex]}
+									wordsToUnderline={
+										mobileUnderlineWords?.[currentIndex] ||
+										[]
+									}
+									prefersReducedMotion={
+										!!prefersReducedMotion
+									}
+								/>
 							</h1>
-
-							{/* Revealed text layer via moving clip-path (right -> left) */}
-							<motion.h1
-								aria-hidden
-								initial={{
-									clipPath:
-										'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)',
-								}}
-								animate={{
-									clipPath: prefersReducedMotion
-										? 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
-										: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
-									transition: {
-										duration: prefersReducedMotion
-											? 0.2
-											: 0.8,
-										delay: 1.05,
-										ease: [0.22, 1, 0.36, 1],
-									},
-								}}
-								exit={{
-									clipPath:
-										'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)',
-									transition: { duration: 0.3 },
-								}}
-								className="pointer-events-none absolute inset-0 z-20 text-5xl lg:text-6xl xl:text-7xl font-bold uppercase text-white-spaces tracking-[0.01em] will-change-[clip-path]"
-							/>
-
-							{/* Underline – back layer (under text) */}
-							<motion.span
-								aria-hidden
-								initial={{
-									x: prefersReducedMotion ? 0 : '120%',
-									scaleX: 1,
-								}}
-								animate={{
-									x: 0,
-									scaleX: prefersReducedMotion
-										? 1
-										: [1, 1.15, 1],
-									transition: {
-										duration: prefersReducedMotion
-											? 0.2
-											: 0.9,
-										delay: 1.05,
-										ease: [0.22, 1, 0.36, 1],
-									},
-								}}
-								exit={{
-									x: prefersReducedMotion ? 0 : '-100%',
-									transition: { duration: 0.3 },
-								}}
-								className="pointer-events-none absolute -left-2 -bottom-2 z-40 h-[10px] w-[100%] bg-eucalyptus-spaces"
-								style={{
-									left: underlineMetrics
-										? underlineMetrics.left - 4
-										: undefined,
-									width: underlineMetrics
-										? underlineMetrics.width
-										: undefined,
-								}}
-							/>
-
-							{/* Underline – front layer (slight overlap over descenders) */}
-							<motion.span
-								aria-hidden
-								initial={{
-									x: prefersReducedMotion ? 0 : '130%',
-									scaleX: 1,
-								}}
-								animate={{
-									x: 0,
-									scaleX: prefersReducedMotion
-										? 1
-										: [1, 1.12, 1],
-									transition: {
-										duration: prefersReducedMotion
-											? 0.2
-											: 0.9,
-										delay: 1.08,
-										ease: [0.22, 1, 0.36, 1],
-									},
-								}}
-								exit={{
-									x: prefersReducedMotion ? 0 : '-100%',
-									transition: { duration: 0.3 },
-								}}
-								className="pointer-events-none absolute left-0 -bottom-[6px] z-30 h-[30px] lg:h-[35px] xl:h-[40px] w-[calc(100%_+_40px)] bg-coral-spaces/90 mix-blend-overlay opacity-80"
-								style={{
-									left: underlineMetrics
-										? underlineMetrics.left + 2
-										: undefined,
-									width: underlineMetrics
-										? Math.max(
-												underlineMetrics.width + 4,
-												0
-										  )
-										: undefined,
-								}}
-							/>
 						</div>
 					</motion.div>
 				</AnimatePresence>
 			)}
 		</div>
+	)
+}
+
+function MobileUnderlineText({
+	text,
+	wordsToUnderline,
+	prefersReducedMotion,
+}: {
+	text: string
+	wordsToUnderline: string[]
+	prefersReducedMotion: boolean
+}) {
+	const tokens = text.split(/(\s+)/) // keep spaces as tokens
+	const targets = new Set(wordsToUnderline.map((w) => w.toLowerCase()))
+
+	return (
+		<span>
+			{tokens.map((tok, i) => {
+				const key = `${tok}-${i}`
+				const isSpace = /^\s+$/.test(tok)
+				if (isSpace) return <span key={key}>{tok}</span>
+				const normalized = tok
+					.replace(/[^\p{L}\p{N}]/gu, '')
+					.toLowerCase()
+				const shouldUnderline = targets.has(normalized)
+				if (!shouldUnderline) return <span key={key}>{tok}</span>
+				return (
+					<span
+						key={key}
+						className="relative inline-block"
+					>
+						<span>{tok}</span>
+						{/* Underline – back layer (match desktop: eucalyptus bar) */}
+						<motion.span
+							aria-hidden
+							initial={{
+								x: prefersReducedMotion ? 0 : '120%',
+								scaleX: 1,
+							}}
+							animate={{
+								x: 0,
+								scaleX: prefersReducedMotion ? 1 : [1, 1.15, 1],
+								transition: {
+									duration: prefersReducedMotion ? 0.2 : 0.9,
+									delay: 1.05,
+									ease: [0.22, 1, 0.36, 1],
+								},
+							}}
+							exit={{
+								x: prefersReducedMotion ? 0 : '-100%',
+								transition: { duration: 0.3 },
+							}}
+							className="pointer-events-none absolute z-40 h-[8px] bg-eucalyptus-spaces"
+							style={{
+								left: -3,
+								bottom: -4,
+								width: 'calc(100% + 4px)',
+							}}
+						/>
+
+						{/* Underline – front layer (match desktop: coral overlay bar) */}
+						<motion.span
+							aria-hidden
+							initial={{
+								x: prefersReducedMotion ? 0 : '130%',
+								scaleX: 1,
+							}}
+							animate={{
+								x: 0,
+								scaleX: prefersReducedMotion ? 1 : [1, 1.12, 1],
+								transition: {
+									duration: prefersReducedMotion ? 0.2 : 0.9,
+									delay: 1.08,
+									ease: [0.22, 1, 0.36, 1],
+								},
+							}}
+							exit={{
+								x: prefersReducedMotion ? 0 : '-100%',
+								transition: { duration: 0.3 },
+							}}
+							className="pointer-events-none absolute z-30 bg-coral-spaces/90 mix-blend-overlay opacity-80"
+							style={{
+								left: 0,
+								bottom: 0,
+								height: 20,
+								width: 'calc(100% + 20px)',
+							}}
+						/>
+					</span>
+				)
+			})}
+		</span>
 	)
 }
