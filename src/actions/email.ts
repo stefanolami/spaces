@@ -54,7 +54,7 @@ export async function sendContactEmail(
 	data: ContactFormData
 ): Promise<EmailResponse> {
 	// Use a relative URL so it works in dev and prod environments
-	const apiEndpoint = 'http://localhost:3000/api/contact'
+	const apiEndpoint = '/api/contact'
 
 	try {
 		const res = await fetch(apiEndpoint, {
@@ -75,4 +75,41 @@ export async function sendContactEmail(
 		console.error('Error sending contact email:', err)
 		return { success: false, error: (err as Error).message }
 	}
+}
+
+// Booking & availability senders
+type BookingRequestData = {
+	// Mirror the bookingRequestSchema fields; keep it loose here to avoid duplication
+	//eslint-disable-next-line @typescript-eslint/no-explicit-any
+	[key: string]: any
+}
+
+export async function sendBookingRequest(
+	data: BookingRequestData
+): Promise<EmailResponse> {
+	const res = await fetch('/api/booking', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(data),
+	})
+	if (!res.ok) {
+		return { success: false, error: `HTTP error! status: ${res.status}` }
+	}
+	const responseData = await res.json()
+	return { success: true, data: responseData }
+}
+
+export async function sendAvailabilityRequest(
+	data: BookingRequestData
+): Promise<EmailResponse> {
+	const res = await fetch('/api/availability', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(data),
+	})
+	if (!res.ok) {
+		return { success: false, error: `HTTP error! status: ${res.status}` }
+	}
+	const responseData = await res.json()
+	return { success: true, data: responseData }
 }

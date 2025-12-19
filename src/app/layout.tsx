@@ -4,6 +4,7 @@ import '@/app/globals.css'
 import { RenderMounted } from '@/components/render-mounted'
 import Header from '@/components/header/header'
 import Footer from '@/components/footer'
+import BookingSheetProvider from '@/components/booking/booking-sheet-provider'
 
 export const metadata: Metadata = {
 	title: 'Time&Spaces',
@@ -37,9 +38,11 @@ export default function RootLayout({
 				className={`${robo.variable} ${nunito.variable} antialiased bg-white-spaces min-h-screen flex flex-col`}
 			>
 				<RenderMounted>
-					<Header />
-					<main className="flex-1">{children}</main>
-					<Footer />
+					<BookingSheetProvider>
+						<Header />
+						<main className="flex-1">{children}</main>
+						<Footer />
+					</BookingSheetProvider>
 				</RenderMounted>
 			</body>
 		</html>

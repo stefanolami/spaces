@@ -82,7 +82,7 @@ const HomeSection = () => {
 					className="w-full h-full"
 				>
 					<button className="w-full h-full bg-midnight-spaces flex items-center justify-center font-nunito font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-white-spaces px-6 md:px-8 lg:px-10 xl:px-12 py-2 lg:py-3 xl:py-4 shadow-md hover:shadow-lg hover:scale-105">
-						BOOK NOW
+						MAKE REQUEST
 					</button>
 				</Link>
 				<Link

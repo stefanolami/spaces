@@ -1,6 +1,10 @@
+'use client'
+
 import Link from 'next/link'
 import { ConceptsCardType } from '@/lib/types'
 import Image from 'next/image'
+import { useBookingSheet } from '@/components/booking/booking-sheet-provider'
+import { BUNDLE_MAP, slugifyBundle } from '@/lib/bundle-map'
 
 const ConceptsCard = ({
 	position,
@@ -9,6 +13,26 @@ const ConceptsCard = ({
 	position: number
 	concept: ConceptsCardType
 }) => {
+	const { openBookingSheet } = useBookingSheet()
+
+	function handleGetQuote(
+		e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>
+	) {
+		e.preventDefault()
+		const slug = slugifyBundle(concept.title)
+		const bundle = BUNDLE_MAP[slug]
+		if (!bundle)
+			return openBookingSheet({ sourcePath: '/concepts' }, 'availability')
+		openBookingSheet(
+			{
+				bundleSlug: slug,
+				rooms: bundle.rooms,
+				services: bundle.services,
+				sourcePath: '/concepts',
+			},
+			'availability'
+		)
+	}
 	return (
 		<div className={` ${concept.containerClasses} flex w-full font-nunito`}>
 			<div className="w-full flex flex-col md:grid md:grid-cols-2 h-full">
@@ -34,11 +58,14 @@ const ConceptsCard = ({
 					<p className="text-sm md:text-sm lg:text-base text-center md:text-justify">
 						{concept.text}
 					</p>
-					<Link href={concept.link}>
+					<Link
+						href={concept.link}
+						onClick={handleGetQuote}
+					>
 						<button
 							className={`w-36 h-8 mx-auto mt-4 md:w-40 md:h-10 lg:w-48 bg-midnight-spaces text-white-spaces hover:scale-105 transition-scale-standard  flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold shadow-md hover:shadow-lg`}
 						>
-							GET A QUOTE
+							MAKE REQUEST
 						</button>
 					</Link>
 				</div>

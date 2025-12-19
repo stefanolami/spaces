@@ -1,8 +1,11 @@
+'use client'
+
 import { FacilitiesCardType } from '@/lib/types'
 /* import Image from 'next/image' */
-import Link from 'next/link'
 import FacilitiesCarousel from './facilities-carousel'
 import Image from 'next/image'
+import { useBookingSheet } from '@/components/booking/booking-sheet-provider'
+import { roomTitleToId } from '@/lib/room-map'
 
 const FacilitiesCard = ({
 	card,
@@ -11,6 +14,19 @@ const FacilitiesCard = ({
 	card: FacilitiesCardType
 	position: number
 }) => {
+	const { openBookingSheet } = useBookingSheet()
+
+	const roomId = roomTitleToId(card.title)
+
+	function handleBookNow() {
+		if (!roomId)
+			return openBookingSheet({ sourcePath: '/facilities' }, 'booking')
+		openBookingSheet(
+			{ rooms: [roomId], sourcePath: '/facilities' },
+			'booking'
+		)
+	}
+
 	return (
 		<>
 			<div className={`bg-white-spaces flex w-full font-nunito`}>
@@ -38,16 +54,13 @@ const FacilitiesCard = ({
 							{card.text}
 						</p>
 						<div className="w-full lg:w-3/4 xl:w-2/3 my-4 md:gap-4 grid grid-cols-2">
-							<Link href={card.firstLink}>
-								<button className="bg-midnight-spaces hover:scale-105 transition-scale-standard w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white-spaces shadow-md hover:shadow-lg">
-									BOOK NOW
-								</button>
-							</Link>
-							<Link href={card.firstLink}>
-								<button className="bg-black-spaces hover:scale-105 transition-scale-standard w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white-spaces shadow-md hover:shadow-lg">
-									GET A QUOTE
-								</button>
-							</Link>
+							<button
+								type="button"
+								onClick={handleBookNow}
+								className="bg-midnight-spaces hover:scale-105 transition-scale-standard w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white-spaces shadow-md hover:shadow-lg"
+							>
+								MAKE REQUEST
+							</button>
 						</div>
 					</div>
 				</div>
