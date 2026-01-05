@@ -5,6 +5,7 @@ import type { PrefillPayload, BookingMode } from '@/lib/booking-types'
 import BookingSheet from '@/components/booking/booking-sheet'
 import { Toaster } from '@/components/ui/sonner'
 import { useBookingStore } from '@/lib/booking-store'
+import { ChevronLeft } from 'lucide-react'
 
 type BookingSheetContextType = {
 	isOpen: boolean
@@ -74,6 +75,17 @@ export default function BookingSheetProvider({
 				payload={payload}
 				mode={mode}
 			/>
+			{/* Expand handle at bottom-right when collapsed */}
+			{!isOpen && (
+				<button
+					aria-label="Expand booking panel"
+					title="Expand"
+					onClick={() => openBookingSheet()}
+					className="fixed bottom-6 right-0 z-40 bg-midnight-spaces text-white-spaces border-2 border-midnight-spaces hover:border-coral-spaces border-r-0 rounded-tl-full rounded-bl-full shadow-xl p-3 hover:bg-midnight-spaces/90 focus:outline-none focus:ring-0"
+				>
+					<ChevronLeft className="h-6 w-6" />
+				</button>
+			)}
 			<Toaster
 				richColors
 				closeButton

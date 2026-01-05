@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { PrefillPayload, BookingMode } from '@/lib/booking-types'
 import {
 	Sheet,
@@ -8,6 +8,7 @@ import {
 	SheetHeader,
 	SheetTitle,
 	SheetDescription,
+	SheetClose,
 } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 import {
@@ -34,9 +35,16 @@ import { SERVICE_IDS, serviceIdToTitle } from '@/lib/service-map'
 import { toast } from 'sonner'
 import { sendAvailabilityRequest, sendBookingRequest } from '@/actions/email'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { useState } from 'react'
+// useState imported above with useRef
 import { useBookingStore } from '@/lib/booking-store'
 import type { RoomId, ServiceSelection } from '@/lib/booking-types'
+import {
+	ChevronRight,
+	Building2,
+	CalendarDays,
+	Cog,
+	UserRound,
+} from 'lucide-react'
 
 export default function BookingSheet({
 	open,
@@ -55,7 +63,6 @@ export default function BookingSheet({
 		resolver: zodResolver(bookingRequestSchema),
 		defaultValues: {
 			mode,
-			rooms: payload?.rooms ?? [],
 			bundleSlug: payload?.bundleSlug,
 			dates: [],
 			startTime: payload?.startTime,
@@ -91,10 +98,11 @@ export default function BookingSheet({
 	const [submitting, setSubmitting] = useState(false)
 
 	const { draft, updateDraft, clearDraft } = useBookingStore()
+	const hydratedRef = useRef(false)
 
 	// Hydrate form from persisted draft when opening without a payload
 	useEffect(() => {
-		if (open && !payload && draft) {
+		if (open && !payload && draft && !hydratedRef.current) {
 			if (draft.rooms && draft.rooms.length > 0)
 				form.setValue('rooms', draft.rooms as [RoomId, ...RoomId[]])
 			if (draft.services && draft.services.length > 0)
@@ -129,7 +137,9 @@ export default function BookingSheet({
 						draft.contact.organization
 					)
 			}
+			hydratedRef.current = true
 		}
+		if (!open) hydratedRef.current = false
 	}, [open, payload, draft, form])
 
 	// Persist draft on form changes
@@ -184,24 +194,43 @@ export default function BookingSheet({
 			open={open}
 			onOpenChange={onOpenChange}
 		>
-			<SheetContent className="bg-white-spaces text-black-spaces border-l border-midnight-spaces p-0 md:p-0">
-				<div className="flex flex-col h-full">
-					<SheetHeader className="px-4 md:px-6 py-3 md:py-4 border-b border-beje-spaces bg-white-spaces">
-						<SheetTitle className="text-lg md:text-xl font-bold">
-							{title}
-						</SheetTitle>
-						<SheetDescription className="text-sm md:text-base">
+			<SheetContent className="bg-white-spaces text-black-spaces border-l border-midnight-spaces shadow-2xl p-0 md:p-0">
+				<div className="flex flex-col h-full relative">
+					{/* Brand accent strip */}
+					{/* {
+						<div
+							className="absolute left-0 top-0 bottom-0 w-1 bg-midnight-spaces/80"
+							aria-hidden="true"
+						/>
+					} */}
+					<SheetHeader className="sticky top-0 z-10 px-4 md:px-6 py-3 md:py-4 border-b border-beje-spaces bg-gradient-to-b from-eucalyptus-spaces/50 to-white-spaces">
+						<div className="flex items-center gap-2">
+							<SheetClose asChild>
+								<button
+									aria-label="Collapse panel"
+									title="Collapse"
+									className="p-2 -ml-1 rounded-md text-black-spaces hover:bg-beje-spaces/70 focus:outline-none focus:ring-0"
+								>
+									<ChevronRight className="h-7 w-7" />
+								</button>
+							</SheetClose>
+							<SheetTitle className="text-lg md:text-xl font-bold text-midnight-spaces">
+								{title}
+							</SheetTitle>
+						</div>
+						<SheetDescription className="text-sm md:text-base text-black-spaces/70">
 							Complete your details and send a request. Our team
 							will reply shortly.
 						</SheetDescription>
 					</SheetHeader>
 
-					<ScrollArea className="flex-1 px-4 md:px-6 py-4">
+					<ScrollArea className="flex-1 px-4 md:px-6 py-6 bg-white-spaces">
 						<Form {...form}>
-							<form className="grid gap-4">
+							<form className="grid gap-6">
 								<section>
-									<div className="text-sm font-bold mb-2">
-										Rooms
+									<div className="text-sm font-bold mb-2 text-midnight-spaces flex items-center gap-2">
+										<Building2 className="h-4 w-4" />
+										<span>Rooms</span>
 									</div>
 									<div className="grid grid-cols-1 md:grid-cols-2 gap-2">
 										{ROOM_IDS.map((id) => (
@@ -216,7 +245,7 @@ export default function BookingSheet({
 														)
 													return (
 														<FormItem className="mt-0">
-															<div className="flex items-center gap-2 border border-beje-spaces rounded-md p-2">
+															<div className="flex items-center gap-2 border border-beje-spaces rounded-md p-2 hover:border-midnight-spaces transition-colors">
 																<FormControl>
 																	<Checkbox
 																		checked={
@@ -248,7 +277,7 @@ export default function BookingSheet({
 																		}}
 																	/>
 																</FormControl>
-																<FormLabel className="font-normal">
+																<FormLabel className="font-normal text-black-spaces">
 																	{roomIdToTitle(
 																		id
 																	)}
@@ -266,8 +295,9 @@ export default function BookingSheet({
 								<Separator className="bg-beje-spaces" />
 
 								<section>
-									<div className="text-sm font-bold mb-2">
-										Dates
+									<div className="text-sm font-bold mb-2 text-midnight-spaces flex items-center gap-2">
+										<CalendarDays className="h-4 w-4" />
+										<span>Dates</span>
 									</div>
 									<FormField
 										control={form.control}
@@ -284,13 +314,34 @@ export default function BookingSheet({
 															)
 														}
 														fromDate={new Date()}
+														buttonVariant="outline"
+														classNames={{
+															weekdays:
+																'flex text-black-spaces/60',
+															weekday:
+																'text-black-spaces/60 flex-1 select-none rounded-md text-[0.8rem] font-normal',
+															caption_label:
+																'text-midnight-spaces',
+															today: 'bg-midnight-spaces text-white-spaces rounded-md data-[selected=true]:rounded-none',
+															range_start:
+																'bg-midnight-spaces text-white-spaces rounded-l-md',
+															range_end:
+																'bg-midnight-spaces text-white-spaces rounded-r-md',
+															range_middle:
+																'bg-beje-spaces text-black-spaces',
+															nav: 'absolute inset-x-0 top-0 flex w-full items-center justify-between',
+															button_previous:
+																'border-beje-spaces',
+															button_next:
+																'border-beje-spaces',
+														}}
 													/>
 												</FormControl>
 												<FormMessage />
 											</FormItem>
 										)}
 									/>
-									{/* <div className="grid grid-cols-2 gap-2 mt-2">
+									<div className="grid grid-cols-2 gap-2 mt-2">
 										<FormField
 											control={form.control}
 											name="startTime"
@@ -300,11 +351,75 @@ export default function BookingSheet({
 														Start time
 													</FormLabel>
 													<FormControl>
-														<Input
-															type="time"
-															placeholder="09:00"
-															{...field}
-														/>
+														{(() => {
+															const {
+																onBlur,
+																onChange,
+																value,
+																...rest
+															} = field
+															return (
+																<Input
+																	type="time"
+																	step={1800}
+																	placeholder="09:00"
+																	className="bg-white-spaces border-midnight-spaces text-black-spaces focus-visible:ring-midnight-spaces"
+																	value={
+																		value ??
+																		''
+																	}
+																	onBlur={(
+																		e
+																	) => {
+																		const v =
+																			e
+																				.target
+																				.value
+																		const m =
+																			v.match(
+																				/^(\d{2}):(\d{2})/
+																			)
+																		if (m) {
+																			const hh =
+																				m[1]
+																			let mm =
+																				parseInt(
+																					m[2],
+																					10
+																				)
+																			mm =
+																				mm <
+																				15
+																					? 0
+																					: mm <
+																					  45
+																					? 30
+																					: 30
+																			const norm = `${hh}:${mm
+																				.toString()
+																				.padStart(
+																					2,
+																					'0'
+																				)}`
+																			onChange(
+																				norm
+																			)
+																		}
+																		onBlur()
+																	}}
+																	onChange={(
+																		e
+																	) =>
+																		onChange(
+																			e
+																				.target
+																				.value
+																		)
+																	}
+																	{...rest}
+																/>
+															)
+														})()}
 													</FormControl>
 													<FormMessage />
 												</FormItem>
@@ -319,24 +434,89 @@ export default function BookingSheet({
 														End time
 													</FormLabel>
 													<FormControl>
-														<Input
-															type="time"
-															placeholder="17:00"
-															{...field}
-														/>
+														{(() => {
+															const {
+																onBlur,
+																onChange,
+																value,
+																...rest
+															} = field
+															return (
+																<Input
+																	type="time"
+																	step={1800}
+																	placeholder="17:00"
+																	className="bg-white-spaces border-midnight-spaces text-black-spaces focus-visible:ring-midnight-spaces"
+																	value={
+																		value ??
+																		''
+																	}
+																	onBlur={(
+																		e
+																	) => {
+																		const v =
+																			e
+																				.target
+																				.value
+																		const m =
+																			v.match(
+																				/^(\d{2}):(\d{2})/
+																			)
+																		if (m) {
+																			const hh =
+																				m[1]
+																			let mm =
+																				parseInt(
+																					m[2],
+																					10
+																				)
+																			mm =
+																				mm <
+																				15
+																					? 0
+																					: mm <
+																					  45
+																					? 30
+																					: 30
+																			const norm = `${hh}:${mm
+																				.toString()
+																				.padStart(
+																					2,
+																					'0'
+																				)}`
+																			onChange(
+																				norm
+																			)
+																		}
+																		onBlur()
+																	}}
+																	onChange={(
+																		e
+																	) =>
+																		onChange(
+																			e
+																				.target
+																				.value
+																		)
+																	}
+																	{...rest}
+																/>
+															)
+														})()}
 													</FormControl>
 													<FormMessage />
 												</FormItem>
 											)}
 										/>
-									</div> */}
+									</div>
 								</section>
 
 								<Separator className="bg-beje-spaces" />
 
 								<section>
-									<div className="text-sm font-bold mb-2">
-										Services
+									<div className="text-sm font-bold mb-2 text-midnight-spaces flex items-center gap-2">
+										<Cog className="h-4 w-4" />
+										<span>Services</span>
 									</div>
 									<div className="grid grid-cols-2 gap-2">
 										{SERVICE_IDS.map((svc) => (
@@ -354,7 +534,7 @@ export default function BookingSheet({
 													const checked = idx >= 0
 													return (
 														<FormItem className="mt-0">
-															<div className="flex items-center gap-2 border border-beje-spaces rounded-md p-2">
+															<div className="flex items-center gap-2 border border-beje-spaces rounded-lg p-2 hover:border-midnight-spaces hover:shadow-sm transition-colors">
 																<FormControl>
 																	<Checkbox
 																		checked={
@@ -405,7 +585,7 @@ export default function BookingSheet({
 
 								<section>
 									<div className="grid grid-cols-1 gap-2">
-										{/* <FormField
+										<FormField
 											control={form.control}
 											name="attendees"
 											render={({ field }) => (
@@ -424,7 +604,7 @@ export default function BookingSheet({
 													<FormMessage />
 												</FormItem>
 											)}
-										/> */}
+										/>
 										<FormField
 											control={form.control}
 											name="notes"
@@ -447,8 +627,9 @@ export default function BookingSheet({
 								<Separator className="bg-beje-spaces" />
 
 								<section>
-									<div className="text-sm font-bold mb-2">
-										Contact
+									<div className="text-sm font-bold mb-2 text-midnight-spaces flex items-center gap-2">
+										<UserRound className="h-4 w-4" />
+										<span>Contact</span>
 									</div>
 									<div className="grid grid-cols-1 md:grid-cols-2 gap-2">
 										<FormField
@@ -542,10 +723,10 @@ export default function BookingSheet({
 						</Form>
 					</ScrollArea>
 
-					<div className="px-4 md:px-6 py-3 md:py-4 border-t border-beje-spaces bg-white-spaces flex items-center justify-end gap-2">
+					<div className="px-2 md:px-6 py-3 md:py-4 border-t border-beje-spaces bg-gradient-to-t from-white-spaces to-white-spaces/70 flex items-center justify-end gap-2">
 						<Button
 							onClick={() => submit('booking')}
-							className="bg-midnight-spaces text-white-spaces hover:bg-midnight-spaces/90"
+							className="bg-midnight-spaces text-white-spaces hover:bg-midnight-spaces/90 text-sm"
 							aria-label="Send booking request"
 							disabled={submitting}
 						>
