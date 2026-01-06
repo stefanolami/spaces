@@ -24,6 +24,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Separator } from '@/components/ui/separator'
 import { Calendar } from '@/components/ui/calendar'
+import type { DateRange } from 'react-day-picker'
 import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -35,7 +36,6 @@ import { SERVICE_IDS, serviceIdToTitle } from '@/lib/service-map'
 import { toast } from 'sonner'
 import { sendAvailabilityRequest, sendBookingRequest } from '@/actions/email'
 import { ScrollArea } from '@/components/ui/scroll-area'
-// useState imported above with useRef
 import { useBookingStore } from '@/lib/booking-store'
 import type { RoomId, ServiceSelection } from '@/lib/booking-types'
 import {
@@ -44,7 +44,17 @@ import {
 	CalendarDays,
 	Cog,
 	UserRound,
+	NotebookPen,
+	Users,
 } from 'lucide-react'
+import { Clock } from 'lucide-react'
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select'
 
 export default function BookingSheet({
 	open,
@@ -57,7 +67,35 @@ export default function BookingSheet({
 	payload: PrefillPayload | null
 	mode: BookingMode
 }) {
-	const title = useMemo(() => 'Booking & Availability', [])
+	// Title based on mode
+	const title = useMemo(
+		() => (mode === 'booking' ? 'Booking Request' : 'Availability Request'),
+		[mode]
+	)
+
+	// Calendar selection mode (single | multiple | range)
+	const [calendarMode, setCalendarMode] = useState<
+		'single' | 'multiple' | 'range'
+	>('single')
+
+	// Local range state to drive visual feedback in range mode
+	const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined)
+
+	function expandRangeToDates(from: Date, to: Date): Date[] {
+		const result: Date[] = []
+		const start = new Date(from)
+		start.setHours(0, 0, 0, 0)
+		const end = new Date(to)
+		end.setHours(0, 0, 0, 0)
+		for (
+			let d = new Date(start.getTime());
+			d.getTime() <= end.getTime();
+			d.setDate(d.getDate() + 1)
+		) {
+			result.push(new Date(d))
+		}
+		return result
+	}
 
 	const form = useForm<BookingRequest>({
 		resolver: zodResolver(bookingRequestSchema),
@@ -203,13 +241,13 @@ export default function BookingSheet({
 							aria-hidden="true"
 						/>
 					} */}
-					<SheetHeader className="sticky top-0 z-10 px-4 md:px-6 py-3 md:py-4 border-b border-beje-spaces bg-gradient-to-b from-eucalyptus-spaces/50 to-white-spaces">
+					<SheetHeader className="sticky top-0 z-10 px-4 md:px-6 py-3 md:py-4 border-b border-coral-spaces bg-gradient-to-b from-eucalyptus-spaces/70 to-white-spaces">
 						<div className="flex items-center gap-2">
 							<SheetClose asChild>
 								<button
 									aria-label="Collapse panel"
 									title="Collapse"
-									className="p-2 -ml-1 rounded-md text-black-spaces hover:bg-beje-spaces/70 focus:outline-none focus:ring-0"
+									className="p-2 -ml-1 rounded-md text-black-spaces hover:bg-eucalyptus-spaces/70 focus:outline-none focus:ring-0"
 								>
 									<ChevronRight className="h-7 w-7" />
 								</button>
@@ -224,9 +262,9 @@ export default function BookingSheet({
 						</SheetDescription>
 					</SheetHeader>
 
-					<ScrollArea className="flex-1 px-4 md:px-6 py-6 bg-white-spaces">
+					<ScrollArea className="flex-1 px-4 bg-white-spaces">
 						<Form {...form}>
-							<form className="grid gap-6">
+							<form className="grid gap-6 my-6">
 								<section>
 									<div className="text-sm font-bold mb-2 text-midnight-spaces flex items-center gap-2">
 										<Building2 className="h-4 w-4" />
@@ -245,12 +283,17 @@ export default function BookingSheet({
 														)
 													return (
 														<FormItem className="mt-0">
-															<div className="flex items-center gap-2 border border-beje-spaces rounded-md p-2 hover:border-midnight-spaces transition-colors">
+															<label
+																htmlFor={`room-${id}`}
+																className="flex items-center gap-2 border border-coral-spaces rounded-md p-2 hover:bg-eucalyptus-spaces/20 transition-colors cursor-pointer w-full"
+															>
 																<FormControl>
 																	<Checkbox
+																		id={`room-${id}`}
 																		checked={
 																			!!checked
 																		}
+																		className="border-midnight-spaces data-[state=checked]:bg-midnight-spaces data-[state=checked]:text-white-spaces data-[state=checked]:border-midnight-spaces"
 																		onCheckedChange={(
 																			c
 																		) => {
@@ -277,12 +320,12 @@ export default function BookingSheet({
 																		}}
 																	/>
 																</FormControl>
-																<FormLabel className="font-normal text-black-spaces">
+																<span className="font-normal text-black-spaces w-full text-xs md:text-sm">
 																	{roomIdToTitle(
 																		id
 																	)}
-																</FormLabel>
-															</div>
+																</span>
+															</label>
 															<FormMessage />
 														</FormItem>
 													)
@@ -292,7 +335,7 @@ export default function BookingSheet({
 									</div>
 								</section>
 
-								<Separator className="bg-beje-spaces" />
+								<Separator className="bg-coral-spaces" />
 
 								<section>
 									<div className="text-sm font-bold mb-2 text-midnight-spaces flex items-center gap-2">
@@ -304,120 +347,454 @@ export default function BookingSheet({
 										name="dates"
 										render={({ field }) => (
 											<FormItem>
-												<FormControl>
-													<Calendar
-														mode="multiple"
-														selected={field.value}
-														onSelect={(dates) =>
-															field.onChange(
-																dates ?? []
+												{/* Calendar mode toggles */}
+												<div className="flex items-center gap-2 mb-2">
+													<Button
+														type="button"
+														size="sm"
+														variant={
+															calendarMode ===
+															'single'
+																? 'default'
+																: 'outline'
+														}
+														className={
+															calendarMode ===
+															'single'
+																? 'bg-midnight-spaces text- text-white-spaces hover:bg-midnight-spaces/90'
+																: ''
+														}
+														onClick={() =>
+															setCalendarMode(
+																'single'
 															)
 														}
-														fromDate={new Date()}
-														buttonVariant="outline"
-														classNames={{
-															weekdays:
-																'flex text-black-spaces/60',
-															weekday:
-																'text-black-spaces/60 flex-1 select-none rounded-md text-[0.8rem] font-normal',
-															caption_label:
-																'text-midnight-spaces',
-															today: 'bg-midnight-spaces text-white-spaces rounded-md data-[selected=true]:rounded-none',
-															range_start:
-																'bg-midnight-spaces text-white-spaces rounded-l-md',
-															range_end:
-																'bg-midnight-spaces text-white-spaces rounded-r-md',
-															range_middle:
-																'bg-beje-spaces text-black-spaces',
-															nav: 'absolute inset-x-0 top-0 flex w-full items-center justify-between',
-															button_previous:
-																'border-beje-spaces',
-															button_next:
-																'border-beje-spaces',
-														}}
-													/>
+													>
+														Single
+													</Button>
+													<Button
+														type="button"
+														size="sm"
+														variant={
+															calendarMode ===
+															'multiple'
+																? 'default'
+																: 'outline'
+														}
+														className={
+															calendarMode ===
+															'multiple'
+																? 'bg-midnight-spaces text-white-spaces hover:bg-midnight-spaces/90'
+																: ''
+														}
+														onClick={() =>
+															setCalendarMode(
+																'multiple'
+															)
+														}
+													>
+														Multiple
+													</Button>
+													<Button
+														type="button"
+														size="sm"
+														variant={
+															calendarMode ===
+															'range'
+																? 'default'
+																: 'outline'
+														}
+														className={
+															calendarMode ===
+															'range'
+																? 'bg-midnight-spaces text-white-spaces hover:bg-midnight-spaces/90'
+																: ''
+														}
+														onClick={() =>
+															setCalendarMode(
+																'range'
+															)
+														}
+													>
+														Range
+													</Button>
+												</div>
+												<FormControl>
+													{calendarMode ===
+													'single' ? (
+														<Calendar
+															mode="single"
+															selected={
+																(field.value &&
+																	field
+																		.value[0]) ||
+																undefined
+															}
+															onSelect={(date) =>
+																field.onChange(
+																	date
+																		? [date]
+																		: []
+																)
+															}
+															fromDate={
+																new Date()
+															}
+															buttonVariant="outline"
+															classNames={{
+																weekdays:
+																	'flex text-black-spaces/60',
+																weekday:
+																	'text-black-spaces/60 flex-1 select-none rounded-md text-[0.8rem] font-normal',
+																caption_label:
+																	'text-midnight-spaces',
+																today: '[&>button]:border [&>button]:border-midnight-spaces [&>button]:rounded-md',
+																day: '[&>button[data-selected-single=true]]:bg-midnight-spaces [&>button[data-selected-single=true]]:text-white-spaces',
+																range_start:
+																	'bg-midnight-spaces text-white-spaces rounded-l-md',
+																range_end:
+																	'bg-midnight-spaces text-white-spaces rounded-r-md',
+																range_middle:
+																	'bg-midnight-spaces text-white-spaces',
+																nav: 'absolute inset-x-0 top-2 flex w-full items-center justify-between',
+																button_previous:
+																	'bg-eucalyptus-spaces/20 hover:bg-eucalyptus-spaces/40 transition-colors duration-300 p-1 rounded-sm',
+																button_next:
+																	'bg-eucalyptus-spaces/20 hover:bg-eucalyptus-spaces/40 transition-colors duration-300 p-1 rounded-sm',
+															}}
+														/>
+													) : calendarMode ===
+													  'multiple' ? (
+														<Calendar
+															mode="multiple"
+															selected={
+																field.value
+															}
+															onSelect={(dates) =>
+																field.onChange(
+																	dates ?? []
+																)
+															}
+															fromDate={
+																new Date()
+															}
+															buttonVariant="outline"
+															classNames={{
+																weekdays:
+																	'flex text-black-spaces/60',
+																weekday:
+																	'text-black-spaces/60 flex-1 select-none rounded-md text-[0.8rem] font-normal',
+																caption_label:
+																	'text-midnight-spaces',
+																today: '[&>button]:border [&>button]:border-midnight-spaces [&>button]:rounded-md',
+																day: '[&>button[data-selected-single=true]]:bg-midnight-spaces [&>button[data-selected-single=true]]:text-white-spaces',
+																range_start:
+																	'bg-midnight-spaces text-white-spaces rounded-l-md',
+																range_end:
+																	'bg-midnight-spaces text-white-spaces rounded-r-md',
+																range_middle:
+																	'bg-midnight-spaces/70 text-white-spaces',
+																nav: 'absolute inset-x-0 top-2 flex w-full items-center justify-between',
+																button_previous:
+																	'bg-eucalyptus-spaces/20 hover:bg-eucalyptus-spaces/40 transition-colors duration-300 p-1 rounded-sm',
+																button_next:
+																	'bg-eucalyptus-spaces/20 hover:bg-eucalyptus-spaces/40 transition-colors duration-300 p-1 rounded-sm',
+															}}
+														/>
+													) : (
+														<Calendar
+															mode="range"
+															required={false}
+															selected={dateRange}
+															onSelect={(
+																range
+															) => {
+																setDateRange(
+																	range ??
+																		undefined
+																)
+																if (
+																	range?.from &&
+																	range?.to
+																)
+																	field.onChange(
+																		expandRangeToDates(
+																			range.from,
+																			range.to
+																		)
+																	)
+																else if (
+																	range?.from
+																)
+																	field.onChange(
+																		[
+																			range.from,
+																		]
+																	)
+																else
+																	field.onChange(
+																		[]
+																	)
+															}}
+															fromDate={
+																new Date()
+															}
+															buttonVariant="outline"
+															classNames={{
+																weekdays:
+																	'flex text-black-spaces/60',
+																weekday:
+																	'text-black-spaces/60 flex-1 select-none rounded-md text-[0.8rem] font-normal',
+																caption_label:
+																	'text-midnight-spaces',
+																today: '[&>button]:border [&>button]:border-midnight-spaces [&>button]:rounded-md',
+																day: '[&>button[data-selected-single=true]]:bg-midnight-spaces [&>button[data-selected-single=true]]:text-white-spaces',
+																range_start:
+																	'bg-midnight-spaces text-white-spaces rounded-l-md',
+																range_end:
+																	'bg-midnight-spaces text-white-spaces rounded-r-md',
+																range_middle:
+																	'bg-midnight-spaces/70 text-white-spaces',
+																nav: 'absolute inset-x-0 top-2 flex w-full items-center justify-between',
+																button_previous:
+																	'bg-eucalyptus-spaces/20 hover:bg-eucalyptus-spaces/40 transition-colors duration-300 p-1 rounded-sm',
+																button_next:
+																	'bg-eucalyptus-spaces/20 hover:bg-eucalyptus-spaces/40 transition-colors duration-300 p-1 rounded-sm',
+															}}
+														/>
+													)}
 												</FormControl>
 												<FormMessage />
 											</FormItem>
 										)}
 									/>
+									{/* Time presets */}
+									<div className="flex items-center gap-2 mt-3">
+										<Button
+											type="button"
+											size="sm"
+											variant={
+												watched.startTime === '08:00' &&
+												watched.endTime === '18:00'
+													? 'default'
+													: 'outline'
+											}
+											className={
+												watched.startTime === '08:00' &&
+												watched.endTime === '18:00'
+													? 'bg-midnight-spaces text-white-spaces hover:bg-midnight-spaces/90'
+													: ''
+											}
+											onClick={() => {
+												form.setValue(
+													'startTime',
+													'08:00'
+												)
+												form.setValue(
+													'endTime',
+													'18:00'
+												)
+											}}
+										>
+											Full day{' '}
+											<span className="hidden sm:inline">
+												08–18
+											</span>
+										</Button>
+										<Button
+											type="button"
+											size="sm"
+											variant={
+												watched.startTime === '08:00' &&
+												watched.endTime === '12:00'
+													? 'default'
+													: 'outline'
+											}
+											className={
+												watched.startTime === '08:00' &&
+												watched.endTime === '12:00'
+													? 'bg-midnight-spaces text-white-spaces hover:bg-midnight-spaces/90'
+													: ''
+											}
+											onClick={() => {
+												form.setValue(
+													'startTime',
+													'08:00'
+												)
+												form.setValue(
+													'endTime',
+													'12:00'
+												)
+											}}
+										>
+											Morning{' '}
+											<span className="hidden sm:inline">
+												08–12
+											</span>
+										</Button>
+										<Button
+											type="button"
+											size="sm"
+											variant={
+												watched.startTime === '14:00' &&
+												watched.endTime === '18:00'
+													? 'default'
+													: 'outline'
+											}
+											className={
+												watched.startTime === '14:00' &&
+												watched.endTime === '18:00'
+													? 'bg-midnight-spaces text-white-spaces hover:bg-midnight-spaces/90'
+													: ''
+											}
+											onClick={() => {
+												form.setValue(
+													'startTime',
+													'14:00'
+												)
+												form.setValue(
+													'endTime',
+													'18:00'
+												)
+											}}
+										>
+											Afternoon{' '}
+											<span className="hidden sm:inline">
+												14–18
+											</span>
+										</Button>
+									</div>
 									<div className="grid grid-cols-2 gap-2 mt-2">
 										<FormField
 											control={form.control}
 											name="startTime"
 											render={({ field }) => (
 												<FormItem>
-													<FormLabel>
-														Start time
+													<FormLabel className="text-sm font-bold text-midnight-spaces flex items-center gap-2 mb-2">
+														<Clock className="h-4 w-4" />
+														<span>Start time</span>
 													</FormLabel>
 													<FormControl>
 														{(() => {
 															const {
-																onBlur,
 																onChange,
 																value,
-																...rest
 															} = field
-															return (
-																<Input
-																	type="time"
-																	step={1800}
-																	placeholder="09:00"
-																	className="bg-white-spaces border-midnight-spaces text-black-spaces focus-visible:ring-midnight-spaces"
-																	value={
-																		value ??
-																		''
-																	}
-																	onBlur={(
-																		e
-																	) => {
-																		const v =
-																			e
-																				.target
-																				.value
-																		const m =
-																			v.match(
-																				/^(\d{2}):(\d{2})/
-																			)
-																		if (m) {
-																			const hh =
-																				m[1]
-																			let mm =
-																				parseInt(
-																					m[2],
-																					10
-																				)
-																			mm =
-																				mm <
-																				15
-																					? 0
-																					: mm <
-																					  45
-																					? 30
-																					: 30
-																			const norm = `${hh}:${mm
-																				.toString()
-																				.padStart(
-																					2,
-																					'0'
-																				)}`
-																			onChange(
-																				norm
-																			)
-																		}
-																		onBlur()
-																	}}
-																	onChange={(
-																		e
-																	) =>
-																		onChange(
-																			e
-																				.target
-																				.value
+															const match =
+																value?.match(
+																	/^(\d{2}):(\d{2})$/
+																)
+															const hour = match
+																? match[1]
+																: undefined
+															const minute = match
+																? match[2]
+																: undefined
+
+															const hours =
+																Array.from(
+																	{
+																		length: 13,
+																	},
+																	(_, i) =>
+																		String(
+																			i +
+																				8
+																		).padStart(
+																			2,
+																			'0'
 																		)
-																	}
-																	{...rest}
-																/>
+																)
+															const minutes = [
+																'00',
+																'30',
+															]
+
+															return (
+																<div className="flex gap-2">
+																	<Select
+																		value={
+																			hour
+																		}
+																		onValueChange={(
+																			hh
+																		) => {
+																			const mm =
+																				minute ??
+																				'00'
+																			onChange(
+																				`${hh}:${mm}`
+																			)
+																		}}
+																	>
+																		<SelectTrigger className="bg-white-spaces border-midnight-spaces text-black-spaces focus-visible:ring-midnight-spaces">
+																			<SelectValue placeholder="HH" />
+																		</SelectTrigger>
+																		<SelectContent>
+																			{hours.map(
+																				(
+																					h
+																				) => (
+																					<SelectItem
+																						key={
+																							h
+																						}
+																						value={
+																							h
+																						}
+																					>
+																						{
+																							h
+																						}
+																					</SelectItem>
+																				)
+																			)}
+																		</SelectContent>
+																	</Select>
+																	<Select
+																		value={
+																			minute
+																		}
+																		onValueChange={(
+																			mm
+																		) => {
+																			if (
+																				!hour
+																			)
+																				return
+																			onChange(
+																				`${hour}:${mm}`
+																			)
+																		}}
+																		disabled={
+																			!hour
+																		}
+																	>
+																		<SelectTrigger className="bg-white-spaces border-midnight-spaces text-black-spaces focus-visible:ring-midnight-spaces">
+																			<SelectValue placeholder="MM" />
+																		</SelectTrigger>
+																		<SelectContent>
+																			{minutes.map(
+																				(
+																					m
+																				) => (
+																					<SelectItem
+																						key={
+																							m
+																						}
+																						value={
+																							m
+																						}
+																					>
+																						{
+																							m
+																						}
+																					</SelectItem>
+																				)
+																			)}
+																		</SelectContent>
+																	</Select>
+																</div>
 															)
 														})()}
 													</FormControl>
@@ -430,77 +807,131 @@ export default function BookingSheet({
 											name="endTime"
 											render={({ field }) => (
 												<FormItem>
-													<FormLabel>
-														End time
+													<FormLabel className="text-sm font-bold text-midnight-spaces flex items-center gap-2 mb-2">
+														<Clock className="h-4 w-4" />
+														<span>End time</span>
 													</FormLabel>
 													<FormControl>
 														{(() => {
 															const {
-																onBlur,
 																onChange,
 																value,
-																...rest
 															} = field
-															return (
-																<Input
-																	type="time"
-																	step={1800}
-																	placeholder="17:00"
-																	className="bg-white-spaces border-midnight-spaces text-black-spaces focus-visible:ring-midnight-spaces"
-																	value={
-																		value ??
-																		''
-																	}
-																	onBlur={(
-																		e
-																	) => {
-																		const v =
-																			e
-																				.target
-																				.value
-																		const m =
-																			v.match(
-																				/^(\d{2}):(\d{2})/
-																			)
-																		if (m) {
-																			const hh =
-																				m[1]
-																			let mm =
-																				parseInt(
-																					m[2],
-																					10
-																				)
-																			mm =
-																				mm <
-																				15
-																					? 0
-																					: mm <
-																					  45
-																					? 30
-																					: 30
-																			const norm = `${hh}:${mm
-																				.toString()
-																				.padStart(
-																					2,
-																					'0'
-																				)}`
-																			onChange(
-																				norm
-																			)
-																		}
-																		onBlur()
-																	}}
-																	onChange={(
-																		e
-																	) =>
-																		onChange(
-																			e
-																				.target
-																				.value
+															const match =
+																value?.match(
+																	/^(\d{2}):(\d{2})$/
+																)
+															const hour = match
+																? match[1]
+																: undefined
+															const minute = match
+																? match[2]
+																: undefined
+
+															const hours =
+																Array.from(
+																	{
+																		length: 13,
+																	},
+																	(_, i) =>
+																		String(
+																			i +
+																				8
+																		).padStart(
+																			2,
+																			'0'
 																		)
-																	}
-																	{...rest}
-																/>
+																)
+															const minutes = [
+																'00',
+																'30',
+															]
+
+															return (
+																<div className="flex gap-2">
+																	<Select
+																		value={
+																			hour
+																		}
+																		onValueChange={(
+																			hh
+																		) => {
+																			const mm =
+																				minute ??
+																				'00'
+																			onChange(
+																				`${hh}:${mm}`
+																			)
+																		}}
+																	>
+																		<SelectTrigger className="bg-white-spaces border-midnight-spaces text-black-spaces focus-visible:ring-midnight-spaces">
+																			<SelectValue placeholder="HH" />
+																		</SelectTrigger>
+																		<SelectContent>
+																			{hours.map(
+																				(
+																					h
+																				) => (
+																					<SelectItem
+																						key={
+																							h
+																						}
+																						value={
+																							h
+																						}
+																					>
+																						{
+																							h
+																						}
+																					</SelectItem>
+																				)
+																			)}
+																		</SelectContent>
+																	</Select>
+																	<Select
+																		value={
+																			minute
+																		}
+																		onValueChange={(
+																			mm
+																		) => {
+																			if (
+																				!hour
+																			)
+																				return
+																			onChange(
+																				`${hour}:${mm}`
+																			)
+																		}}
+																		disabled={
+																			!hour
+																		}
+																	>
+																		<SelectTrigger className="bg-white-spaces border-midnight-spaces text-black-spaces focus-visible:ring-midnight-spaces">
+																			<SelectValue placeholder="MM" />
+																		</SelectTrigger>
+																		<SelectContent>
+																			{minutes.map(
+																				(
+																					m
+																				) => (
+																					<SelectItem
+																						key={
+																							m
+																						}
+																						value={
+																							m
+																						}
+																					>
+																						{
+																							m
+																						}
+																					</SelectItem>
+																				)
+																			)}
+																		</SelectContent>
+																	</Select>
+																</div>
 															)
 														})()}
 													</FormControl>
@@ -511,7 +942,7 @@ export default function BookingSheet({
 									</div>
 								</section>
 
-								<Separator className="bg-beje-spaces" />
+								<Separator className="bg-coral-spaces" />
 
 								<section>
 									<div className="text-sm font-bold mb-2 text-midnight-spaces flex items-center gap-2">
@@ -534,12 +965,17 @@ export default function BookingSheet({
 													const checked = idx >= 0
 													return (
 														<FormItem className="mt-0">
-															<div className="flex items-center gap-2 border border-beje-spaces rounded-lg p-2 hover:border-midnight-spaces hover:shadow-sm transition-colors">
+															<label
+																htmlFor={`svc-${svc}`}
+																className="flex items-center gap-2 border border-coral-spaces rounded-lg shadow-sm hover:bg-eucalyptus-spaces/20 transition-colors cursor-pointer p-2 w-full"
+															>
 																<FormControl>
 																	<Checkbox
+																		id={`svc-${svc}`}
 																		checked={
 																			!!checked
 																		}
+																		className="border-midnight-spaces data-[state=checked]:bg-midnight-spaces data-[state=checked]:text-white-spaces data-[state=checked]:border-midnight-spaces m-0"
 																		onCheckedChange={(
 																			c
 																		) => {
@@ -566,12 +1002,12 @@ export default function BookingSheet({
 																		}}
 																	/>
 																</FormControl>
-																<FormLabel className="font-normal">
+																<span className="font-normal w-full h-full text-black-spaces flex items-center text-xs md:text-sm">
 																	{serviceIdToTitle(
 																		svc
 																	)}
-																</FormLabel>
-															</div>
+																</span>
+															</label>
 															<FormMessage />
 														</FormItem>
 													)
@@ -581,7 +1017,7 @@ export default function BookingSheet({
 									</div>
 								</section>
 
-								<Separator className="bg-beje-spaces" />
+								<Separator className="bg-coral-spaces" />
 
 								<section>
 									<div className="grid grid-cols-1 gap-2">
@@ -590,15 +1026,19 @@ export default function BookingSheet({
 											name="attendees"
 											render={({ field }) => (
 												<FormItem>
-													<FormLabel>
-														Attendees
-													</FormLabel>
+													<div className="text-sm font-bold mb-2 text-midnight-spaces flex items-center gap-2">
+														<Users className="h-4 w-4" />
+														<FormLabel>
+															Attendees
+														</FormLabel>
+													</div>
 													<FormControl>
 														<Input
 															type="number"
 															min={1}
 															placeholder="10"
 															{...field}
+															className="focus-visible:ring-0 focus:border-coral-spaces focus:border-2"
 														/>
 													</FormControl>
 													<FormMessage />
@@ -610,11 +1050,17 @@ export default function BookingSheet({
 											name="notes"
 											render={({ field }) => (
 												<FormItem>
-													<FormLabel>Notes</FormLabel>
+													<div className="text-sm font-bold mb-2 text-midnight-spaces flex items-center gap-2">
+														<NotebookPen className="h-4 w-4" />
+														<FormLabel>
+															Notes
+														</FormLabel>
+													</div>
 													<FormControl>
 														<Textarea
 															placeholder="Special requirements, layout details, etc."
 															{...field}
+															className="focus-visible:ring-0 focus:border-coral-spaces focus:border-2"
 														/>
 													</FormControl>
 													<FormMessage />
@@ -624,7 +1070,7 @@ export default function BookingSheet({
 									</div>
 								</section>
 
-								<Separator className="bg-beje-spaces" />
+								<Separator className="bg-coral-spaces" />
 
 								<section>
 									<div className="text-sm font-bold mb-2 text-midnight-spaces flex items-center gap-2">
@@ -637,11 +1083,14 @@ export default function BookingSheet({
 											name="contact.name"
 											render={({ field }) => (
 												<FormItem>
-													<FormLabel>Name</FormLabel>
+													<FormLabel className="text-sm font-semibold text-midnight-spaces">
+														Name
+													</FormLabel>
 													<FormControl>
 														<Input
 															placeholder="Your full name"
 															{...field}
+															className="focus-visible:ring-0 focus:border-coral-spaces focus:border-2"
 														/>
 													</FormControl>
 													<FormMessage />
@@ -653,12 +1102,15 @@ export default function BookingSheet({
 											name="contact.email"
 											render={({ field }) => (
 												<FormItem>
-													<FormLabel>Email</FormLabel>
+													<FormLabel className="text-sm font-semibold text-midnight-spaces">
+														Email
+													</FormLabel>
 													<FormControl>
 														<Input
 															type="email"
 															placeholder="you@example.com"
 															{...field}
+															className="focus-visible:ring-0 focus:border-coral-spaces focus:border-2"
 														/>
 													</FormControl>
 													<FormMessage />
@@ -670,11 +1122,14 @@ export default function BookingSheet({
 											name="contact.phone"
 											render={({ field }) => (
 												<FormItem>
-													<FormLabel>Phone</FormLabel>
+													<FormLabel className="text-sm font-semibold text-midnight-spaces">
+														Phone
+													</FormLabel>
 													<FormControl>
 														<Input
 															placeholder="Optional"
 															{...field}
+															className="focus-visible:ring-0 focus:border-coral-spaces focus:border-2"
 														/>
 													</FormControl>
 													<FormMessage />
@@ -686,13 +1141,14 @@ export default function BookingSheet({
 											name="contact.organization"
 											render={({ field }) => (
 												<FormItem>
-													<FormLabel>
+													<FormLabel className="text-sm font-semibold text-midnight-spaces">
 														Organization
 													</FormLabel>
 													<FormControl>
 														<Input
 															placeholder="Optional"
 															{...field}
+															className="focus-visible:ring-0 focus:border-coral-spaces focus:border-2"
 														/>
 													</FormControl>
 													<FormMessage />
@@ -708,7 +1164,7 @@ export default function BookingSheet({
 									name="honeypot"
 									render={({ field }) => (
 										<FormItem className="hidden">
-											<FormLabel>Do not fill</FormLabel>
+											<FormLabel></FormLabel>
 											<FormControl>
 												<Input
 													tabIndex={-1}
@@ -723,7 +1179,7 @@ export default function BookingSheet({
 						</Form>
 					</ScrollArea>
 
-					<div className="px-2 md:px-6 py-3 md:py-4 border-t border-beje-spaces bg-gradient-to-t from-white-spaces to-white-spaces/70 flex items-center justify-end gap-2">
+					<div className="px-2 md:px-6 py-3 md:py-4 border-t border-coral-spaces bg-white-spaces flex items-center justify-end gap-2">
 						<Button
 							onClick={() => submit('booking')}
 							className="bg-midnight-spaces text-white-spaces hover:bg-midnight-spaces/90 text-sm"
