@@ -9,7 +9,7 @@ export const serviceSelectionSchema = z.object({
 		'recording',
 		'layout',
 	]),
-	quantity: z.number().int().positive().optional(),
+	quantity: z.coerce.number().int().positive().optional(),
 	notes: z.string().optional(),
 })
 
@@ -28,7 +28,9 @@ export const bookingRequestSchema = z.object({
 	bundleSlug: z.string().optional(),
 	dates: z
 		.array(
-			z.date().min(new Date(), { message: 'Dates must be in the future' })
+			z.coerce
+				.date()
+				.min(new Date(), { message: 'Dates must be in the future' })
 		)
 		.nonempty({ message: 'Provide at least one date' }),
 	startTime: z
@@ -39,7 +41,7 @@ export const bookingRequestSchema = z.object({
 		.string()
 		.regex(/^\d{2}:\d{2}$/)
 		.optional(),
-	attendees: z.number().int().positive().optional(),
+	attendees: z.coerce.number().int().positive().optional(),
 	services: z.array(serviceSelectionSchema).optional(),
 	notes: z.string().optional(),
 	contact: z.object({

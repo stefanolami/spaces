@@ -2,12 +2,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
 import Mail from 'nodemailer/lib/mailer'
 import { bookingRequestSchema } from '@/components/booking/booking.zod'
-import {
-	bodyFor,
-	generateRefId,
-	subjectFor,
-	generateICS,
-} from '@/lib/booking-email'
+import { bodyFor, subjectFor } from '@/lib/booking-email'
 
 export async function POST(request: NextRequest) {
 	const json = await request.json()
@@ -27,8 +22,6 @@ export async function POST(request: NextRequest) {
 		return NextResponse.json({ message: 'Ignored' })
 	}
 
-	const refId = generateRefId()
-
 	const transport = nodemailer.createTransport({
 		host: 'smtp.zoho.com',
 		port: 465,
@@ -43,19 +36,8 @@ export async function POST(request: NextRequest) {
 	const mailOptions: Mail.Options = {
 		from: process.env.MY_EMAIL,
 		to: process.env.MY_EMAIL,
-		subject: subjectFor(req, refId),
-		text: bodyFor(req, refId),
-	}
-
-	const ics = generateICS(req, refId)
-	if (ics) {
-		mailOptions.attachments = [
-			{
-				filename: `Time&Spaces-${refId}.ics`,
-				content: ics,
-				contentType: 'text/calendar',
-			},
-		]
+		subject: subjectFor(req),
+		text: bodyFor(req),
 	}
 
 	const sendMailPromise = () =>
@@ -72,7 +54,7 @@ export async function POST(request: NextRequest) {
 	try {
 		await sendMailPromise()
 		// Basic acknowledgment payload for client usage
-		return NextResponse.json({ message: 'Message sent', refId })
+		return NextResponse.json({ message: 'Message sent' })
 	} catch (err) {
 		console.log(err)
 		return NextResponse.json({ error: err }, { status: 500 })

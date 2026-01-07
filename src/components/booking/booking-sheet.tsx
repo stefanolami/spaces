@@ -67,6 +67,36 @@ export default function BookingSheet({
 	payload: PrefillPayload | null
 	mode: BookingMode
 }) {
+	function getFocusableWithin(container: HTMLElement): HTMLElement[] {
+		const candidates = Array.from(
+			container.querySelectorAll<HTMLElement>(
+				'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+			)
+		)
+		return candidates.filter((el) => {
+			// Ignore elements that are not actually visible/interactive.
+			if (el.hasAttribute('disabled')) return false
+			if (el.getAttribute('aria-hidden') === 'true') return false
+			const rects = el.getClientRects()
+			return rects.length > 0
+		})
+	}
+
+	function focusFirstControlWithin(container: HTMLElement) {
+		const control = container.querySelector(
+			'input:not([type="hidden"]), textarea, select'
+		) as (HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement) | null
+		if (!control) return
+		// Defer to ensure this wins over any focus-trap / blur re-render timing.
+		requestAnimationFrame(() => {
+			try {
+				control.focus({ preventScroll: true })
+			} catch {
+				control.focus()
+			}
+		})
+	}
+
 	// Title based on mode
 	const title = useMemo(
 		() => (mode === 'booking' ? 'Booking Request' : 'Availability Request'),
@@ -137,6 +167,7 @@ export default function BookingSheet({
 
 	const { draft, updateDraft, clearDraft } = useBookingStore()
 	const hydratedRef = useRef(false)
+	const draftPersistTimerRef = useRef<number | null>(null)
 
 	// Hydrate form from persisted draft when opening without a payload
 	useEffect(() => {
@@ -185,29 +216,50 @@ export default function BookingSheet({
 		control: form.control,
 	}) as Partial<BookingRequest>
 	useEffect(() => {
+		// Only persist while the sheet is open; also debounce to avoid typing lag.
+		if (!open) return
 		if (!watched) return
-		updateDraft({
-			rooms: (watched.rooms ?? []).filter(Boolean) as RoomId[],
-			services: (watched.services ?? []).filter(
-				Boolean
-			) as ServiceSelection[],
-			dates: (watched.dates ?? [])
-				.filter(Boolean)
-				.map((d) => (d as Date).toISOString()),
-			startTime: watched.startTime,
-			endTime: watched.endTime,
-			attendees: watched.attendees,
-			notes: watched.notes,
-			contact: {
-				name: watched.contact?.name,
-				email: watched.contact?.email,
-				phone: watched.contact?.phone,
-				organization: watched.contact?.organization,
-			},
-		})
-	}, [watched, updateDraft])
+
+		if (draftPersistTimerRef.current) {
+			window.clearTimeout(draftPersistTimerRef.current)
+		}
+
+		draftPersistTimerRef.current = window.setTimeout(() => {
+			updateDraft({
+				rooms: (watched.rooms ?? []).filter(Boolean) as RoomId[],
+				services: (watched.services ?? []).filter(
+					Boolean
+				) as ServiceSelection[],
+				dates: (watched.dates ?? [])
+					.filter(Boolean)
+					.map((d) => (d as Date).toISOString()),
+				startTime: watched.startTime,
+				endTime: watched.endTime,
+				attendees: watched.attendees,
+				notes: watched.notes,
+				contact: {
+					name: watched.contact?.name,
+					email: watched.contact?.email,
+					phone: watched.contact?.phone,
+					organization: watched.contact?.organization,
+				},
+			})
+		}, 200)
+
+		return () => {
+			if (draftPersistTimerRef.current) {
+				window.clearTimeout(draftPersistTimerRef.current)
+			}
+		}
+	}, [watched, open, updateDraft])
 
 	async function submit(modeOverride: BookingMode) {
+		// Validate before submitting to avoid 400 from API
+		const isValid = await form.trigger()
+		if (!isValid) {
+			toast.error('Please fix the highlighted fields.')
+			return
+		}
 		const values = form.getValues()
 		const data: BookingRequest = { ...values, mode: modeOverride }
 		const sender =
@@ -217,7 +269,7 @@ export default function BookingSheet({
 		setSubmitting(true)
 		const res = await sender(data)
 		if (res.success) {
-			toast.success(`Sent! Ref ${res.data?.refId ?? ''}`)
+			toast.success('Sent!')
 			onOpenChange(false)
 			form.reset()
 			clearDraft()
@@ -232,7 +284,35 @@ export default function BookingSheet({
 			open={open}
 			onOpenChange={onOpenChange}
 		>
-			<SheetContent className="bg-white-spaces text-black-spaces border-l border-midnight-spaces shadow-2xl p-0 md:p-0">
+			<SheetContent
+				tabIndex={-1}
+				onKeyDownCapture={(e) => {
+					if (e.key !== 'Tab') return
+					if (e.altKey || e.ctrlKey || e.metaKey) return
+					const container = e.currentTarget as HTMLElement
+					const focusables = getFocusableWithin(container)
+					if (focusables.length === 0) return
+
+					const active = document.activeElement as HTMLElement | null
+					const activeIndex = active ? focusables.indexOf(active) : -1
+					const nextIndex = e.shiftKey
+						? activeIndex <= 0
+							? focusables.length - 1
+							: activeIndex - 1
+						: activeIndex === -1 ||
+						  activeIndex === focusables.length - 1
+						? 0
+						: activeIndex + 1
+
+					e.preventDefault()
+					try {
+						focusables[nextIndex]?.focus({ preventScroll: true })
+					} catch {
+						focusables[nextIndex]?.focus()
+					}
+				}}
+				className="bg-white-spaces text-black-spaces border-l border-midnight-spaces shadow-2xl p-0 md:p-0"
+			>
 				<div className="flex flex-col h-full relative">
 					{/* Brand accent strip */}
 					{/* {
@@ -1025,7 +1105,13 @@ export default function BookingSheet({
 											control={form.control}
 											name="attendees"
 											render={({ field }) => (
-												<FormItem>
+												<FormItem
+													onPointerDownCapture={(e) =>
+														focusFirstControlWithin(
+															e.currentTarget as HTMLElement
+														)
+													}
+												>
 													<div className="text-sm font-bold mb-2 text-midnight-spaces flex items-center gap-2">
 														<Users className="h-4 w-4" />
 														<FormLabel>
@@ -1037,7 +1123,27 @@ export default function BookingSheet({
 															type="number"
 															min={1}
 															placeholder="10"
-															{...field}
+															name={field.name}
+															onBlur={
+																field.onBlur
+															}
+															ref={field.ref}
+															value={
+																field.value ??
+																''
+															}
+															onChange={(e) => {
+																const v =
+																	e.target
+																		.value
+																field.onChange(
+																	v === ''
+																		? undefined
+																		: Number(
+																				v
+																		  )
+																)
+															}}
 															className="focus-visible:ring-0 focus:border-coral-spaces focus:border-2"
 														/>
 													</FormControl>
@@ -1049,7 +1155,13 @@ export default function BookingSheet({
 											control={form.control}
 											name="notes"
 											render={({ field }) => (
-												<FormItem>
+												<FormItem
+													onPointerDownCapture={(e) =>
+														focusFirstControlWithin(
+															e.currentTarget as HTMLElement
+														)
+													}
+												>
 													<div className="text-sm font-bold mb-2 text-midnight-spaces flex items-center gap-2">
 														<NotebookPen className="h-4 w-4" />
 														<FormLabel>
@@ -1072,7 +1184,7 @@ export default function BookingSheet({
 
 								<Separator className="bg-coral-spaces" />
 
-								<section>
+								<section className="z-50">
 									<div className="text-sm font-bold mb-2 text-midnight-spaces flex items-center gap-2">
 										<UserRound className="h-4 w-4" />
 										<span>Contact</span>
@@ -1082,7 +1194,13 @@ export default function BookingSheet({
 											control={form.control}
 											name="contact.name"
 											render={({ field }) => (
-												<FormItem>
+												<FormItem
+													onPointerDownCapture={(e) =>
+														focusFirstControlWithin(
+															e.currentTarget as HTMLElement
+														)
+													}
+												>
 													<FormLabel className="text-sm font-semibold text-midnight-spaces">
 														Name
 													</FormLabel>
@@ -1101,7 +1219,13 @@ export default function BookingSheet({
 											control={form.control}
 											name="contact.email"
 											render={({ field }) => (
-												<FormItem>
+												<FormItem
+													onPointerDownCapture={(e) =>
+														focusFirstControlWithin(
+															e.currentTarget as HTMLElement
+														)
+													}
+												>
 													<FormLabel className="text-sm font-semibold text-midnight-spaces">
 														Email
 													</FormLabel>
@@ -1121,7 +1245,13 @@ export default function BookingSheet({
 											control={form.control}
 											name="contact.phone"
 											render={({ field }) => (
-												<FormItem>
+												<FormItem
+													onPointerDownCapture={(e) =>
+														focusFirstControlWithin(
+															e.currentTarget as HTMLElement
+														)
+													}
+												>
 													<FormLabel className="text-sm font-semibold text-midnight-spaces">
 														Phone
 													</FormLabel>
@@ -1140,7 +1270,13 @@ export default function BookingSheet({
 											control={form.control}
 											name="contact.organization"
 											render={({ field }) => (
-												<FormItem>
+												<FormItem
+													onPointerDownCapture={(e) =>
+														focusFirstControlWithin(
+															e.currentTarget as HTMLElement
+														)
+													}
+												>
 													<FormLabel className="text-sm font-semibold text-midnight-spaces">
 														Organization
 													</FormLabel>

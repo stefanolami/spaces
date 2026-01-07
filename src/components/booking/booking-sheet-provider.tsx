@@ -81,7 +81,7 @@ export default function BookingSheetProvider({
 					aria-label="Expand booking panel"
 					title="Expand"
 					onClick={() => openBookingSheet()}
-					className="fixed bottom-6 right-0 z-40 bg-midnight-spaces text-white-spaces border-2 border-midnight-spaces hover:border-coral-spaces border-r-0 rounded-tl-full rounded-bl-full shadow-xl p-3 hover:bg-midnight-spaces/90 focus:outline-none focus:ring-0"
+					className="fixed bottom-3 md:bottom-6 right-0 z-40 bg-midnight-spaces text-white-spaces border-2 border-midnight-spaces hover:border-coral-spaces border-r-0 rounded-tl-full rounded-bl-full shadow-xl p-2 md:p-3 hover:bg-midnight-spaces/90 focus:outline-none focus:ring-0"
 				>
 					<ChevronLeft className="h-6 w-6" />
 				</button>

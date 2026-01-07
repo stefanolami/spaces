@@ -1,5 +1,3 @@
-'use server'
-
 type FormData = {
 	formRequest: string
 	dates: string
@@ -92,10 +90,13 @@ export async function sendBookingRequest(
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(data),
 	})
+	const responseData = await res.json().catch(() => undefined)
 	if (!res.ok) {
-		return { success: false, error: `HTTP error! status: ${res.status}` }
+		const errMsg =
+			(responseData && (responseData.error || responseData.message)) ||
+			`HTTP error! status: ${res.status}`
+		return { success: false, error: errMsg, data: responseData }
 	}
-	const responseData = await res.json()
 	return { success: true, data: responseData }
 }
 
@@ -107,9 +108,12 @@ export async function sendAvailabilityRequest(
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(data),
 	})
+	const responseData = await res.json().catch(() => undefined)
 	if (!res.ok) {
-		return { success: false, error: `HTTP error! status: ${res.status}` }
+		const errMsg =
+			(responseData && (responseData.error || responseData.message)) ||
+			`HTTP error! status: ${res.status}`
+		return { success: false, error: errMsg, data: responseData }
 	}
-	const responseData = await res.json()
 	return { success: true, data: responseData }
 }
