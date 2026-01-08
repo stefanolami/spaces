@@ -86,11 +86,7 @@ export default function BookingSheetProvider({
 					<ChevronLeft className="h-6 w-6" />
 				</button>
 			)}
-			<Toaster
-				richColors
-				closeButton
-				position="top-right"
-			/>
+			<Toaster position="top-right" />
 		</BookingSheetContext.Provider>
 	)
 }

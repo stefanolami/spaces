@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { PrefillPayload, BookingMode } from '@/lib/booking-types'
 import {
 	Sheet,
@@ -108,6 +108,22 @@ export default function BookingSheet({
 		'single' | 'multiple' | 'range'
 	>('single')
 
+	const tomorrow = useMemo(() => {
+		const d = new Date()
+		d.setHours(0, 0, 0, 0)
+		d.setDate(d.getDate() + 1)
+		return d
+	}, [])
+
+	const isOnOrAfterTomorrow = useCallback(
+		(date: Date) => {
+			const d = new Date(date)
+			d.setHours(0, 0, 0, 0)
+			return d.getTime() >= tomorrow.getTime()
+		},
+		[tomorrow]
+	)
+
 	// Local range state to drive visual feedback in range mode
 	const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined)
 
@@ -157,11 +173,13 @@ export default function BookingSheet({
 		if (payload?.attendees) form.setValue('attendees', payload.attendees)
 		if (payload?.date) {
 			const d = new Date(payload.date)
-			if (!Number.isNaN(d.getTime())) form.setValue('dates', [d])
+			if (!Number.isNaN(d.getTime()) && isOnOrAfterTomorrow(d)) {
+				form.setValue('dates', [d])
+			}
 		}
 		if (payload?.startTime) form.setValue('startTime', payload.startTime)
 		if (payload?.endTime) form.setValue('endTime', payload.endTime)
-	}, [payload, mode, form])
+	}, [payload, mode, form, tomorrow, isOnOrAfterTomorrow])
 
 	const [submitting, setSubmitting] = useState(false)
 
@@ -185,10 +203,11 @@ export default function BookingSheet({
 					'dates',
 					draft.dates
 						.map((iso) => new Date(iso))
-						.filter((d) => !Number.isNaN(d.getTime())) as [
-						Date,
-						...Date[]
-					]
+						.filter(
+							(d) =>
+								!Number.isNaN(d.getTime()) &&
+								isOnOrAfterTomorrow(d)
+						) as [Date, ...Date[]]
 				)
 			if (draft.startTime) form.setValue('startTime', draft.startTime)
 			if (draft.endTime) form.setValue('endTime', draft.endTime)
@@ -209,7 +228,7 @@ export default function BookingSheet({
 			hydratedRef.current = true
 		}
 		if (!open) hydratedRef.current = false
-	}, [open, payload, draft, form])
+	}, [open, payload, draft, form, tomorrow, isOnOrAfterTomorrow])
 
 	// Persist draft on form changes
 	const watched = useWatch({
@@ -257,7 +276,10 @@ export default function BookingSheet({
 		// Validate before submitting to avoid 400 from API
 		const isValid = await form.trigger()
 		if (!isValid) {
-			toast.error('Please fix the highlighted fields.')
+			toast.error('Please check the form', {
+				description:
+					'Fix the highlighted fields, then try sending again.',
+			})
 			return
 		}
 		const values = form.getValues()
@@ -269,12 +291,23 @@ export default function BookingSheet({
 		setSubmitting(true)
 		const res = await sender(data)
 		if (res.success) {
-			toast.success('Sent!')
+			toast.success(
+				modeOverride === 'booking'
+					? 'Booking request sent'
+					: 'Availability request sent',
+				{
+					description: "Thanks — we'll contact you shortly.",
+					duration: 6000,
+				}
+			)
 			onOpenChange(false)
 			form.reset()
 			clearDraft()
 		} else {
-			toast.error(`Error: ${res.error}`)
+			toast.error('Could not send request', {
+				description: res.error ?? 'Please try again in a moment.',
+				duration: 7000,
+			})
 		}
 		setSubmitting(false)
 	}
@@ -517,9 +550,10 @@ export default function BookingSheet({
 																		: []
 																)
 															}
-															fromDate={
-																new Date()
-															}
+															fromDate={tomorrow}
+															disabled={{
+																before: tomorrow,
+															}}
 															buttonVariant="outline"
 															classNames={{
 																weekdays:
@@ -555,9 +589,10 @@ export default function BookingSheet({
 																	dates ?? []
 																)
 															}
-															fromDate={
-																new Date()
-															}
+															fromDate={tomorrow}
+															disabled={{
+																before: tomorrow,
+															}}
 															buttonVariant="outline"
 															classNames={{
 																weekdays:
@@ -616,9 +651,10 @@ export default function BookingSheet({
 																		[]
 																	)
 															}}
-															fromDate={
-																new Date()
-															}
+															fromDate={tomorrow}
+															disabled={{
+																before: tomorrow,
+															}}
 															buttonVariant="outline"
 															classNames={{
 																weekdays:

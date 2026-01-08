@@ -37,7 +37,7 @@ export default function Header() {
 				animate={hidden ? 'hidden' : 'visible'}
 				transition={{ duration: 0.3, ease: 'easeInOut' }}
 				className={
-					'fixed top-0 w-full text-white-spaces bg-eucalyptus-spaces z-50 h-16 xl:h-20'
+					'fixed top-0 w-full text-white-spaces bg-eucalyptus-spaces z-30 h-16 xl:h-20'
 				}
 			>
 				<div className="mx-auto w-[90%] max-w-[1200px] flex flex-row items-center justify-between h-full">
