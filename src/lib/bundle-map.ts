@@ -13,12 +13,12 @@ export const BUNDLE_MAP: Record<string, BundleMapEntry> = {
 		rooms: ['board-and-conference-room', 'relaxation-break-out-room'],
 		services: [{ id: 'catering' }, { id: 'av' }, { id: 'layout' }],
 	},
-	'mini-conferences-panel-discussions-keynote-speeches': {
+	'mini-conferences-panel-discussions-and-keynote-speeches': {
 		title: 'Mini-Conferences, Panel Discussions & Keynote Speeches',
 		rooms: ['board-and-conference-room', 'catering-or-meeting-room-2'],
-		services: [{ id: 'av' }, { id: 'layout' }],
+		services: [{ id: 'catering' }, { id: 'layout' }],
 	},
-	'trainings-seminars-action-tanks': {
+	'trainings-seminars-and-action-tanks': {
 		title: 'Trainings, Seminars & Action Tanks',
 		rooms: ['meeting-room-3', 'relaxation-break-out-room'],
 		services: [{ id: 'catering' }, { id: 'recording' }],

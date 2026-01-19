@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { ConceptsCardType } from '@/lib/types'
 import Image from 'next/image'
 import { useBookingSheet } from '@/components/booking/booking-sheet-provider'
@@ -20,7 +19,9 @@ const ConceptsCard = ({
 	) {
 		e.preventDefault()
 		const slug = slugifyBundle(concept.title)
+		console.log('slug', slug)
 		const bundle = BUNDLE_MAP[slug]
+		console.log('bundle', bundle)
 		if (!bundle)
 			return openBookingSheet({ sourcePath: '/concepts' }, 'availability')
 		openBookingSheet(
@@ -58,16 +59,12 @@ const ConceptsCard = ({
 					<p className="text-sm md:text-sm lg:text-base text-center md:text-justify">
 						{concept.text}
 					</p>
-					<Link
-						href={concept.link}
+					<button
 						onClick={handleGetQuote}
+						className={`w-36 h-8 mx-auto mt-4 md:w-40 md:h-10 lg:w-48 bg-midnight-spaces text-white-spaces hover:scale-105 transition-scale-standard  flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold shadow-md hover:shadow-lg`}
 					>
-						<button
-							className={`w-36 h-8 mx-auto mt-4 md:w-40 md:h-10 lg:w-48 bg-midnight-spaces text-white-spaces hover:scale-105 transition-scale-standard  flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold shadow-md hover:shadow-lg`}
-						>
-							MAKE REQUEST
-						</button>
-					</Link>
+						MAKE REQUEST
+					</button>
 				</div>
 			</div>
 		</div>

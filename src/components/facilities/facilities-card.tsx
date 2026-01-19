@@ -23,7 +23,7 @@ const FacilitiesCard = ({
 			return openBookingSheet({ sourcePath: '/facilities' }, 'booking')
 		openBookingSheet(
 			{ rooms: [roomId], sourcePath: '/facilities' },
-			'booking'
+			'booking',
 		)
 	}
 
@@ -53,11 +53,11 @@ const FacilitiesCard = ({
 						<p className="text-sm md:text-sm lg:text-base text-center md:text-justify">
 							{card.text}
 						</p>
-						<div className="w-full lg:w-3/4 xl:w-2/3 my-4 md:gap-4 grid grid-cols-2">
+						<div className="my-4 mx-auto md:mx-0 md:mr-auto w-fit">
 							<button
 								type="button"
 								onClick={handleBookNow}
-								className="bg-midnight-spaces hover:scale-105 transition-scale-standard w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white-spaces shadow-md hover:shadow-lg"
+								className="bg-midnight-spaces hover:scale-105 transition-scale-standard w-full flex items-center justify-center py-2 px-6 md:px-10 text-xs md:text-sm lg:text-base font-bold text-white-spaces shadow-md hover:shadow-lg"
 							>
 								MAKE REQUEST
 							</button>
