@@ -1,6 +1,9 @@
+'use client'
+
 import Link from 'next/link'
 import HeroServices from './hero-services'
 import Image from 'next/image'
+import { useBookingSheet } from '../booking/booking-sheet-provider'
 
 const LIST_ITEMS = [
 	'Camera team to capture your event (video or static)',
@@ -35,6 +38,7 @@ const EQUIPMENT_ITEMS = [
 ]
 
 const Services = () => {
+	const { openBookingSheet } = useBookingSheet()
 	return (
 		<div>
 			<HeroServices />
@@ -61,19 +65,18 @@ const Services = () => {
 					<p className="w-[90%] font-nunito text-xs md:text-base lg:text-xl text-center italic mt-6 lg:mt-10 2xl:mt-20 max-w-[800px] mx-auto">
 						These are included, or can be specifically requested
 						through the{' '}
-						<Link
-							href="/concepts"
-							className="text-eucalyptus-spaces font-bold"
+						<span
+							onClick={(e) => {
+								e.preventDefault()
+								openBookingSheet(
+									{ sourcePath: '/services' },
+									'booking',
+								)
+							}}
+							className="text-eucalyptus-spaces font-bold cursor-pointer"
 						>
-							booking system
-						</Link>{' '}
-						or through the{' '}
-						<Link
-							href="/services"
-							className="text-eucalyptus-spaces font-bold"
-						>
-							request for a quote
-						</Link>{' '}
+							make request
+						</span>{' '}
 						form.
 					</p>
 				</div>

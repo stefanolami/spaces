@@ -13,7 +13,7 @@ type BookingDraft = {
 	dates?: string[] // ISO strings
 	startTime?: string
 	endTime?: string
-	attendees?: number
+	attendees?: string
 	contact?: {
 		name?: string
 		email?: string
@@ -66,6 +66,6 @@ export const useBookingStore = create<BookingStore>()(
 			name: 'ts_booking_store',
 			// Persist only the draft
 			partialize: (state) => ({ draft: state.draft }),
-		}
-	)
+		},
+	),
 )

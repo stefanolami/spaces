@@ -58,7 +58,7 @@ const ContactUsComponent = () => {
 	}
 
 	return (
-		<div className="mt-32 lg:mt-52 mb-20 w-[90%] sm:w-3/4 md:w-3/5 mx-auto max-w-[700px] font-nunito">
+		<div className="mt-32 lg:mt-52 mb-20 w-[90%] sm:w-3/4 md:w-3/5 mx-auto max-w-[700px] font-nunito bg-white-spaces text-black-spaces">
 			<h2 className="font-robo font-bold uppercase text-lg lg:text-2xl mb-8 lg:mb-12">
 				CONTACT US
 			</h2>
@@ -70,14 +70,14 @@ const ContactUsComponent = () => {
 						render={({ field }) => (
 							<FormItem className="flex flex-col">
 								<FormLabel className="lg:text-lg">
-									YOUR NAME*
+									YOUR NAME
 								</FormLabel>
 								<FormControl className="mt-2 lg:mt-4">
 									<Input
 										disabled={isSubmitting}
 										placeholder="NAME"
 										{...field}
-										className="bg-white-spaces text-primary"
+										className="bg-white-spaces text-primary focus-visible:ring-0 focus:border-coral-spaces focus:border-2"
 									/>
 								</FormControl>
 								<FormMessage className="text-red-500 text-sm lg:text-base lg:mt-1" />
@@ -91,14 +91,14 @@ const ContactUsComponent = () => {
 						render={({ field }) => (
 							<FormItem className="flex flex-col">
 								<FormLabel className="lg:text-lg">
-									YOUR EMAIL*
+									YOUR EMAIL
 								</FormLabel>
 								<FormControl className="mt-2 lg:mt-4">
 									<Input
 										disabled={isSubmitting}
 										placeholder="EMAIL"
 										{...field}
-										className="bg-white-spaces text-primary"
+										className="bg-white-spaces text-primary focus-visible:ring-0 focus:border-coral-spaces focus:border-2"
 									/>
 								</FormControl>
 								<FormMessage className="text-red-500 text-sm lg:text-base lg:mt-1" />
@@ -112,14 +112,14 @@ const ContactUsComponent = () => {
 						render={({ field }) => (
 							<FormItem className="flex flex-col">
 								<FormLabel className="lg:text-lg">
-									SUBJECT*
+									SUBJECT
 								</FormLabel>
 								<FormControl className="mt-2 lg:mt-4">
 									<Input
 										disabled={isSubmitting}
 										placeholder="SUBJECT"
 										{...field}
-										className="bg-white-spaces text-primary"
+										className="bg-white-spaces text-primary focus-visible:ring-0 focus:border-coral-spaces focus:border-2"
 									/>
 								</FormControl>
 								<FormMessage className="text-red-500 text-sm lg:text-base lg:mt-1" />
@@ -133,14 +133,14 @@ const ContactUsComponent = () => {
 						render={({ field }) => (
 							<FormItem className="flex flex-col">
 								<FormLabel className="lg:text-lg">
-									YOUR MESSAGE*
+									YOUR MESSAGE
 								</FormLabel>
 								<FormControl className="mt-2 lg:mt-4">
 									<Textarea
 										disabled={isSubmitting}
 										placeholder="MESSAGE"
 										{...field}
-										className="bg-white-spaces text-primary"
+										className="bg-white-spaces text-primary focus-visible:ring-0 focus:border-coral-spaces focus:border-2"
 									/>
 								</FormControl>
 								<FormMessage className="text-red-500 text-sm lg:text-base lg:mt-1" />

@@ -26,6 +26,7 @@ import { Separator } from '@/components/ui/separator'
 import { Calendar } from '@/components/ui/calendar'
 import type { DateRange } from 'react-day-picker'
 import { useForm, useWatch } from 'react-hook-form'
+import type { Resolver } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	bookingRequestSchema,
@@ -70,8 +71,8 @@ export default function BookingSheet({
 	function getFocusableWithin(container: HTMLElement): HTMLElement[] {
 		const candidates = Array.from(
 			container.querySelectorAll<HTMLElement>(
-				'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
-			)
+				'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+			),
 		)
 		return candidates.filter((el) => {
 			// Ignore elements that are not actually visible/interactive.
@@ -84,7 +85,7 @@ export default function BookingSheet({
 
 	function focusFirstControlWithin(container: HTMLElement) {
 		const control = container.querySelector(
-			'input:not([type="hidden"]), textarea, select'
+			'input:not([type="hidden"]), textarea, select',
 		) as (HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement) | null
 		if (!control) return
 		// Defer to ensure this wins over any focus-trap / blur re-render timing.
@@ -100,7 +101,7 @@ export default function BookingSheet({
 	// Title based on mode
 	const title = useMemo(
 		() => (mode === 'booking' ? 'Booking Request' : 'Availability Request'),
-		[mode]
+		[mode],
 	)
 
 	// Calendar selection mode (single | multiple | range)
@@ -121,7 +122,7 @@ export default function BookingSheet({
 			d.setHours(0, 0, 0, 0)
 			return d.getTime() >= tomorrow.getTime()
 		},
-		[tomorrow]
+		[tomorrow],
 	)
 
 	// Local range state to drive visual feedback in range mode
@@ -144,7 +145,9 @@ export default function BookingSheet({
 	}
 
 	const form = useForm<BookingRequest>({
-		resolver: zodResolver(bookingRequestSchema),
+		resolver: zodResolver(
+			bookingRequestSchema,
+		) as unknown as Resolver<BookingRequest>,
 		defaultValues: {
 			mode,
 			bundleSlug: payload?.bundleSlug,
@@ -161,16 +164,102 @@ export default function BookingSheet({
 		},
 	})
 
+	const TIME_PRESETS = useMemo(
+		() =>
+			[
+				{
+					id: 'full',
+					label: 'Full day',
+					start: '08:00',
+					end: '22:00',
+					short: '08–22',
+				},
+				{
+					id: 'morning',
+					label: 'Morning',
+					start: '08:00',
+					end: '12:00',
+					short: '08–12',
+				},
+				{
+					id: 'afternoon',
+					label: 'Afternoon',
+					start: '14:00',
+					end: '18:00',
+					short: '14–18',
+				},
+				{
+					id: 'evening',
+					label: 'Evening',
+					start: '18:00',
+					end: '22:00',
+					short: '18–22',
+				},
+			] as const,
+		[],
+	)
+
+	type TimePresetId = (typeof TIME_PRESETS)[number]['id']
+	const [selectedTimePresets, setSelectedTimePresets] = useState<
+		TimePresetId[]
+	>([])
+
+	function hhmmToMinutes(value: string): number {
+		const [hh, mm] = value.split(':')
+		return Number.parseInt(hh, 10) * 60 + Number.parseInt(mm, 10)
+	}
+	function minutesToHHMM(value: number): string {
+		const hh = String(Math.floor(value / 60)).padStart(2, '0')
+		const mm = String(value % 60).padStart(2, '0')
+		return `${hh}:${mm}`
+	}
+	function applyPresetSelection(nextSelected: TimePresetId[]) {
+		setSelectedTimePresets(nextSelected)
+		if (nextSelected.length === 0) return
+		let minStart = Number.POSITIVE_INFINITY
+		let maxEnd = Number.NEGATIVE_INFINITY
+		for (const id of nextSelected) {
+			const preset = TIME_PRESETS.find((p) => p.id === id)
+			if (!preset) continue
+			minStart = Math.min(minStart, hhmmToMinutes(preset.start))
+			maxEnd = Math.max(maxEnd, hhmmToMinutes(preset.end))
+		}
+		if (!Number.isFinite(minStart) || !Number.isFinite(maxEnd)) return
+		form.setValue('startTime', minutesToHHMM(minStart))
+		form.setValue('endTime', minutesToHHMM(maxEnd))
+	}
+
+	function normalizeRooms(
+		nextRooms: RoomId[] | undefined,
+	): [RoomId, ...RoomId[]] | undefined {
+		if (!nextRooms || nextRooms.length === 0) return undefined
+		const next = new Set<RoomId>()
+		let hadRelaxation = false
+		for (const r of nextRooms) {
+			if (r === 'relaxation-break-out-room') {
+				hadRelaxation = true
+				continue
+			}
+			next.add(r)
+		}
+		if (hadRelaxation) next.add('board-and-conference-room')
+		const arr = Array.from(next)
+		return arr.length > 0 ? (arr as [RoomId, ...RoomId[]]) : undefined
+	}
+
 	useEffect(() => {
 		form.setValue('mode', mode)
-		if (payload?.rooms && payload.rooms.length > 0)
-			form.setValue('rooms', payload.rooms as [RoomId, ...RoomId[]])
+		if (payload?.rooms && payload.rooms.length > 0) {
+			const normalized = normalizeRooms(payload.rooms)
+			if (normalized) form.setValue('rooms', normalized)
+		}
 		if (payload?.services && payload.services.length > 0)
 			form.setValue(
 				'services',
-				payload.services as [ServiceSelection, ...ServiceSelection[]]
+				payload.services as [ServiceSelection, ...ServiceSelection[]],
 			)
-		if (payload?.attendees) form.setValue('attendees', payload.attendees)
+		if (payload?.attendees !== undefined && payload?.attendees !== null)
+			form.setValue('attendees', String(payload.attendees))
 		if (payload?.date) {
 			const d = new Date(payload.date)
 			if (!Number.isNaN(d.getTime()) && isOnOrAfterTomorrow(d)) {
@@ -190,14 +279,17 @@ export default function BookingSheet({
 	// Hydrate form from persisted draft when opening without a payload
 	useEffect(() => {
 		if (open && !payload && draft && !hydratedRef.current) {
-			if (draft.rooms && draft.rooms.length > 0)
-				form.setValue('rooms', draft.rooms as [RoomId, ...RoomId[]])
+			if (draft.rooms && draft.rooms.length > 0) {
+				const normalized = normalizeRooms(draft.rooms as RoomId[])
+				if (normalized) form.setValue('rooms', normalized)
+			}
 			if (draft.services && draft.services.length > 0)
 				form.setValue(
 					'services',
-					draft.services as [ServiceSelection, ...ServiceSelection[]]
+					draft.services as [ServiceSelection, ...ServiceSelection[]],
 				)
-			if (draft.attendees) form.setValue('attendees', draft.attendees)
+			if (draft.attendees !== undefined && draft.attendees !== null)
+				form.setValue('attendees', String(draft.attendees))
 			if (draft.dates && draft.dates.length > 0)
 				form.setValue(
 					'dates',
@@ -206,8 +298,8 @@ export default function BookingSheet({
 						.filter(
 							(d) =>
 								!Number.isNaN(d.getTime()) &&
-								isOnOrAfterTomorrow(d)
-						) as [Date, ...Date[]]
+								isOnOrAfterTomorrow(d),
+						) as [Date, ...Date[]],
 				)
 			if (draft.startTime) form.setValue('startTime', draft.startTime)
 			if (draft.endTime) form.setValue('endTime', draft.endTime)
@@ -222,13 +314,17 @@ export default function BookingSheet({
 				if (draft.contact.organization)
 					form.setValue(
 						'contact.organization',
-						draft.contact.organization
+						draft.contact.organization,
 					)
 			}
 			hydratedRef.current = true
 		}
 		if (!open) hydratedRef.current = false
 	}, [open, payload, draft, form, tomorrow, isOnOrAfterTomorrow])
+
+	useEffect(() => {
+		if (!open) setSelectedTimePresets([])
+	}, [open])
 
 	// Persist draft on form changes
 	const watched = useWatch({
@@ -247,7 +343,7 @@ export default function BookingSheet({
 			updateDraft({
 				rooms: (watched.rooms ?? []).filter(Boolean) as RoomId[],
 				services: (watched.services ?? []).filter(
-					Boolean
+					Boolean,
 				) as ServiceSelection[],
 				dates: (watched.dates ?? [])
 					.filter(Boolean)
@@ -298,7 +394,7 @@ export default function BookingSheet({
 				{
 					description: "Thanks — we'll contact you shortly.",
 					duration: 6000,
-				}
+				},
 			)
 			onOpenChange(false)
 			form.reset()
@@ -333,9 +429,9 @@ export default function BookingSheet({
 							? focusables.length - 1
 							: activeIndex - 1
 						: activeIndex === -1 ||
-						  activeIndex === focusables.length - 1
-						? 0
-						: activeIndex + 1
+							  activeIndex === focusables.length - 1
+							? 0
+							: activeIndex + 1
 
 					e.preventDefault()
 					try {
@@ -377,14 +473,30 @@ export default function BookingSheet({
 
 					<ScrollArea className="flex-1 px-4 bg-white-spaces">
 						<Form {...form}>
-							<form className="grid gap-6 my-6">
+							<form className="grid gap-6 my-3">
+								<p className="text-[11px] leading-tight text-black-spaces/60">
+									Fields marked with{' '}
+									<span className="text-coral-spaces font-semibold">
+										*
+									</span>{' '}
+									are required.
+								</p>
 								<section>
 									<div className="text-sm font-bold mb-2 text-midnight-spaces flex items-center gap-2">
 										<Building2 className="h-4 w-4" />
-										<span>Rooms</span>
+										<span>
+											Rooms{' '}
+											<span className="text-coral-spaces">
+												*
+											</span>
+										</span>
 									</div>
 									<div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-										{ROOM_IDS.map((id) => (
+										{ROOM_IDS.filter(
+											(id) =>
+												id !==
+												'relaxation-break-out-room',
+										).map((id) => (
 											<FormField
 												key={id}
 												control={form.control}
@@ -392,10 +504,17 @@ export default function BookingSheet({
 												render={({ field }) => {
 													const checked =
 														field.value?.includes(
-															id
+															id,
 														)
 													return (
-														<FormItem className="mt-0">
+														<FormItem
+															className={`mt-0 ${
+																id ===
+																'board-and-conference-room'
+																	? 'md:col-span-2'
+																	: ''
+															}`}
+														>
 															<label
 																htmlFor={`room-${id}`}
 																className="flex items-center gap-2 border border-coral-spaces rounded-md p-2 hover:bg-eucalyptus-spaces/20 transition-colors cursor-pointer w-full"
@@ -408,36 +527,50 @@ export default function BookingSheet({
 																		}
 																		className="border-midnight-spaces data-[state=checked]:bg-midnight-spaces data-[state=checked]:text-white-spaces data-[state=checked]:border-midnight-spaces"
 																		onCheckedChange={(
-																			c
+																			c,
 																		) => {
 																			const next =
 																				new Set(
 																					field.value ??
-																						[]
+																						[],
 																				)
 																			if (
 																				c
 																			)
 																				next.add(
-																					id
+																					id,
 																				)
 																			else
 																				next.delete(
-																					id
+																					id,
 																				)
 																			field.onChange(
 																				Array.from(
-																					next
-																				)
+																					next,
+																				),
 																			)
 																		}}
 																	/>
 																</FormControl>
-																<span className="font-normal text-black-spaces w-full text-xs md:text-sm">
-																	{roomIdToTitle(
-																		id
-																	)}
-																</span>
+																<div className="w-full">
+																	<div className="font-normal text-black-spaces text-xs md:text-sm">
+																		{id ===
+																		'board-and-conference-room'
+																			? 'Large Board or Conference Room'
+																			: roomIdToTitle(
+																					id,
+																				)}
+																	</div>
+																	{id ===
+																	'board-and-conference-room' ? (
+																		<div className="text-[11px] leading-tight text-black-spaces/60">
+																			includes
+																			relaxation
+																			break-out
+																			room
+																		</div>
+																	) : null}
+																</div>
 															</label>
 															<FormMessage />
 														</FormItem>
@@ -453,7 +586,12 @@ export default function BookingSheet({
 								<section>
 									<div className="text-sm font-bold mb-2 text-midnight-spaces flex items-center gap-2">
 										<CalendarDays className="h-4 w-4" />
-										<span>Dates</span>
+										<span>
+											Dates{' '}
+											<span className="text-coral-spaces">
+												*
+											</span>
+										</span>
 									</div>
 									<FormField
 										control={form.control}
@@ -479,7 +617,7 @@ export default function BookingSheet({
 														}
 														onClick={() =>
 															setCalendarMode(
-																'single'
+																'single',
 															)
 														}
 													>
@@ -502,7 +640,7 @@ export default function BookingSheet({
 														}
 														onClick={() =>
 															setCalendarMode(
-																'multiple'
+																'multiple',
 															)
 														}
 													>
@@ -525,7 +663,7 @@ export default function BookingSheet({
 														}
 														onClick={() =>
 															setCalendarMode(
-																'range'
+																'range',
 															)
 														}
 													>
@@ -547,7 +685,7 @@ export default function BookingSheet({
 																field.onChange(
 																	date
 																		? [date]
-																		: []
+																		: [],
 																)
 															}
 															fromDate={tomorrow}
@@ -586,7 +724,7 @@ export default function BookingSheet({
 															}
 															onSelect={(dates) =>
 																field.onChange(
-																	dates ?? []
+																	dates ?? [],
 																)
 															}
 															fromDate={tomorrow}
@@ -622,11 +760,11 @@ export default function BookingSheet({
 															required={false}
 															selected={dateRange}
 															onSelect={(
-																range
+																range,
 															) => {
 																setDateRange(
 																	range ??
-																		undefined
+																		undefined,
 																)
 																if (
 																	range?.from &&
@@ -635,8 +773,8 @@ export default function BookingSheet({
 																	field.onChange(
 																		expandRangeToDates(
 																			range.from,
-																			range.to
-																		)
+																			range.to,
+																		),
 																	)
 																else if (
 																	range?.from
@@ -644,11 +782,11 @@ export default function BookingSheet({
 																	field.onChange(
 																		[
 																			range.from,
-																		]
+																		],
 																	)
 																else
 																	field.onChange(
-																		[]
+																		[],
 																	)
 															}}
 															fromDate={tomorrow}
@@ -684,101 +822,52 @@ export default function BookingSheet({
 											</FormItem>
 										)}
 									/>
-									{/* Time presets */}
-									<div className="flex items-center gap-2 mt-3">
-										<Button
-											type="button"
-											size="sm"
-											variant={
-												watched.startTime === '08:00' &&
-												watched.endTime === '18:00'
-													? 'default'
-													: 'outline'
-											}
-											className={
-												watched.startTime === '08:00' &&
-												watched.endTime === '18:00'
-													? 'bg-midnight-spaces text-white-spaces hover:bg-midnight-spaces/90'
-													: ''
-											}
-											onClick={() => {
-												form.setValue(
-													'startTime',
-													'08:00'
+									{/* Time presets (multi-select) */}
+									<div className="flex flex-wrap items-center gap-2 mt-3">
+										{TIME_PRESETS.map((preset) => {
+											const selected =
+												selectedTimePresets.includes(
+													preset.id,
 												)
-												form.setValue(
-													'endTime',
-													'18:00'
-												)
-											}}
-										>
-											Full day{' '}
-											<span className="hidden sm:inline">
-												08–18
-											</span>
-										</Button>
-										<Button
-											type="button"
-											size="sm"
-											variant={
-												watched.startTime === '08:00' &&
-												watched.endTime === '12:00'
-													? 'default'
-													: 'outline'
-											}
-											className={
-												watched.startTime === '08:00' &&
-												watched.endTime === '12:00'
-													? 'bg-midnight-spaces text-white-spaces hover:bg-midnight-spaces/90'
-													: ''
-											}
-											onClick={() => {
-												form.setValue(
-													'startTime',
-													'08:00'
-												)
-												form.setValue(
-													'endTime',
-													'12:00'
-												)
-											}}
-										>
-											Morning{' '}
-											<span className="hidden sm:inline">
-												08–12
-											</span>
-										</Button>
-										<Button
-											type="button"
-											size="sm"
-											variant={
-												watched.startTime === '14:00' &&
-												watched.endTime === '18:00'
-													? 'default'
-													: 'outline'
-											}
-											className={
-												watched.startTime === '14:00' &&
-												watched.endTime === '18:00'
-													? 'bg-midnight-spaces text-white-spaces hover:bg-midnight-spaces/90'
-													: ''
-											}
-											onClick={() => {
-												form.setValue(
-													'startTime',
-													'14:00'
-												)
-												form.setValue(
-													'endTime',
-													'18:00'
-												)
-											}}
-										>
-											Afternoon{' '}
-											<span className="hidden sm:inline">
-												14–18
-											</span>
-										</Button>
+											return (
+												<Button
+													key={preset.id}
+													type="button"
+													size="sm"
+													variant={
+														selected
+															? 'default'
+															: 'outline'
+													}
+													className={
+														selected
+															? 'bg-midnight-spaces text-white-spaces hover:bg-midnight-spaces/90'
+															: ''
+													}
+													aria-pressed={selected}
+													onClick={() => {
+														const next = selected
+															? selectedTimePresets.filter(
+																	(id) =>
+																		id !==
+																		preset.id,
+																)
+															: [
+																	...selectedTimePresets,
+																	preset.id,
+																]
+														applyPresetSelection(
+															next,
+														)
+													}}
+												>
+													{preset.label}{' '}
+													<span className="hidden sm:inline">
+														{preset.short}
+													</span>
+												</Button>
+											)
+										})}
 									</div>
 									<div className="grid grid-cols-2 gap-2 mt-2">
 										<FormField
@@ -798,7 +887,7 @@ export default function BookingSheet({
 															} = field
 															const match =
 																value?.match(
-																	/^(\d{2}):(\d{2})$/
+																	/^(\d{2}):(\d{2})$/,
 																)
 															const hour = match
 																? match[1]
@@ -810,16 +899,16 @@ export default function BookingSheet({
 															const hours =
 																Array.from(
 																	{
-																		length: 13,
+																		length: 15,
 																	},
 																	(_, i) =>
 																		String(
 																			i +
-																				8
+																				8,
 																		).padStart(
 																			2,
-																			'0'
-																		)
+																			'0',
+																		),
 																)
 															const minutes = [
 																'00',
@@ -833,13 +922,13 @@ export default function BookingSheet({
 																			hour
 																		}
 																		onValueChange={(
-																			hh
+																			hh,
 																		) => {
 																			const mm =
 																				minute ??
 																				'00'
 																			onChange(
-																				`${hh}:${mm}`
+																				`${hh}:${mm}`,
 																			)
 																		}}
 																	>
@@ -849,7 +938,7 @@ export default function BookingSheet({
 																		<SelectContent>
 																			{hours.map(
 																				(
-																					h
+																					h,
 																				) => (
 																					<SelectItem
 																						key={
@@ -863,7 +952,7 @@ export default function BookingSheet({
 																							h
 																						}
 																					</SelectItem>
-																				)
+																				),
 																			)}
 																		</SelectContent>
 																	</Select>
@@ -872,14 +961,14 @@ export default function BookingSheet({
 																			minute
 																		}
 																		onValueChange={(
-																			mm
+																			mm,
 																		) => {
 																			if (
 																				!hour
 																			)
 																				return
 																			onChange(
-																				`${hour}:${mm}`
+																				`${hour}:${mm}`,
 																			)
 																		}}
 																		disabled={
@@ -892,7 +981,7 @@ export default function BookingSheet({
 																		<SelectContent>
 																			{minutes.map(
 																				(
-																					m
+																					m,
 																				) => (
 																					<SelectItem
 																						key={
@@ -906,7 +995,7 @@ export default function BookingSheet({
 																							m
 																						}
 																					</SelectItem>
-																				)
+																				),
 																			)}
 																		</SelectContent>
 																	</Select>
@@ -935,7 +1024,7 @@ export default function BookingSheet({
 															} = field
 															const match =
 																value?.match(
-																	/^(\d{2}):(\d{2})$/
+																	/^(\d{2}):(\d{2})$/,
 																)
 															const hour = match
 																? match[1]
@@ -947,16 +1036,16 @@ export default function BookingSheet({
 															const hours =
 																Array.from(
 																	{
-																		length: 13,
+																		length: 15,
 																	},
 																	(_, i) =>
 																		String(
 																			i +
-																				8
+																				8,
 																		).padStart(
 																			2,
-																			'0'
-																		)
+																			'0',
+																		),
 																)
 															const minutes = [
 																'00',
@@ -970,13 +1059,13 @@ export default function BookingSheet({
 																			hour
 																		}
 																		onValueChange={(
-																			hh
+																			hh,
 																		) => {
 																			const mm =
 																				minute ??
 																				'00'
 																			onChange(
-																				`${hh}:${mm}`
+																				`${hh}:${mm}`,
 																			)
 																		}}
 																	>
@@ -986,7 +1075,7 @@ export default function BookingSheet({
 																		<SelectContent>
 																			{hours.map(
 																				(
-																					h
+																					h,
 																				) => (
 																					<SelectItem
 																						key={
@@ -1000,7 +1089,7 @@ export default function BookingSheet({
 																							h
 																						}
 																					</SelectItem>
-																				)
+																				),
 																			)}
 																		</SelectContent>
 																	</Select>
@@ -1009,14 +1098,14 @@ export default function BookingSheet({
 																			minute
 																		}
 																		onValueChange={(
-																			mm
+																			mm,
 																		) => {
 																			if (
 																				!hour
 																			)
 																				return
 																			onChange(
-																				`${hour}:${mm}`
+																				`${hour}:${mm}`,
 																			)
 																		}}
 																		disabled={
@@ -1029,7 +1118,7 @@ export default function BookingSheet({
 																		<SelectContent>
 																			{minutes.map(
 																				(
-																					m
+																					m,
 																				) => (
 																					<SelectItem
 																						key={
@@ -1043,7 +1132,7 @@ export default function BookingSheet({
 																							m
 																						}
 																					</SelectItem>
-																				)
+																				),
 																			)}
 																		</SelectContent>
 																	</Select>
@@ -1056,6 +1145,11 @@ export default function BookingSheet({
 											)}
 										/>
 									</div>
+									<p className="mt-2 text-[11px] leading-tight text-black-spaces/60">
+										If you select multiple days and the
+										times differ per day, please specify the
+										details in the Notes section below.
+									</p>
 								</section>
 
 								<Separator className="bg-coral-spaces" />
@@ -1076,7 +1170,7 @@ export default function BookingSheet({
 														field.value ?? []
 													const idx = list.findIndex(
 														(s: ServiceSelection) =>
-															s.id === svc
+															s.id === svc,
 													)
 													const checked = idx >= 0
 													return (
@@ -1093,7 +1187,7 @@ export default function BookingSheet({
 																		}
 																		className="border-midnight-spaces data-[state=checked]:bg-midnight-spaces data-[state=checked]:text-white-spaces data-[state=checked]:border-midnight-spaces m-0"
 																		onCheckedChange={(
-																			c
+																			c,
 																		) => {
 																			const next =
 																				[
@@ -1105,22 +1199,22 @@ export default function BookingSheet({
 																				next.push(
 																					{
 																						id: svc,
-																					}
+																					},
 																				)
 																			else
 																				next.splice(
 																					idx,
-																					1
+																					1,
 																				)
 																			field.onChange(
-																				next
+																				next,
 																			)
 																		}}
 																	/>
 																</FormControl>
 																<span className="font-normal w-full h-full text-black-spaces flex items-center text-xs md:text-sm">
 																	{serviceIdToTitle(
-																		svc
+																		svc,
 																	)}
 																</span>
 															</label>
@@ -1144,21 +1238,24 @@ export default function BookingSheet({
 												<FormItem
 													onPointerDownCapture={(e) =>
 														focusFirstControlWithin(
-															e.currentTarget as HTMLElement
+															e.currentTarget as HTMLElement,
 														)
 													}
 												>
 													<div className="text-sm font-bold mb-2 text-midnight-spaces flex items-center gap-2">
 														<Users className="h-4 w-4" />
 														<FormLabel>
-															Attendees
+															Attendees{' '}
+															<span className="text-coral-spaces">
+																*
+															</span>
 														</FormLabel>
 													</div>
 													<FormControl>
 														<Input
-															type="number"
-															min={1}
-															placeholder="10"
+															type="text"
+															inputMode="text"
+															placeholder="e.g. 12 or 10-15"
 															name={field.name}
 															onBlur={
 																field.onBlur
@@ -1169,15 +1266,9 @@ export default function BookingSheet({
 																''
 															}
 															onChange={(e) => {
-																const v =
-																	e.target
-																		.value
 																field.onChange(
-																	v === ''
-																		? undefined
-																		: Number(
-																				v
-																		  )
+																	e.target
+																		.value,
 																)
 															}}
 															className="focus-visible:ring-0 focus:border-coral-spaces focus:border-2"
@@ -1194,7 +1285,7 @@ export default function BookingSheet({
 												<FormItem
 													onPointerDownCapture={(e) =>
 														focusFirstControlWithin(
-															e.currentTarget as HTMLElement
+															e.currentTarget as HTMLElement,
 														)
 													}
 												>
@@ -1233,16 +1324,18 @@ export default function BookingSheet({
 												<FormItem
 													onPointerDownCapture={(e) =>
 														focusFirstControlWithin(
-															e.currentTarget as HTMLElement
+															e.currentTarget as HTMLElement,
 														)
 													}
 												>
 													<FormLabel className="text-sm font-semibold text-midnight-spaces">
-														Name
+														Name{' '}
+														<span className="text-coral-spaces">
+															*
+														</span>
 													</FormLabel>
 													<FormControl>
 														<Input
-															placeholder="Your full name"
 															{...field}
 															className="focus-visible:ring-0 focus:border-coral-spaces focus:border-2"
 														/>
@@ -1258,17 +1351,19 @@ export default function BookingSheet({
 												<FormItem
 													onPointerDownCapture={(e) =>
 														focusFirstControlWithin(
-															e.currentTarget as HTMLElement
+															e.currentTarget as HTMLElement,
 														)
 													}
 												>
 													<FormLabel className="text-sm font-semibold text-midnight-spaces">
-														Email
+														Email{' '}
+														<span className="text-coral-spaces">
+															*
+														</span>
 													</FormLabel>
 													<FormControl>
 														<Input
 															type="email"
-															placeholder="you@example.com"
 															{...field}
 															className="focus-visible:ring-0 focus:border-coral-spaces focus:border-2"
 														/>
@@ -1284,7 +1379,7 @@ export default function BookingSheet({
 												<FormItem
 													onPointerDownCapture={(e) =>
 														focusFirstControlWithin(
-															e.currentTarget as HTMLElement
+															e.currentTarget as HTMLElement,
 														)
 													}
 												>
@@ -1293,7 +1388,6 @@ export default function BookingSheet({
 													</FormLabel>
 													<FormControl>
 														<Input
-															placeholder="Optional"
 															{...field}
 															className="focus-visible:ring-0 focus:border-coral-spaces focus:border-2"
 														/>
@@ -1309,7 +1403,7 @@ export default function BookingSheet({
 												<FormItem
 													onPointerDownCapture={(e) =>
 														focusFirstControlWithin(
-															e.currentTarget as HTMLElement
+															e.currentTarget as HTMLElement,
 														)
 													}
 												>
@@ -1318,7 +1412,6 @@ export default function BookingSheet({
 													</FormLabel>
 													<FormControl>
 														<Input
-															placeholder="Optional"
 															{...field}
 															className="focus-visible:ring-0 focus:border-coral-spaces focus:border-2"
 														/>

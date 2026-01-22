@@ -25,7 +25,7 @@ export type PrefillPayload = {
 	date?: string // ISO date for single-day prefill
 	startTime?: string // HH:mm
 	endTime?: string // HH:mm
-	attendees?: number
+	attendees?: string
 	sourcePath?: string
 	utm?: Record<string, string>
 }
