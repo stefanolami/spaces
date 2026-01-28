@@ -35,7 +35,7 @@ import {
 import { ROOM_IDS, roomIdToTitle } from '@/lib/room-map'
 import { SERVICE_IDS, serviceIdToTitle } from '@/lib/service-map'
 import { toast } from 'sonner'
-import { sendAvailabilityRequest, sendBookingRequest } from '@/actions/email'
+import { sendAvailabilityRequest } from '@/actions/email'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { useBookingStore } from '@/lib/booking-store'
 import type { RoomId, ServiceSelection } from '@/lib/booking-types'
@@ -98,11 +98,7 @@ export default function BookingSheet({
 		})
 	}
 
-	// Title based on mode
-	const title = useMemo(
-		() => (mode === 'booking' ? 'Booking Request' : 'Availability Request'),
-		[mode],
-	)
+	const title = 'Request Price & Availability'
 
 	// Calendar selection mode (single | multiple | range)
 	const [calendarMode, setCalendarMode] = useState<
@@ -164,7 +160,7 @@ export default function BookingSheet({
 		},
 	})
 
-	const TIME_PRESETS = useMemo(
+	/* const TIME_PRESETS = useMemo(
 		() =>
 			[
 				{
@@ -227,7 +223,7 @@ export default function BookingSheet({
 		if (!Number.isFinite(minStart) || !Number.isFinite(maxEnd)) return
 		form.setValue('startTime', minutesToHHMM(minStart))
 		form.setValue('endTime', minutesToHHMM(maxEnd))
-	}
+	} */
 
 	function normalizeRooms(
 		nextRooms: RoomId[] | undefined,
@@ -322,9 +318,9 @@ export default function BookingSheet({
 		if (!open) hydratedRef.current = false
 	}, [open, payload, draft, form, tomorrow, isOnOrAfterTomorrow])
 
-	useEffect(() => {
+	/* useEffect(() => {
 		if (!open) setSelectedTimePresets([])
-	}, [open])
+	}, [open]) */
 
 	// Persist draft on form changes
 	const watched = useWatch({
@@ -368,7 +364,7 @@ export default function BookingSheet({
 		}
 	}, [watched, open, updateDraft])
 
-	async function submit(modeOverride: BookingMode) {
+	async function submit() {
 		// Validate before submitting to avoid 400 from API
 		const isValid = await form.trigger()
 		if (!isValid) {
@@ -379,23 +375,14 @@ export default function BookingSheet({
 			return
 		}
 		const values = form.getValues()
-		const data: BookingRequest = { ...values, mode: modeOverride }
-		const sender =
-			modeOverride === 'booking'
-				? sendBookingRequest
-				: sendAvailabilityRequest
+		const data: BookingRequest = { ...values, mode: 'availability' }
 		setSubmitting(true)
-		const res = await sender(data)
+		const res = await sendAvailabilityRequest(data)
 		if (res.success) {
-			toast.success(
-				modeOverride === 'booking'
-					? 'Booking request sent'
-					: 'Availability request sent',
-				{
-					description: "Thanks — we'll contact you shortly.",
-					duration: 6000,
-				},
-			)
+			toast.success('Request sent', {
+				description: "Thanks — we'll contact you shortly.",
+				duration: 6000,
+			})
 			onOpenChange(false)
 			form.reset()
 			clearDraft()
@@ -466,8 +453,8 @@ export default function BookingSheet({
 							</SheetTitle>
 						</div>
 						<SheetDescription className="text-sm md:text-base text-black-spaces/70">
-							Complete your details and send a request. Our team
-							will reply shortly.
+							Request price and availability. Our team will reply
+							shortly.
 						</SheetDescription>
 					</SheetHeader>
 
@@ -823,7 +810,7 @@ export default function BookingSheet({
 										)}
 									/>
 									{/* Time presets (multi-select) */}
-									<div className="flex flex-wrap items-center gap-2 mt-3">
+									{/* <div className="flex flex-wrap items-center gap-2 mt-3">
 										{TIME_PRESETS.map((preset) => {
 											const selected =
 												selectedTimePresets.includes(
@@ -868,7 +855,7 @@ export default function BookingSheet({
 												</Button>
 											)
 										})}
-									</div>
+									</div> */}
 									<div className="grid grid-cols-2 gap-2 mt-2">
 										<FormField
 											control={form.control}
@@ -1444,23 +1431,23 @@ export default function BookingSheet({
 						</Form>
 					</ScrollArea>
 
-					<div className="px-2 md:px-6 py-3 md:py-4 border-t border-coral-spaces bg-white-spaces flex items-center justify-end gap-2">
-						<Button
-							onClick={() => submit('booking')}
-							className="bg-midnight-spaces text-white-spaces hover:bg-midnight-spaces/90 text-sm"
-							aria-label="Send booking request"
-							disabled={submitting}
-						>
-							Send Booking Request
-						</Button>
-						<Button
-							onClick={() => submit('availability')}
-							className="bg-black-spaces text-white-spaces hover:bg-black-spaces/90"
-							aria-label="Ask availability"
-							disabled={submitting}
-						>
-							Ask Availability
-						</Button>
+					<div className="px-2 md:px-6 py-3 md:py-4 border-t border-coral-spaces bg-white-spaces">
+						<div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+							<Button
+								onClick={submit}
+								className="bg-midnight-spaces text-white-spaces hover:bg-midnight-spaces/90 text-sm"
+								aria-label="Request price and availability"
+								disabled={submitting}
+							>
+								Request Price &amp; Availability
+							</Button>
+							<a
+								href="/contact-us"
+								className="text-[12px] leading-tight text-black-spaces/70 hover:text-black-spaces underline sm:text-right"
+							>
+								Alternatively, call or email us directly.
+							</a>
+						</div>
 					</div>
 				</div>
 			</SheetContent>

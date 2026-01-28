@@ -31,13 +31,12 @@ const Access = () => {
 		<div>
 			<HeroAccess />
 			<div className="w-[90%] mx-auto max-w-[1000px] text-center mt-10 lg:mt-20 text-black-spaces">
-				<p className="w-[90%] max-w-[1000px] mx-auto font-nunito text-sm md:text-base lg:text-lg mb-10 lg:mb-20 2xl:mt-32 text-midnight-spaces font-bold">
+				<p className="w-[90%] max-w-[1000px] mx-auto font-nunito text-sm md:text-base lg:text-xl mb-10 lg:mb-20 2xl:mt-32 text-midnight-spaces font-bold">
 					Rue de la Loi 81A / Wetstraat 81A - 1040 Bruxelles /
 					Brussels
 				</p>
 				<h2 className="font-robo font-bold uppercase text-lg lg:text-2xl">
-					At the heart of the EU district, here is how easy to get to
-					us:
+					At the Heart of the EU District – Getting Here Is Easy:
 				</h2>
 				<ul className="w-fit mx-auto space-y-4 mt-10 mb-10 lg:mb-20">
 					{LIST_ITEMS.map((item, index) => (

@@ -1,4 +1,4 @@
-'use server'
+'use client'
 
 import Link from 'next/link'
 import CogsSvg from '../svgs/cogs'
@@ -7,20 +7,22 @@ import PhoneSvg from '../svgs/phone'
 import HomeCard from './home-card'
 import Image from 'next/image'
 import PinSvg from '../svgs/pin'
+import { useBookingSheet } from '../booking/booking-sheet-provider'
 
 const HomeSection = () => {
+	const { openBookingSheet } = useBookingSheet()
 	return (
 		<div className="w-full">
 			<div className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px] my-10 lg:my-20 2xl:my-32">
 				<p className="font-nunito text-[12px] md:text-[16px] lg:text-[20px] leading-[14px] md:leading-[18px] lg:leading-[22px] text-justify">
-					We provide strategic meeting and event locations. Launched
-					in March 2025, our first location is at the heart of EU
-					decision-making in Brussels. Our focus is on providing the
-					right spaces for your place of action; from board meeting to
-					conferences, and expert round-tables to trainings. We also
-					provide 360°-office support assistance and with a team of
-					dedicated experts, the full spectrum of event management
-					services. Our ultimate aims: A perfect fit and memorable.
+					We offer strategic meeting and event spaces. Our first
+					location, launched in March 2025, is at the heart of EU
+					decision-making in Brussels. From board meetings and
+					conferences to expert roundtables and trainings, we provide
+					the right setting for every occasion. Our services also
+					include full event management and comprehensive office
+					support, backed by a team of dedicated professionals. Our
+					goal: the perfect fit and a lasting impression.
 				</p>
 			</div>
 			<h1 className="text-center font-robo font-bold text-xl lg:text-3xl">
@@ -77,14 +79,15 @@ const HomeSection = () => {
 				</Link>
 			</div>
 			<div className="mt-16 md:mt-20 lg:mt-32 xl:mt-36 mb-20 md:grid-cols-2 md:gap-4 mx-auto w-fit">
-				<Link
-					href="/booking"
-					className="w-full h-full"
+				<button
+					onClick={(e) => {
+						e.preventDefault()
+						openBookingSheet({ sourcePath: '/header' }, 'booking')
+					}}
+					className="w-full h-full bg-midnight-spaces flex items-center justify-center font-nunito font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-white-spaces px-6 md:px-8 lg:px-10 xl:px-12 py-2 lg:py-3 xl:py-4 shadow-md hover:shadow-lg hover:scale-105"
 				>
-					<button className="w-full h-full bg-midnight-spaces flex items-center justify-center font-nunito font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-white-spaces px-6 md:px-8 lg:px-10 xl:px-12 py-2 lg:py-3 xl:py-4 shadow-md hover:shadow-lg hover:scale-105">
-						MAKE REQUEST
-					</button>
-				</Link>
+					MAKE REQUEST
+				</button>
 				{/* <Link
 					href="/"
 					className="w-full h-full"

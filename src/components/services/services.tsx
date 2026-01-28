@@ -1,28 +1,25 @@
 'use client'
 
-import Link from 'next/link'
 import HeroServices from './hero-services'
 import Image from 'next/image'
 import { useBookingSheet } from '../booking/booking-sheet-provider'
 
 const LIST_ITEMS = [
-	'Camera team to capture your event (video or static)',
-	'Dog walking services',
-	'Limousine or general pick-up services',
+	'Camera team to capture your event (photo or video)',
+	'General transportation services',
 	'Dry cleaning',
-	'Gym access (offsite)',
-	'Give-aways or meeting paraphernalia with your logo',
+	'Branded giveaways or meeting paraphernalia with your logo',
 ]
 
 const EQUIPMENT_ITEMS = [
 	{
 		title: 'Screens',
-		desc: 'Available in each room except in the relaxation break-out room. Included in price.',
+		desc: 'Available in all rooms except the Relaxation Breakout Room, and included in the booking price.',
 		icon: '/services/screen-icon.png',
 	},
 	{
 		title: 'Conference system',
-		desc: 'Available in each room except in the relaxation break-out room. Included in price.',
+		desc: 'Available in all rooms except the Relaxation Breakout Room, and included in the booking price.',
 		icon: '/services/conf-icon.png',
 	},
 	{
@@ -45,8 +42,8 @@ const Services = () => {
 			<div className="text-black-spaces">
 				<div className="text-center">
 					<p className="w-[90%] max-w-[1000px] mx-auto text-midnight-spaces font-nunito font-bold text-sm md:text-base lg:text-lg xl:text-xl my-10 lg:my-20 2xl:my-32">
-						Our services from the necessary to the extraordinary to
-						support your requirements.
+						We offer services ranging from the essential to the
+						exceptional to meet your every need.
 					</p>
 					<div className="relative w-full aspect-[16/4] lg:aspect-[20/3] flex items-center justify-center">
 						<div className="absolute inset-0 z-20 bg-black-spaces/30"></div>
@@ -58,13 +55,13 @@ const Services = () => {
 						/>
 						<div className="z-20 text-white-spaces flex flex-col items-center justify-center">
 							<h2 className="font-robo font-bold uppercase text-xl lg:text-3xl">
-								Facility-related equipment
+								Facility equipment
 							</h2>
 						</div>
 					</div>
 					<p className="w-[90%] font-nunito text-xs md:text-base lg:text-xl text-center italic mt-6 lg:mt-10 2xl:mt-20 max-w-[800px] mx-auto">
-						These are included, or can be specifically requested
-						through the{' '}
+						Equipment is either included or can be requested through
+						the{' '}
 						<span
 							onClick={(e) => {
 								e.preventDefault()
@@ -73,7 +70,7 @@ const Services = () => {
 									'booking',
 								)
 							}}
-							className="text-eucalyptus-spaces font-bold cursor-pointer"
+							className="text-coral-spaces font-bold cursor-pointer"
 						>
 							make request
 						</span>{' '}
@@ -107,16 +104,15 @@ const Services = () => {
 			</div>
 			<div className="w-4/5 max-w-[1000px] mx-auto space-y-2 lg:space-y-4 my-6 lg:my-10 2xl:my-20 text-center text-xs md:text-sm lg:text-lg">
 				<p className="">
-					Dare us to satisfy your tastes. We have a long list of
-					various catering services to offer, from warm buffet to cold
-					cuts, from Brazilian cuisine and Scandic specialities to
-					Japanese flavours. We can also organize a wine tasting, a
-					mixologist for delicious cocktails, or a barista to make
-					that cappuccino extra special.
+					We offer a wide range of catering options to suit every
+					taste, from warm buffets and cold cuts to international
+					specialties. Additional experiences can be arranged, such as
+					wine tastings, a mixologist for cocktails, or a barista for
+					specialty coffee.
 				</p>
 				<p className="italic">
-					Keep in mind, we offer coffee, tea and water (flat and
-					sparkling) at no charge.
+					Standard coffee, tea, and still or sparkling water are
+					always included at no extra charge.
 				</p>
 			</div>
 			<div className="relative w-full aspect-[16/4] lg:aspect-[20/3] flex items-center justify-center">
@@ -135,8 +131,8 @@ const Services = () => {
 			</div>
 			<div className="w-4/5 max-w-[1000px] mx-auto  my-6 lg:my-10 2xl:my-20 text-center text-xs md:text-sm lg:text-lg">
 				<p className="">
-					If you do not find what you need on the list below,
-					challenge us to satisfy your requirements.
+					If you don’t see what you need listed below, let us
+					know—we’ll do our best to meet your requirements
 				</p>
 				<ul className="mt-8 lg:mt-12 w-fit mx-auto lg:grid xl:grid-cols-2 xl:gap-x-4">
 					{LIST_ITEMS.map((item, index) => (
@@ -163,19 +159,20 @@ const Services = () => {
 			</div>
 			<div className="w-4/5 max-w-[1000px] mx-auto space-y-2 lg:space-y-4 my-6 lg:my-10 2xl:my-20 text-center text-xs md:text-sm lg:text-lg">
 				<p className="">
-					Our sister company Time&Place Consulting can help you
-					organize your event from a 360-perspective, from
-					pre-planning and execution to post-event activities. This
-					includes inviting the right audience and speakers to
-					developing multi-channel communication tools so that you get
-					your message through. You can find more details{' '}
-					<Link
+					Our sister company, Time&Place Consulting, provides full
+					360° event management—from pre-planning and execution to
+					post-event follow-up. Services include audience and speaker
+					invitations, as well as the development of multi-channel
+					communication tools to ensure your message reaches its
+					target. For more details, let us know, and we’ll connect you
+					with their team.{' '}
+					{/* <Link
 						href="https://timeandplaceconsulting.com/service/event-organisation"
 						className="text-eucalyptus-spaces font-bold"
 					>
 						here
 					</Link>
-					. Let us know and we will get you in touch.
+					. Let us know and we will get you in touch. */}
 				</p>
 			</div>
 		</div>
@@ -186,12 +183,12 @@ export default Services
 
 const ListItem = ({ text }: { text: string }) => {
 	return (
-		<li className="flex flex-row items-center gap-2 justify-start text-xs md:text-sm lg:text-lg font-nunito text-left text-black-spaces mb-2 lg:mb-3">
+		<li className="flex flex-row items-start gap-2 justify-start text-xs md:text-sm lg:text-lg font-nunito text-left text-black-spaces mb-2 lg:mb-3">
 			<Image
 				src="/services/checkmark-icon.png"
 				width={20}
 				height={20}
-				className=""
+				className="mt-1"
 				alt="screen icon"
 			/>
 			<span>{text}</span>

@@ -9,21 +9,22 @@ const FacilitiesComponent = () => {
 			<HeroFacilities />
 			<div className="w-full bg-white-spaces my-10 lg:my-20 3xl:my-32 font-nunito">
 				<p className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px]  font-nunito text-xs md:text-base lg:text-xl text-center text-midnight-spaces font-bold">
-					Our facilities can be mixed and matched to various{' '}
+					Our facilities can be tailored and combined to suit a wide
+					range of{' '}
 					<Link
 						href="/concepts"
 						className="text-coral-spaces font-bold"
 					>
 						concepts
 					</Link>{' '}
-					for your needs. And, our{' '}
+					, and our{' '}
 					<Link
 						href="/services"
 						className="text-coral-spaces font-bold"
 					>
 						services
 					</Link>{' '}
-					will make the most of the facilities.
+					are designed to suit your requirements.
 				</p>
 			</div>
 			<div className="relative max-w-[2000px] mx-auto">
@@ -39,7 +40,7 @@ const FacilitiesComponent = () => {
 				<p className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px]  font-nunito text-xs md:text-base lg:text-xl text-center text-black-spaces">
 					Please note: All rooms except the relaxation room have large
 					screens and video-conferencing capacities. All bookings
-					include coffee, tea and water (flat and sparkling) at no
+					include coffee, tea, and water (flat and sparkling) at no
 					charge.
 				</p>
 			</div>

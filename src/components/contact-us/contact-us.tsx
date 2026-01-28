@@ -16,6 +16,7 @@ import { Input } from '../ui/input'
 import { Textarea } from '../ui/textarea'
 import { useState } from 'react'
 import { sendContactEmail } from '@/actions/email'
+import { Mail, MapPin, Phone } from 'lucide-react'
 
 const ContactUsComponent = () => {
 	const [responseMessage, setResponseMessage] = useState('')
@@ -62,6 +63,32 @@ const ContactUsComponent = () => {
 			<h2 className="font-robo font-bold uppercase text-lg lg:text-2xl mb-8 lg:mb-12">
 				CONTACT US
 			</h2>
+			<div className="mb-8 lg:mb-12">
+				<ul className="space-y-3 text-sm lg:text-base text-black-spaces/80">
+					<li className="flex items-start gap-3">
+						<Phone className="h-5 w-5 text-midnight-spaces mt-0.5" />
+						<a
+							href="tel:+32485382221"
+							className="hover:underline"
+						>
+							+32 (0) 485 382 221
+						</a>
+					</li>
+					<li className="flex items-start gap-3">
+						<Mail className="h-5 w-5 text-midnight-spaces mt-0.5" />
+						<a
+							href="mailto:contact@timeandspaces.org"
+							className="hover:underline"
+						>
+							contact@timeandspaces.org
+						</a>
+					</li>
+					<li className="flex items-start gap-3">
+						<MapPin className="h-5 w-5 text-midnight-spaces mt-0.5" />
+						<span>Rue de la Loi 81A - 1040 Brussels, Belgium</span>
+					</li>
+				</ul>
+			</div>
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(submitHandler)}>
 					<FormField

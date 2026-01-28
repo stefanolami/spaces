@@ -150,12 +150,16 @@ const LINKS = [
 		title: 'ACCESS',
 		href: '/access',
 	},
+	{
+		title: 'CONTACT US',
+		href: '/contact-us',
+	},
 ]
 
 const UNDERLAY_VARIANTS = {
 	open: {
 		width: 'calc(100% - 24px)',
-		height: '430px',
+		height: '480px',
 		transition: { type: 'spring', mass: 1.5, stiffness: 550, damping: 55 },
 		backgroundColor: '#2D2D2D',
 	},

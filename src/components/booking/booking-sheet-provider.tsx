@@ -23,7 +23,7 @@ export function useBookingSheet() {
 	const ctx = useContext(BookingSheetContext)
 	if (!ctx)
 		throw new Error(
-			'useBookingSheet must be used within BookingSheetProvider'
+			'useBookingSheet must be used within BookingSheetProvider',
 		)
 	return ctx
 }
@@ -61,7 +61,7 @@ export default function BookingSheetProvider({
 			closeBookingSheet,
 			setPayload,
 			setMode,
-		]
+		],
 	)
 
 	return (
@@ -78,8 +78,8 @@ export default function BookingSheetProvider({
 			{/* Expand handle at bottom-right when collapsed */}
 			{!isOpen && (
 				<button
-					aria-label="Expand booking panel"
-					title="Expand"
+					aria-label="Expand request panel"
+					title="Expand request panel"
 					onClick={() => openBookingSheet()}
 					className="fixed bottom-3 md:bottom-6 right-0 z-40 bg-midnight-spaces text-white-spaces border-2 border-midnight-spaces hover:border-coral-spaces border-r-0 rounded-tl-full rounded-bl-full shadow-xl p-2 md:p-3 hover:bg-midnight-spaces/90 focus:outline-none focus:ring-0"
 				>

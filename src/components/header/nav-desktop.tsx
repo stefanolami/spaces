@@ -19,6 +19,10 @@ const LINKS = [
 		name: 'ACCESS',
 		path: '/access',
 	},
+	{
+		name: 'CONTACT US',
+		path: '/contact-us',
+	},
 ]
 
 const NavDesktop = () => {
@@ -28,11 +32,11 @@ const NavDesktop = () => {
 			id="desktop-nav"
 			className="bg-eucalyptus-spaces hidden md:flex flex-row justify-between items-center h-full"
 		>
-			<nav className="grid grid-cols-4 gap-10 items-center text-center h-full font-robo md:text-xs xl:text-base font-normal">
+			<nav className="grid grid-cols-5 md: gap-5 lg:gap-10 items-center text-center h-full font-robo md:text-xs xl:text-base font-normal">
 				{LINKS.map((link, index) => (
 					<Link
 						key={index}
-						className={`relative w-[80px] xl:w-[110px]
+						className={`relative 
                                 ${
 									path == link.path
 										? 'active-link'

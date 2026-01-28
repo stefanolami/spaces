@@ -13,13 +13,12 @@ export function subjectFor(req: BookingRequest): string {
 	const dateStr = req.dates
 		.map((d) => d.toISOString().slice(0, 10))
 		.join(', ')
-	const prefix =
-		req.mode === 'booking' ? 'Booking Request' : 'Availability Inquiry'
+	const prefix = 'Price & Availability Request'
 	return `Time&Spaces ${prefix} · ${primary ?? '—'} · ${dateStr}`
 }
 export function bodyFor(req: BookingRequest): string {
 	return [
-		`Mode: ${req.mode}`,
+		'Request: Price & Availability',
 		`Rooms: ${req.rooms.join(', ')}`,
 		req.bundleSlug ? `Bundle: ${req.bundleSlug}` : undefined,
 		`Dates: ${req.dates.map((d) => d.toDateString()).join(', ')}`,

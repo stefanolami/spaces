@@ -14,7 +14,12 @@ const Footer = () => {
 					<div className="flex flex-row items-center justify-center gap-4">
 						<span>+32 (0) 485 382 221</span>
 						<span>|</span>
-						<span>info@timeandspaces.org</span>
+						<a
+							href="mailto:info@timeandspaces.org"
+							className="hover:underline"
+						>
+							info@timeandspaces.org
+						</a>
 					</div>
 					<span className="block">
 						Rue de la Loi 81A - 1040 Brussels, Belgium
@@ -69,7 +74,13 @@ const Footer = () => {
 							<span className="block">
 								Rue de la Loi 81A - 1040 Brussels, Belgium
 							</span>
-							+32 (0) 485 382 221 - contact@timeandspaces.org
+							+32 (0) 485 382 221 -{' '}
+							<a
+								href="mailto:contact@timeandspaces.org"
+								className="hover:underline"
+							>
+								contact@timeandspaces.org
+							</a>
 						</span>
 					</div>
 				</div>
