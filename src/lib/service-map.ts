@@ -2,15 +2,16 @@ import type { ServiceId } from '@/lib/booking-types'
 
 export const SERVICE_TITLE_MAP: Record<ServiceId, string> = {
 	catering: 'Catering',
-	av: 'A/V Support',
-	streaming: 'Streaming',
 	interpretation: 'Interpretation',
+	streaming: 'Live streaming',
 	recording: 'Recording',
-	layout: 'Room Layout',
+	'videos-and-photos': 'Videos and/or photos',
+	'branded-giveaways': 'Branded giveaways/paraphernalia',
+	transportation: 'Transportation',
 }
 
 export const SERVICE_IDS: ServiceId[] = Object.keys(
-	SERVICE_TITLE_MAP
+	SERVICE_TITLE_MAP,
 ) as ServiceId[]
 
 export function serviceIdToTitle(id: ServiceId): string {

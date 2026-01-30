@@ -6,11 +6,12 @@ export type RoomId =
 
 export type ServiceId =
 	| 'catering'
-	| 'av'
+	| 'interpretation'
 	| 'streaming'
 	| 'recording'
-	| 'interpretation'
-	| 'layout'
+	| 'videos-and-photos'
+	| 'branded-giveaways'
+	| 'transportation'
 
 export type ServiceSelection = {
 	id: ServiceId

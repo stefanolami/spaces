@@ -36,6 +36,14 @@ const Access = () => {
 					Brussels
 				</p>
 				<h2 className="font-robo font-bold uppercase text-lg lg:text-2xl">
+					Accessibility
+				</h2>
+				<p className="w-[90%] max-w-[1000px] mx-auto font-nunito text-sm md:text-base lg:text-xl mt-4 mb-10 lg:mb-20 text-black-spaces">
+					Our building and all rooms are accessible for guests with
+					reduced mobility. If you have specific requirements, please
+					let us know in advance.
+				</p>
+				<h2 className="font-robo font-bold uppercase text-lg lg:text-2xl">
 					At the Heart of the EU District – Getting Here Is Easy:
 				</h2>
 				<ul className="w-fit mx-auto space-y-4 mt-10 mb-10 lg:mb-20">

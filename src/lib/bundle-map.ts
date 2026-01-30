@@ -11,12 +11,12 @@ export const BUNDLE_MAP: Record<string, BundleMapEntry> = {
 	'multi-functional-board-meeting-approach': {
 		title: 'Multi-functional Board Meeting Approach',
 		rooms: ['board-and-conference-room', 'relaxation-break-out-room'],
-		services: [{ id: 'catering' }, { id: 'av' }, { id: 'layout' }],
+		services: [{ id: 'catering' }],
 	},
 	'mini-conferences-panel-discussions-and-keynote-speeches': {
 		title: 'Mini-Conferences, Panel Discussions & Keynote Speeches',
 		rooms: ['board-and-conference-room', 'catering-or-meeting-room-2'],
-		services: [{ id: 'catering' }, { id: 'layout' }],
+		services: [{ id: 'catering' }],
 	},
 	'trainings-seminars-and-action-tanks': {
 		title: 'Trainings, Seminars & Action Tanks',

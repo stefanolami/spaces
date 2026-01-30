@@ -3,11 +3,12 @@ import { z } from 'zod'
 export const serviceSelectionSchema = z.object({
 	id: z.enum([
 		'catering',
-		'av',
-		'streaming',
 		'interpretation',
+		'streaming',
 		'recording',
-		'layout',
+		'videos-and-photos',
+		'branded-giveaways',
+		'transportation',
 	]),
 	quantity: z.coerce.number().int().positive().optional(),
 	notes: z.string().optional(),

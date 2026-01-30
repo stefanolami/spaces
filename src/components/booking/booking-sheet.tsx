@@ -243,17 +243,33 @@ export default function BookingSheet({
 		return arr.length > 0 ? (arr as [RoomId, ...RoomId[]]) : undefined
 	}
 
+	function normalizeServices(
+		nextServices: ServiceSelection[] | undefined,
+	): [ServiceSelection, ...ServiceSelection[]] | undefined {
+		if (!nextServices || nextServices.length === 0) return undefined
+		const allowed = new Set(SERVICE_IDS)
+		const deduped = new Map<string, ServiceSelection>()
+		for (const svc of nextServices) {
+			if (!svc) continue
+			if (!allowed.has(svc.id)) continue
+			if (!deduped.has(svc.id)) deduped.set(svc.id, svc)
+		}
+		const arr = Array.from(deduped.values())
+		return arr.length > 0
+			? (arr as [ServiceSelection, ...ServiceSelection[]])
+			: undefined
+	}
+
 	useEffect(() => {
 		form.setValue('mode', mode)
 		if (payload?.rooms && payload.rooms.length > 0) {
 			const normalized = normalizeRooms(payload.rooms)
 			if (normalized) form.setValue('rooms', normalized)
 		}
-		if (payload?.services && payload.services.length > 0)
-			form.setValue(
-				'services',
-				payload.services as [ServiceSelection, ...ServiceSelection[]],
-			)
+		if (payload?.services && payload.services.length > 0) {
+			const normalized = normalizeServices(payload.services)
+			if (normalized) form.setValue('services', normalized)
+		}
 		if (payload?.attendees !== undefined && payload?.attendees !== null)
 			form.setValue('attendees', String(payload.attendees))
 		if (payload?.date) {
@@ -279,11 +295,12 @@ export default function BookingSheet({
 				const normalized = normalizeRooms(draft.rooms as RoomId[])
 				if (normalized) form.setValue('rooms', normalized)
 			}
-			if (draft.services && draft.services.length > 0)
-				form.setValue(
-					'services',
-					draft.services as [ServiceSelection, ...ServiceSelection[]],
+			if (draft.services && draft.services.length > 0) {
+				const normalized = normalizeServices(
+					draft.services as ServiceSelection[],
 				)
+				if (normalized) form.setValue('services', normalized)
+			}
 			if (draft.attendees !== undefined && draft.attendees !== null)
 				form.setValue('attendees', String(draft.attendees))
 			if (draft.dates && draft.dates.length > 0)
@@ -1199,7 +1216,7 @@ export default function BookingSheet({
 																		}}
 																	/>
 																</FormControl>
-																<span className="font-normal w-full h-full text-black-spaces flex items-center text-xs md:text-sm">
+																<span className="font-normal w-full h-full text-black-spaces flex items-center text-xs md:text-xs">
 																	{serviceIdToTitle(
 																		svc,
 																	)}

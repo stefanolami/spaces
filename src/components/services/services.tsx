@@ -7,6 +7,8 @@ import { useBookingSheet } from '../booking/booking-sheet-provider'
 const LIST_ITEMS = [
 	'Camera team to capture your event (photo or video)',
 	'General transportation services',
+	'Interpretation',
+	'Live streaming',
 	'Dry cleaning',
 	'Branded giveaways or meeting paraphernalia with your logo',
 ]
