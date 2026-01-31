@@ -151,6 +151,10 @@ const LINKS = [
 		href: '/access',
 	},
 	{
+		title: 'PRICING',
+		href: '/pricing',
+	},
+	{
 		title: 'CONTACT US',
 		href: '/contact-us',
 	},
@@ -159,7 +163,7 @@ const LINKS = [
 const UNDERLAY_VARIANTS = {
 	open: {
 		width: 'calc(100% - 24px)',
-		height: '480px',
+		height: '530px',
 		transition: { type: 'spring', mass: 1.5, stiffness: 550, damping: 55 },
 		backgroundColor: '#2D2D2D',
 	},

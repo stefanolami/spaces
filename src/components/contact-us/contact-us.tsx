@@ -60,7 +60,7 @@ const ContactUsComponent = () => {
 
 	return (
 		<div className="mt-32 lg:mt-52 mb-20 w-[90%] sm:w-3/4 md:w-3/5 mx-auto max-w-[700px] font-nunito bg-white-spaces text-black-spaces">
-			<h2 className="font-robo font-bold uppercase text-lg lg:text-2xl mb-8 lg:mb-12">
+			<h2 className="font-robo font-bold uppercase text-lg lg:text-3xl mb-8 lg:mb-12">
 				CONTACT US
 			</h2>
 			<div className="mb-8 lg:mb-12">
