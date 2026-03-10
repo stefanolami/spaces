@@ -49,7 +49,7 @@ const PricingTable = ({
 								Half-day + lunch (5.5h)
 							</th>
 							<th className="p-3 font-robo text-xs md:text-sm">
-								Full day (9h)
+								Full day (10h)
 							</th>
 							<th className="p-3 font-robo text-xs md:text-sm">
 								Full evening (4h)
@@ -149,8 +149,8 @@ const Pricing = () => {
 					<p className="font-nunito text-sm md:text-base lg:text-lg text-center">
 						The price list below is a point of reference. Following
 						your request for availability and price, the price will
-						be calculated according to this list. New customers get
-						an automatic{' '}
+						be calculated according to this list. New customers and
+						Time&Place Consulting clients get an automatic{' '}
 						<span className="font-bold text-midnight-spaces">
 							5% reduction
 						</span>{' '}
@@ -198,7 +198,7 @@ const Pricing = () => {
 							rows={LARGE_MEETING_ROOM_ROWS}
 						/>
 						<PricingTable
-							caption="Catering or Meeting room"
+							caption="Catering or Meeting room (8-PERSONS)"
 							rows={CATERING_OR_MEETING_ROOM_ROWS}
 						/>
 					</div>
