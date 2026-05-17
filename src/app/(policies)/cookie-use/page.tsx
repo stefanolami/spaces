@@ -1,4 +1,19 @@
 import React from 'react'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: 'Cookie Policy | Time&Spaces',
+	description:
+		'Understand how Time&Spaces uses cookies and similar technologies on our website.',
+	alternates: { canonical: '/cookie-use' },
+	openGraph: {
+		title: 'Cookie Policy | Time&Spaces',
+		description: 'How Time&Spaces uses cookies and similar technologies.',
+		url: 'https://www.timeandspaces.org/cookie-use',
+		siteName: 'Time&Spaces',
+		type: 'article',
+	},
+}
 
 const CookieUsePage = () => {
 	return (

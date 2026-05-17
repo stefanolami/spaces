@@ -1,7 +1,11 @@
+'use client'
+
 import { FacilitiesCardType } from '@/lib/types'
 /* import Image from 'next/image' */
-import Link from 'next/link'
 import FacilitiesCarousel from './facilities-carousel'
+import Image from 'next/image'
+import { useBookingSheet } from '@/components/booking/booking-sheet-provider'
+import { roomTitleToId } from '@/lib/room-map'
 
 const FacilitiesCard = ({
 	card,
@@ -10,9 +14,22 @@ const FacilitiesCard = ({
 	card: FacilitiesCardType
 	position: number
 }) => {
+	const { openBookingSheet } = useBookingSheet()
+
+	const roomId = roomTitleToId(card.title)
+
+	function handleBookNow() {
+		if (!roomId)
+			return openBookingSheet({ sourcePath: '/facilities' }, 'booking')
+		openBookingSheet(
+			{ rooms: [roomId], sourcePath: '/facilities' },
+			'booking',
+		)
+	}
+
 	return (
 		<>
-			<div className={`bg-white flex w-full font-nunito`}>
+			<div className={`bg-white-spaces flex w-full font-nunito`}>
 				<div className="w-full flex flex-col md:grid md:grid-cols-2 h-full">
 					<div
 						className={`w-full h-52 md:h-full max-h-[600px] relative ${
@@ -21,24 +38,29 @@ const FacilitiesCard = ({
 					>
 						<FacilitiesCarousel images={card.images} />
 					</div>
-					<div className="flex flex-col justify-center w-3/4 mx-auto max-w-[600px] py-8 md:py-12 lg:py-20 xl:py-36 gap-4 md:gap-5 lg:gap-6">
+					<div className="flex flex-col justify-center w-3/4 mx-auto max-w-[600px] gap-4 lg:p-8 md:gap-5 lg:gap-6 p-4">
+						<div className="relative aspect-[132/108] mx-auto md:mx-0 w-40 md:w-52 lg:w-60 xl:w-72 mt-2 lg:mt-0">
+							<Image
+								src={card.floorplan}
+								alt={card.title + ' floorplan'}
+								fill
+								className="object-contain"
+							/>
+						</div>
 						<h3 className="text-base md:text-lg lg:text-xl font-bold w-full text-balance text-center md:text-left">
 							{card.title}
 						</h3>
 						<p className="text-sm md:text-sm lg:text-base text-center md:text-justify">
 							{card.text}
 						</p>
-						<div className="w-full lg:w-3/4 xl:w-2/3 my-4 md:gap-4 grid grid-cols-2">
-							<Link href={card.firstLink}>
-								<button className="bg-orange-spaces hover:scale-105 transition-scale-standard w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white shadow-md hover:shadow-lg">
-									BOOK NOW
-								</button>
-							</Link>
-							<Link href={card.firstLink}>
-								<button className="bg-black-spaces hover:scale-105 transition-scale-standard w-full flex items-center justify-center p-2 text-xs md:text-sm lg:text-base font-bold text-white shadow-md hover:shadow-lg">
-									GET A QUOTE
-								</button>
-							</Link>
+						<div className="my-4 mx-auto md:mx-0 md:mr-auto w-fit">
+							<button
+								type="button"
+								onClick={handleBookNow}
+								className="bg-midnight-spaces hover:scale-105 transition-scale-standard w-full flex items-center justify-center py-2 px-6 md:px-10 text-xs md:text-sm lg:text-base font-bold text-white-spaces shadow-md hover:shadow-lg"
+							>
+								MAKE REQUEST
+							</button>
 						</div>
 					</div>
 				</div>

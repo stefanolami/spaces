@@ -4,9 +4,9 @@ import React from 'react'
 import { ImagesSlider } from './images-slider'
 const HeroHome = () => {
 	const images = [
-		'/hero/hero-1.jpeg',
-		'/hero/hero-2.png',
-		'/hero/hero-3.jpg',
+		'/hero/hero-1.png',
+		'/hero/hero-map.jpg',
+		'/hero/hero-3.png',
 		'/hero/hero-4.png',
 		'/hero/hero-5.png',
 	]
@@ -17,11 +17,21 @@ const HeroHome = () => {
 		'Your place of action',
 		' ...within the heart of the EU',
 	]
+	const positions = ['top', 'top', 'center', 'center', 'top']
+	const mobileUnderlineWords = [
+		['view'],
+		['access'],
+		['voice'],
+		['action'],
+		['heart', 'EU'],
+	]
 	return (
 		<ImagesSlider
-			className=" w-full h-[calc(100vh_-_84px)] md:h-[calc(100vh_-_92px)] lg:h-[calc(100vh_-_120px)] py-8 md:py-6 xl:py-4"
+			className=" w-full h-[100vh] py-8 md:py-6 xl:py-4 select-none"
 			images={images}
 			texts={texts}
+			positions={positions}
+			mobileUnderlineWords={mobileUnderlineWords}
 		>
 			{/* <motion.div
 				initial={{

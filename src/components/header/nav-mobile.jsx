@@ -56,15 +56,15 @@ const NavLink = ({ children, href, idx }) => {
 				opacity: 1,
 				y: 0,
 				transition: {
-					delay: 0.75 + idx * 0.125,
-					duration: 0.5,
+					delay: 0.5 + idx * 0.08,
+					duration: 0.35,
 					ease: 'easeInOut',
 				},
 			}}
 			exit={{ opacity: 0, y: -8 }}
 			href={href}
 			className={`block text-4xl font-semibold font-nunito text-center ${
-				path === href ? 'text-orange-spaces' : 'text-white'
+				path === href ? 'text-coral-spaces' : 'text-white'
 			}`}
 		>
 			{children}
@@ -73,21 +73,20 @@ const NavLink = ({ children, href, idx }) => {
 }
 
 const Logo = () => {
-	// Temp logo from https://logoipsum.com/
 	return (
 		<motion.a
 			initial={{ opacity: 0, y: -12 }}
 			animate={{
 				opacity: 1,
 				y: 0,
-				transition: { delay: 0.5, duration: 0.5, ease: 'easeInOut' },
+				transition: { delay: 0.35, duration: 0.35, ease: 'easeInOut' },
 			}}
 			exit={{ opacity: 0, y: -12 }}
 			href="/"
-			className="grid h-20 w-full place-content-center rounded-tl-xl bg-orange-spaces"
+			className="grid h-28 w-full place-content-center rounded-tl-xl bg-midnight-spaces"
 		>
 			<Image
-				src="/header-logo.png"
+				src="/header-logo-vertical.png"
 				alt="Logo"
 				width={150}
 				height={57}
@@ -116,17 +115,17 @@ const HamburgerButton = ({ active, setActive }) => {
 			>
 				<motion.span
 					variants={HAMBURGER_VARIANTS.top}
-					className="absolute block h-1 w-7 bg-white rounded-sm"
+					className="absolute block h-1 w-7 bg-white-spaces rounded-sm"
 					style={{ y: '-50%', left: '50%', x: '-50%' }}
 				/>
 				<motion.span
 					variants={HAMBURGER_VARIANTS.middle}
-					className="absolute block h-1 w-7 bg-white rounded-sm"
+					className="absolute block h-1 w-7 bg-white-spaces rounded-sm"
 					style={{ left: '50%', x: '-50%', top: '50%', y: '-50%' }}
 				/>
 				<motion.span
 					variants={HAMBURGER_VARIANTS.bottom}
-					className="absolute block h-1 w-4 bg-white rounded-sm"
+					className="absolute block h-1 w-4 bg-white-spaces rounded-sm"
 					style={{ x: '-50%', y: '50%' }}
 				/>
 			</motion.button>
@@ -151,25 +150,33 @@ const LINKS = [
 		title: 'ACCESS',
 		href: '/access',
 	},
+	{
+		title: 'PRICING',
+		href: '/pricing',
+	},
+	{
+		title: 'CONTACT US',
+		href: '/contact-us',
+	},
 ]
 
 const UNDERLAY_VARIANTS = {
 	open: {
 		width: 'calc(100% - 24px)',
-		height: '400px',
-		transition: { type: 'spring', mass: 3, stiffness: 400, damping: 50 },
-		backgroundColor: '#2A2A2A',
+		height: '530px',
+		transition: { type: 'spring', mass: 1.5, stiffness: 550, damping: 55 },
+		backgroundColor: '#2D2D2D',
 	},
 	closed: {
 		width: '40px',
 		height: '40px',
-		backgroundColor: '#0F2CCA',
+		backgroundColor: '#53939D',
 		transition: {
-			delay: 0.75,
+			delay: 0.35,
 			type: 'spring',
-			mass: 3,
-			stiffness: 400,
-			damping: 50,
+			mass: 1.5,
+			stiffness: 550,
+			damping: 55,
 		},
 	},
 }

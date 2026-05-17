@@ -1,4 +1,4 @@
-'use server'
+'use client'
 
 import Link from 'next/link'
 import CogsSvg from '../svgs/cogs'
@@ -7,20 +7,22 @@ import PhoneSvg from '../svgs/phone'
 import HomeCard from './home-card'
 import Image from 'next/image'
 import PinSvg from '../svgs/pin'
+import { useBookingSheet } from '../booking/booking-sheet-provider'
 
 const HomeSection = () => {
+	const { openBookingSheet } = useBookingSheet()
 	return (
 		<div className="w-full">
-			<div className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px] my-8 md:my-12 lg:my-16">
+			<div className="w-[80%] mx-auto md:w-[70%] xl:w-[60%] max-w-[1000px] my-10 lg:my-20 2xl:my-32">
 				<p className="font-nunito text-[12px] md:text-[16px] lg:text-[20px] leading-[14px] md:leading-[18px] lg:leading-[22px] text-justify">
-					We provide strategic meeting and event locations. Launched
-					in March 2025, our first location is at the heart of EU
-					decision-making in Brussels. Our focus is on providing the
-					right spaces for your place of action; from board meeting to
-					conferences, and expert round-tables to trainings. We also
-					provide 360°-office support assistance and with a team of
-					dedicated experts, the full spectrum of event management
-					services. Our ultimate aims: A perfect fit and memorable.
+					We offer strategic meeting and event spaces. Our first
+					location, launched in March 2025, is at the heart of EU
+					decision-making in Brussels. From board meetings and
+					conferences to expert roundtables and trainings, we provide
+					the right setting for every occasion. Our services also
+					include full event management and comprehensive office
+					support, backed by a team of dedicated professionals. Our
+					goal: the perfect fit and a lasting impression.
 				</p>
 			</div>
 			<h1 className="text-center font-robo font-bold text-xl lg:text-3xl">
@@ -30,7 +32,7 @@ const HomeSection = () => {
 				<HomeCard
 					title="CONCEPTS"
 					Icon={LaptopSvg}
-					image="/hero/hero-concepts.jpeg"
+					image="/hero/hero-concepts.png"
 					link="/concepts"
 				/>
 				<HomeCard
@@ -42,7 +44,7 @@ const HomeSection = () => {
 				<HomeCard
 					title="SERVICES"
 					Icon={CogsSvg}
-					image="/hero/hero-services.jpg"
+					image="/hero/hero-services.png"
 					link="/services"
 				/>
 			</div>
@@ -57,7 +59,7 @@ const HomeSection = () => {
 					<div className=" w-full aspect-[10/9] md:aspect-[2/1] relative ">
 						<div className="bg-black-spaces/30 absolute inset-0 z-20"></div>
 						<Image
-							src="/hero-map.png"
+							src="/hero/hero-map.jpg"
 							alt="Access"
 							fill
 							priority
@@ -66,9 +68,9 @@ const HomeSection = () => {
 						/>
 					</div>
 
-					<div className="w-full h-12 lg:h-20 flex flex-row items-center justify-center gap-4 transition duration-300 ease-in-out bg-black-spaces md:group-hover:bg-orange-spaces text-white font-robo">
+					<div className="w-full h-12 lg:h-20 flex flex-row items-center justify-center gap-4 transition duration-300 ease-in-out bg-black-spaces md:group-hover:bg-midnight-spaces text-white-spaces font-robo">
 						<div className="relative w-8 h-8 lg:w-12 lg:h-12">
-							<PinSvg className="transition duration-300 ease-in-out fill-orange-spaces md:group-hover:fill-black-spaces" />
+							<PinSvg className="transition duration-300 ease-in-out fill-midnight-spaces md:group-hover:fill-coral-spaces" />
 						</div>
 						<span className="font-bold text-lg lg:text-2xl">
 							ACCESS
@@ -76,23 +78,24 @@ const HomeSection = () => {
 					</div>
 				</Link>
 			</div>
-			<div className="grid grid-rows-2 gap-3 mt-16 md:mt-20 lg:mt-32 xl:mt-36 mb-20 md:grid-cols-2 md:gap-4 mx-auto w-fit">
-				<Link
-					href="/booking"
-					className="w-full h-full"
+			<div className="mt-16 md:mt-20 lg:mt-32 xl:mt-36 mb-20 md:grid-cols-2 md:gap-4 mx-auto w-fit">
+				<button
+					onClick={(e) => {
+						e.preventDefault()
+						openBookingSheet({ sourcePath: '/home' }, 'booking')
+					}}
+					className="w-full h-full bg-midnight-spaces flex items-center justify-center font-nunito font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-white-spaces px-6 md:px-8 lg:px-10 xl:px-12 py-2 lg:py-3 xl:py-4 shadow-md hover:shadow-lg hover:scale-105"
 				>
-					<button className="w-full h-full bg-orange-spaces flex items-center justify-center font-nunito font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-white px-6 md:px-8 lg:px-10 xl:px-12 py-2 lg:py-3 xl:py-4 shadow-md hover:shadow-lg hover:scale-105">
-						BOOK NOW
-					</button>
-				</Link>
-				<Link
+					MAKE REQUEST
+				</button>
+				{/* <Link
 					href="/"
 					className="w-full h-full"
 				>
-					<button className="w-full h-full bg-black-spaces flex items-center justify-center font-nunito font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-white px-6 md:px-8 lg:px-10 xl:px-12 py-2 lg:py-3 xl:py-4 shadow-md hover:shadow-lg hover:scale-105">
+					<button className="w-full h-full bg-black-spaces flex items-center justify-center font-nunito font-bold text-base md:text-lg lg:text-xl xl:text-2xl text-white-spaces px-6 md:px-8 lg:px-10 xl:px-12 py-2 lg:py-3 xl:py-4 shadow-md hover:shadow-lg hover:scale-105">
 						GET A QUOTE
 					</button>
-				</Link>
+				</Link> */}
 			</div>
 		</div>
 	)

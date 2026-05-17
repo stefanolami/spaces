@@ -25,7 +25,7 @@ const HomeCard = ({
 			}}
 		>
 			<div className="absolute inset-0 bg-black-spaces/60"></div>
-			<div className="relative z-10 flex flex-col items-center justify-end gap-4 h-full text-center text-white px-4">
+			<div className="relative z-10 flex flex-col items-center justify-end gap-4 h-full text-center text-white-spaces px-4">
 				<motion.h1
 					initial={{ opacity: 0, y: -30 }}
 					whileInView={{ opacity: 1, y: 0 }}
@@ -52,12 +52,12 @@ const HomeCard = ({
 					className="grid grid-cols-2 gap-4"
 				>
 					<Link href={firstLink}>
-						<button className="bg-orange-spaces hover:bg-orange-spaces/80 text-white font-bold py-2 px-4 rounded text-sm w-full">
+						<button className="bg-midnight-spaces hover:bg-midnight-spaces/80 text-white-spaces font-bold py-2 px-4 rounded text-sm w-full">
 							GET A QUOTE
 						</button>
 					</Link>
 					<Link href={secondLink}>
-						<button className="bg-black-spaces hover:bg-black-spaces/80 text-white font-bold py-2 px-4 rounded text-sm w-full">
+						<button className="bg-black-spaces hover:bg-black-spaces/80 text-white-spaces font-bold py-2 px-4 rounded text-sm w-full">
 							FIND MORE
 						</button>
 					</Link>

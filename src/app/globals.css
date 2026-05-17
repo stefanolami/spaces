@@ -20,15 +20,13 @@
 	transform: translateX(-50%);
 	width: 10px; /* Adjust as needed */
 	height: 10px; /* Adjust as needed */
-	background-color: #ff5900;
+	background-color: #fd6f73;
 	border-radius: 50%;
 	z-index: 99;
 }
 
-
-
 @layer base {
-  :root {
+	:root {
 		--background: 0 0% 100%;
 		--foreground: 0 0% 3.9%;
 		--card: 0 0% 100%;
@@ -55,7 +53,7 @@
 		--chart-5: 27 87% 67%;
 		--radius: 0.5rem;
 	}
-  .dark {
+	.dark {
 		--background: 0 0% 3.9%;
 		--foreground: 0 0% 98%;
 		--card: 0 0% 3.9%;
@@ -83,13 +81,11 @@
 	}
 }
 
-
-
 @layer base {
-  * {
-    @apply border-border;
+	* {
+		@apply border-border;
 	}
-  body {
-    @apply bg-background text-foreground;
+	body {
+		@apply bg-background text-foreground;
 	}
 }

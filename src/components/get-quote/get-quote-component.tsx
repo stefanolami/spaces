@@ -122,7 +122,7 @@ const GetQuoteComponent = () => {
 										disabled={isSubmitting}
 										placeholder="REQUEST"
 										{...field}
-										className="bg-white text-primary"
+										className="bg-white-spaces text-primary"
 									/>
 								</FormControl>
 								<FormMessage className="text-red-500 text-sm lg:text-base lg:mt-1" />
@@ -131,20 +131,20 @@ const GetQuoteComponent = () => {
 										Our{' '}
 										<Link
 											href="/concepts"
-											className="text-blue-spaces font-bold"
+											className="text-eucalyptus-spaces font-bold"
 										>
 											concepts
 										</Link>{' '}
 										<Link
 											href="/facilities"
-											className="text-blue-spaces font-bold"
+											className="text-eucalyptus-spaces font-bold"
 										>
 											facilities
 										</Link>{' '}
 										&{' '}
 										<Link
 											href="/services"
-											className="text-blue-spaces font-bold"
+											className="text-eucalyptus-spaces font-bold"
 										>
 											services
 										</Link>{' '}
@@ -177,7 +177,7 @@ const GetQuoteComponent = () => {
 											<Button
 												variant={'outline'}
 												className={cn(
-													'pl-3 text-left font-normal  bg-white hover:bg-white text-primary hover:text-primary'
+													'pl-3 text-left font-normal  bg-white-spaces hover:bg-white-spaces text-primary hover:text-primary'
 												)}
 											>
 												{field.value?.length > 0 ? (
@@ -204,7 +204,7 @@ const GetQuoteComponent = () => {
 										align="start"
 									>
 										<Calendar
-											className="bg-white text-primary"
+											className="bg-white-spaces text-primary"
 											mode="multiple"
 											selected={field.value}
 											onSelect={(date) => {
@@ -235,7 +235,7 @@ const GetQuoteComponent = () => {
 										disabled={isSubmitting}
 										placeholder="NAME"
 										{...field}
-										className="bg-white text-primary"
+										className="bg-white-spaces text-primary"
 									/>
 								</FormControl>
 								<FormMessage className="text-red-500 text-sm lg:text-base lg:mt-1" />
@@ -255,7 +255,7 @@ const GetQuoteComponent = () => {
 										disabled={isSubmitting}
 										placeholder="EMAIL"
 										{...field}
-										className="bg-white text-primary"
+										className="bg-white-spaces text-primary"
 									/>
 								</FormControl>
 								<FormMessage className="text-red-500 text-sm lg:text-base lg:mt-1" />
@@ -279,7 +279,7 @@ const GetQuoteComponent = () => {
 										disabled={isSubmitting}
 										placeholder="PHONE NUMBER"
 										{...field}
-										className="bg-white text-primary"
+										className="bg-white-spaces text-primary"
 									/>
 								</FormControl>
 								<FormMessage className="text-red-500 text-sm lg:text-base lg:mt-1" />
@@ -291,7 +291,7 @@ const GetQuoteComponent = () => {
 							disabled={isSending}
 							type="submit"
 							variant="default"
-							className="bg-black-spaces hover:scale-105 transition-scale-standard flex items-center justify-center text-xs md:text-sm lg:text-base font-bold font-nunito text-white shadow-md hover:shadow-lg uppercase rounded-none px-6 lg:px-10 py-2 lg:py-5"
+							className="bg-black-spaces hover:scale-105 transition-scale-standard flex items-center justify-center text-xs md:text-sm lg:text-base font-bold font-nunito text-white-spaces shadow-md hover:shadow-lg uppercase rounded-none px-6 lg:px-10 py-2 lg:py-5"
 						>
 							send
 						</Button>

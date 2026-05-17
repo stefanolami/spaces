@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import { nunito, robo } from '@/app/fonts'
-import './globals.css'
+import '@/app/globals.css'
 import { RenderMounted } from '@/components/render-mounted'
 import Header from '@/components/header/header'
 import Footer from '@/components/footer'
+import BookingSheetProvider from '@/components/booking/booking-sheet-provider'
 
 export const metadata: Metadata = {
 	title: 'Time&Spaces',
@@ -33,15 +34,19 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${robo.variable} ${nunito.variable} antialiased`}>
+			<body
+				className={`${robo.variable} ${nunito.variable} antialiased bg-white-spaces min-h-screen flex flex-col`}
+			>
 				<RenderMounted>
-					<Header />
-					<main className="">{children}</main>
-					<Footer />
+					<BookingSheetProvider>
+						<Header />
+						<main className="flex-1">{children}</main>
+						<Footer />
+					</BookingSheetProvider>
 				</RenderMounted>
 			</body>
 		</html>
 	)
 }
 
-/* pt-[84px] md:pt-[92px] xl:pt-[120px] */
+/* Header is fixed: base total 92px (64+28), xl total 120px (80+40) */
