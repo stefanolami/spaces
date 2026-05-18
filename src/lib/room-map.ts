@@ -7,14 +7,14 @@ export const ROOM_TITLE_MAP: Record<RoomId, string> = {
 	'meeting-room-3': 'Meeting Room 3',
 }
 
-export const ROOM_IDS: RoomId[] = (Object.keys(ROOM_TITLE_MAP) as RoomId[]).filter(
-	(id) => id !== 'meeting-room-3'
-)
+export const ROOM_IDS: RoomId[] = (
+	Object.keys(ROOM_TITLE_MAP) as RoomId[]
+).filter((id) => id !== 'meeting-room-3')
 
 export function roomTitleToId(title: string): RoomId | undefined {
 	const entries = Object.entries(ROOM_TITLE_MAP) as [RoomId, string][]
 	const found = entries.find(
-		([, t]) => t.toLowerCase() === title.toLowerCase()
+		([, t]) => t.toLowerCase() === title.toLowerCase(),
 	)
 	return found?.[0]
 }
