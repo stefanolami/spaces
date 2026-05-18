@@ -15,10 +15,10 @@ const Footer = () => {
 						<span>+32 (0) 485 382 221</span>
 						<span>|</span>
 						<a
-							href="mailto:info@timeandspaces.org"
+							href="mailto:contact@timeandspaces.org"
 							className="hover:underline"
 						>
-							info@timeandspaces.org
+							contact@timeandspaces.org
 						</a>
 					</div>
 					<span className="block">
@@ -27,7 +27,7 @@ const Footer = () => {
 				</div>
 				<div className="w-[90%] max-w-[1200px] mx-auto h-full flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between">
 					<div className="flex flex-col items-center gap-12">
-						<nav className="mt-4 hidden md:grid grid-cols-4 gap-6 lg:gap-10 items-center text-center h-full font-robo text-sm font-normal text-white">
+						<nav className="mt-4 hidden md:grid grid-cols-6 gap-6 lg:gap-10 items-center text-center h-full font-robo text-sm font-normal text-white">
 							{LINKS.map((link, index) => (
 								<Link
 									key={index}
@@ -148,5 +148,13 @@ const LINKS = [
 	{
 		name: 'ACCESS',
 		path: '/access',
+	},
+	{
+		name: 'PRICING',
+		path: '/pricing',
+	},
+	{
+		name: 'CONTACT US',
+		path: '/contact-us',
 	},
 ]

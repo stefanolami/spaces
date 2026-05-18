@@ -202,10 +202,10 @@ const PrivacyPolicyPage = () => {
 					<br />
 					Email:{' '}
 					<a
-						href="mailto:info@timeandspaces.org"
+						href="mailto:contact@timeandspaces.org"
 						className="underline"
 					>
-						info@timeandspaces.org
+						contact@timeandspaces.org
 					</a>
 					<br />
 					Address: Rue de la Loi 81A, 1040 Brussels, Belgium
@@ -399,10 +399,10 @@ const PrivacyPolicyPage = () => {
 					<br />
 					Email:{' '}
 					<a
-						href="mailto:info@timeandspaces.org"
+						href="mailto:contact@timeandspaces.org"
 						className="underline"
 					>
-						info@timeandspaces.org
+						contact@timeandspaces.org
 					</a>
 					<br />
 					Address: Rue de la Loi 81A, 1040 Brussels, Belgium

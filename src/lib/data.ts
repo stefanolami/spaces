@@ -93,16 +93,4 @@ export const FACILITIES: FacilitiesCardType[] = [
 		secondLink: '/',
 		floorplan: '/facilities/floorplans/catering.png',
 	},
-	{
-		title: 'Meeting Room 3',
-		text: 'Our second-largest boardroom accommodates up to 12 people and is ideal for all types of round-table discussions.',
-		images: [
-			'/facilities/facilities-4a.png',
-			'/facilities/facilities-4b.png',
-			'/facilities/facilities-4c.png',
-		],
-		firstLink: '/',
-		secondLink: '/',
-		floorplan: '/facilities/floorplans/small-meeting.png',
-	},
 ]

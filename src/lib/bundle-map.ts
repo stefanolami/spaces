@@ -20,7 +20,7 @@ export const BUNDLE_MAP: Record<string, BundleMapEntry> = {
 	},
 	'trainings-seminars-and-action-tanks': {
 		title: 'Trainings, Seminars & Action Tanks',
-		rooms: ['meeting-room-3', 'relaxation-break-out-room'],
+		rooms: ['relaxation-break-out-room'],
 		services: [{ id: 'catering' }, { id: 'recording' }],
 	},
 }
