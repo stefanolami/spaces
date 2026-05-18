@@ -511,17 +511,10 @@ export default function BookingSheet({
 															id,
 														)
 													return (
-														<FormItem
-															className={`mt-0 ${
-																id ===
-																'board-and-conference-room'
-																	? 'md:col-span-2'
-																	: ''
-															}`}
-														>
+														<FormItem className="mt-0">
 															<label
 																htmlFor={`room-${id}`}
-																className="flex items-center gap-2 border border-coral-spaces rounded-md p-2 hover:bg-eucalyptus-spaces/20 transition-colors cursor-pointer w-full"
+																className="flex items-center gap-2 border border-coral-spaces rounded-md p-2 min-h-[56px] md:min-h-[52px] hover:bg-eucalyptus-spaces/20 transition-colors cursor-pointer w-full"
 															>
 																<FormControl>
 																	<Checkbox
@@ -556,8 +549,8 @@ export default function BookingSheet({
 																		}}
 																	/>
 																</FormControl>
-																<div className="w-full">
-																	<div className="font-normal text-black-spaces text-xs md:text-sm">
+																<div className="w-full flex flex-col justify-center">
+																	<div className="font-normal text-black-spaces text-[11px] md:text-xs">
 																		{id ===
 																		'board-and-conference-room'
 																			? 'Large Board or Conference Room'
