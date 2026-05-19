@@ -5,6 +5,7 @@ import { RenderMounted } from '@/components/render-mounted'
 import Header from '@/components/header/header'
 import Footer from '@/components/footer'
 import BookingSheetProvider from '@/components/booking/booking-sheet-provider'
+import { Analytics } from '@vercel/analytics/next'
 
 export const metadata: Metadata = {
 	title: 'Time&Spaces',
@@ -44,6 +45,7 @@ export default function RootLayout({
 						<Footer />
 					</BookingSheetProvider>
 				</RenderMounted>
+				<Analytics />
 			</body>
 		</html>
 	)
